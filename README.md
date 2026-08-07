@@ -2,7 +2,7 @@
 
 暗金影视风格个人主页 — 产品经理 × 生成式 AI × 影视数字化。
 
-**线上地址**：https://liguannan-alex.github.io/portfolio-2026/
+**线上地址**：https://piguannan.com
 **上一版主页**（保留）：https://liguannan-alex.github.io
 
 ## 技术栈
