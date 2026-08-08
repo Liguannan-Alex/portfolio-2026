@@ -588,6 +588,7 @@
     <main id="stage" aria-live="polite">
 
       <section id="slide-1" class="slide hero-slide active" data-title="从会问 AI，到能对结果负责" data-minutes="2" tabindex="-1" role="group" aria-roledescription="幻灯片" aria-label="第1页，共20页：从会问 AI，到能对结果负责">
+        <canvas class="smoke-canvas" aria-hidden="true"></canvas>
         <div class="hero-wrap">
           <div class="hero-kicker">AI 协作课 · 90 MIN</div>
           <h1 class="title-xl">
@@ -1184,6 +1185,7 @@
       </section>
 
       <section id="slide-20" class="slide hero-slide" data-title="完成一次可验证实验" data-minutes="2" tabindex="-1" role="group" aria-roledescription="幻灯片" aria-label="第20页，共20页：完成一次可验证实验">
+        <canvas class="smoke-canvas" aria-hidden="true"></canvas>
         <div class="page-mark">20 / 20</div>
         <div class="closing">
           <div class="eyebrow">离场任务</div>
@@ -1493,6 +1495,100 @@
       fitStage();
       setSlide(index, false);
       wakeChrome();
+    })();
+  </script>
+
+  <style>
+    .smoke-canvas { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+    .closing { position: relative; }
+    @media print { .smoke-canvas { display: none !important; } }
+  </style>
+  <script>
+    (() => {
+      if (!window.WebGLRenderingContext) return;
+      const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      const FS = [
+        'precision mediump float;',
+        'uniform vec2 R; uniform float T;',
+        'float h(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453123);}',
+        'float n(vec2 p){vec2 i=floor(p),f=fract(p);vec2 u=f*f*(3.-2.*f);',
+        ' return mix(mix(h(i),h(i+vec2(1.,0.)),u.x),mix(h(i+vec2(0.,1.)),h(i+vec2(1.,1.)),u.x),u.y);}',
+        'float fbm(vec2 p){float v=0.,a=.5;',
+        ' for(int i=0;i<5;i++){v+=a*n(p);p=p*2.03+vec2(11.,7.);a*=.5;}return v;}',
+        'void main(){',
+        ' vec2 uv=gl_FragCoord.xy/R;',
+        ' vec2 p=uv*vec2(R.x/R.y,1.)*2.2;',
+        ' float t=T*.05;',
+        ' vec2 q=vec2(fbm(p+vec2(0.,t*1.4)),fbm(p+vec2(5.2,1.3)-t));',
+        ' vec2 r=vec2(fbm(p+3.2*q+vec2(1.7,9.2)+t*.9),fbm(p+3.2*q+vec2(8.3,2.8)-t*.6));',
+        ' float f=fbm(p+3.0*r+vec2(t*.6,0.));',
+        ' float m=smoothstep(.42,.95,f);',
+        ' float ymask=mix(1.0,.22,smoothstep(.12,.85,uv.y));',
+        ' vec3 cyan=vec3(.36,.88,1.),purple=vec3(.72,.61,1.);',
+        ' vec3 col=mix(cyan,purple,clamp(q.y*1.4,0.,1.));',
+        ' float a=m*ymask*.30;',
+        ' gl_FragColor=vec4(col*a,a);',
+        '}'
+      ].join('\n');
+      const VS = 'attribute vec2 p;void main(){gl_Position=vec4(p,0.,1.);}';
+
+      document.querySelectorAll('.smoke-canvas').forEach(cv => {
+        const slide = cv.closest('.slide');
+        if (!slide) return;
+        let gl = null, uRes = null, uT = null, raf = null, inited = false, failed = false;
+        const t0 = performance.now();
+
+        function init() {
+          gl = cv.getContext('webgl', { alpha: true, antialias: false, premultipliedAlpha: true });
+          if (!gl) return false;
+          function sh(type, src) {
+            const s = gl.createShader(type);
+            gl.shaderSource(s, src); gl.compileShader(s);
+            return gl.getShaderParameter(s, gl.COMPILE_STATUS) ? s : null;
+          }
+          const v = sh(gl.VERTEX_SHADER, VS), f = sh(gl.FRAGMENT_SHADER, FS);
+          if (!v || !f) return false;
+          const prog = gl.createProgram();
+          gl.attachShader(prog, v); gl.attachShader(prog, f); gl.linkProgram(prog);
+          if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) return false;
+          gl.useProgram(prog);
+          const buf = gl.createBuffer();
+          gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+          gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW);
+          const loc = gl.getAttribLocation(prog, 'p');
+          gl.enableVertexAttribArray(loc);
+          gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
+          uRes = gl.getUniformLocation(prog, 'R');
+          uT = gl.getUniformLocation(prog, 'T');
+          inited = true;
+          return true;
+        }
+
+        function frame(now) {
+          raf = null;
+          if (!slide.classList.contains('active') || document.hidden) return;
+          const w = Math.max(2, cv.clientWidth >> 1), hgt = Math.max(2, cv.clientHeight >> 1);
+          if (cv.width !== w || cv.height !== hgt) { cv.width = w; cv.height = hgt; gl.viewport(0, 0, w, hgt); }
+          gl.uniform2f(uRes, w, hgt);
+          gl.uniform1f(uT, (now - t0) / 1000);
+          gl.drawArrays(gl.TRIANGLES, 0, 3);
+          if (!reduced) raf = requestAnimationFrame(frame);
+        }
+
+        function start() {
+          if (raf || failed) return;
+          if (!inited && !init()) { failed = true; cv.style.display = 'none'; return; }
+          raf = requestAnimationFrame(frame);
+        }
+
+        new MutationObserver(() => { if (slide.classList.contains('active')) start(); })
+          .observe(slide, { attributes: true, attributeFilter: ['class'] });
+        document.addEventListener('visibilitychange', () => {
+          if (!document.hidden && slide.classList.contains('active')) start();
+        });
+        if (slide.classList.contains('active')) start();
+      });
     })();
   </script>
 </body>
