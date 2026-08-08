@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>学 AI · AI 技术栈全景图</title>
+  <style>
+
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;700&display=swap');
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #0b0d14;
+      --bg-card: #131620;
+      --bg-deep: #0e111a;
+      --border: #1e2232;
+      --border-hi: #3b3f54;
+      --text: #e1e4eb;
+      --text-dim: #9aa3b5;
+      --text-faint: #6b7280;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', 'Noto Sans SC', -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      padding-bottom: 80px;
+    }
+
+    .container { max-width: 1000px; margin: 0 auto; padding: 0 22px; }
+
+    /* ── 顶栏 ── */
+    .top { display: flex; align-items: center; justify-content: space-between; padding: 26px 0 18px; }
+    .top a.back { color: var(--text-faint); text-decoration: none; font-size: 13px; border: 1px solid var(--border); padding: 6px 14px; border-radius: 20px; transition: all .2s; }
+    .top a.back:hover { color: var(--text); border-color: var(--border-hi); }
+    .top .tag { font-size: 12px; color: var(--text-faint); }
+
+    .header { text-align: center; margin: 8px 0 10px; }
+    .header h1 {
+      font-size: 30px; font-weight: 700; letter-spacing: -0.5px;
+      background: linear-gradient(135deg, #a78bfa, #7dd3fc);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      margin-bottom: 12px;
+    }
+    .header p { font-size: 14px; color: var(--text-dim); line-height: 1.8; }
+    .stat-line { text-align: center; margin: 14px 0 22px; }
+    .stat-line span {
+      display: inline-block; font-size: 12px; color: var(--text-dim);
+      border: 1px solid var(--border); border-radius: 14px; padding: 4px 14px; margin: 0 4px;
+      background: var(--bg-card);
+    }
+    .stat-line b { color: #a78bfa; font-weight: 600; }
+
+    /* ── 粘性导航 ── */
+    .nav {
+      position: sticky; top: 0; z-index: 40;
+      background: rgba(11,13,20,0.86); backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
+      padding: 10px 0; margin-bottom: 34px;
+    }
+    .nav .container { display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none; }
+    .nav .container::-webkit-scrollbar { display: none; }
+    .nav a {
+      flex-shrink: 0; font-size: 12.5px; color: var(--text-dim); text-decoration: none;
+      border: 1px solid var(--border); padding: 5px 13px; border-radius: 16px; transition: all .15s;
+      white-space: nowrap;
+    }
+    .nav a:hover { color: #fff; border-color: var(--nc, var(--border-hi)); background: color-mix(in srgb, var(--nc, #888) 12%, transparent); }
+
+    /* ── 全景层 ── */
+    .layer {
+      display: grid; grid-template-columns: 172px 1fr;
+      border: 1px solid var(--border); border-radius: 13px;
+      background: var(--bg-card); overflow: hidden; margin-bottom: 6px;
+      color: inherit; transition: border-color .15s;
+    }
+    .layer:hover { border-color: color-mix(in srgb, var(--lc) 60%, var(--border)); }
+    .layer-label { padding: 15px 16px; border-right: 1px solid var(--border); position: relative; display: flex; flex-direction: column; justify-content: center; }
+    .layer-label::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: var(--lc); }
+    .layer-label .no { font-size: 10.5px; font-weight: 600; color: var(--lc); letter-spacing: 1px; margin-bottom: 4px; }
+    .layer-label h2 { font-size: 16px; font-weight: 700; color: #f1f5f9; }
+    .layer-label .en { font-size: 10.5px; color: var(--text-faint); margin-top: 1px; }
+    .layer-label .cnt { font-size: 10.5px; color: var(--text-faint); margin-top: 6px; }
+    a.layer-label { text-decoration: none; }
+    a.layer-label:hover h2 { color: var(--lc); }
+    .chips { padding: 12px 14px; display: flex; flex-wrap: wrap; gap: 7px; align-content: center; }
+    .chip {
+      font-size: 12.5px; padding: 5px 11px; border-radius: 8px; cursor: pointer;
+      border: 1px solid var(--border); background: var(--bg-deep); color: var(--text); line-height: 1.4;
+      transition: all .15s;
+    }
+    .chip:hover { border-color: var(--lc); background: color-mix(in srgb, var(--lc) 10%, var(--bg-deep)); transform: translateY(-1px); }
+    .chip.hot { border-color: color-mix(in srgb, var(--lc) 55%, var(--border)); color: #fff; font-weight: 500; }
+    .chip .fam { color: var(--text-faint); font-size: 11px; margin-right: 2px; }
+    .conn { display: flex; align-items: center; justify-content: center; height: 30px; position: relative; color: var(--text-faint); font-size: 11px; }
+    .conn .line { width: 1px; height: 100%; background: linear-gradient(#1e2232, #3b3f54, #1e2232); }
+    .conn span.lbl { position: absolute; background: var(--bg); padding: 2px 12px; border-radius: 10px; border: 1px solid var(--border); }
+    .more { font-size: 11px; color: var(--lc); align-self: center; margin-left: 2px; flex-shrink: 0; text-decoration: none; border: 1px dashed color-mix(in srgb, var(--lc) 50%, var(--border)); border-radius: 8px; padding: 5px 10px; }
+    .more:hover { background: color-mix(in srgb, var(--lc) 12%, transparent); }
+
+    /* ── 章节 ── */
+    .section { margin-top: 72px; scroll-margin-top: 66px; }
+    .sec-head { display: flex; align-items: baseline; gap: 12px; margin-bottom: 6px; }
+    .sec-head .no { font-size: 12px; font-weight: 700; color: var(--sc); letter-spacing: 1.5px; font-family: 'Inter'; }
+    .sec-head h2 { font-size: 23px; font-weight: 700; color: #fff; }
+    .sec-sub { font-size: 13.5px; color: var(--text-dim); line-height: 1.75; margin-bottom: 26px; max-width: 780px; }
+
+    /* ── 模型家族卡 ── */
+    .family {
+      border: 1px solid var(--border); border-radius: 14px; background: var(--bg-card);
+      margin-bottom: 22px; overflow: hidden;
+    }
+    .family-head { padding: 18px 20px 14px; border-bottom: 1px solid var(--border); }
+    .family-head .row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+    .family-head .icon { font-size: 22px; }
+    .family-head h3 { font-size: 17.5px; font-weight: 700; color: #fff; }
+    .arch-pill {
+      font-size: 11.5px; padding: 3px 11px; border-radius: 12px;
+      color: var(--fc); background: color-mix(in srgb, var(--fc) 12%, transparent);
+      border: 1px solid color-mix(in srgb, var(--fc) 35%, transparent); font-weight: 500;
+    }
+    .family-head .what { font-size: 13px; color: var(--text-dim); margin-top: 9px; line-height: 1.7; }
+    .family-body { padding: 16px 20px 20px; }
+    .fb-title { font-size: 12px; font-weight: 600; color: var(--text-faint); letter-spacing: 1px; margin: 6px 0 12px; }
+    .fb-title:not(:first-child) { margin-top: 20px; }
+
+    /* 时间线 */
+    .timeline { padding-left: 4px; }
+    .tl-item { position: relative; padding: 0 0 16px 20px; border-left: 1px solid var(--border); margin-left: 5px; }
+    .tl-item:last-child { padding-bottom: 2px; border-left-color: transparent; }
+    .tl-item::before {
+      content: ''; position: absolute; left: -4.5px; top: 5px;
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--fc); box-shadow: 0 0 0 3px color-mix(in srgb, var(--fc) 20%, transparent);
+    }
+    .tl-year { font-size: 11.5px; font-weight: 700; color: var(--fc); font-family: 'Inter'; letter-spacing: .5px; }
+    .tl-name { font-size: 13.5px; font-weight: 600; color: #f1f5f9; margin: 2px 0 3px; }
+    .tl-desc { font-size: 12.5px; color: var(--text-dim); line-height: 1.65; }
+    .tl-desc b { color: var(--text); font-weight: 500; }
+
+    .note {
+      font-size: 12.5px; color: var(--text-dim); line-height: 1.7;
+      background: var(--bg-deep); border: 1px solid var(--border); border-radius: 10px; padding: 12px 15px;
+    }
+    .note b { color: var(--fc, var(--text)); font-weight: 600; }
+
+    /* ── 表格 ── */
+    .tbl-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: 12px; margin-bottom: 18px; }
+    table { width: 100%; border-collapse: collapse; font-size: 12.8px; min-width: 640px; }
+    th {
+      text-align: left; padding: 11px 14px; font-size: 11.5px; letter-spacing: .5px;
+      color: var(--sc, #a78bfa); background: color-mix(in srgb, var(--sc, #a78bfa) 7%, var(--bg-card));
+      border-bottom: 1px solid var(--border); white-space: nowrap; font-weight: 600;
+    }
+    td { padding: 11px 14px; border-bottom: 1px solid var(--border); color: var(--text-dim); line-height: 1.6; vertical-align: top; background: var(--bg-card); }
+    tr:last-child td { border-bottom: none; }
+    td:first-child { color: #f1f5f9; font-weight: 600; white-space: nowrap; }
+    td b { color: var(--text); font-weight: 500; }
+
+    .vs-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(225px, 1fr)); gap: 12px; margin-bottom: 18px; }
+    .vs-card { border: 1px solid var(--border); border-radius: 12px; background: var(--bg-card); padding: 16px 16px 14px; position: relative; overflow: hidden; }
+    .vs-card::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: var(--vc); }
+    .vs-card h4 { font-size: 14.5px; font-weight: 700; color: #fff; margin-bottom: 3px; }
+    .vs-card .sub { font-size: 11px; color: var(--vc); margin-bottom: 9px; font-weight: 500; }
+    .vs-card p { font-size: 12.5px; color: var(--text-dim); line-height: 1.65; }
+    .vs-card p b { color: var(--text); font-weight: 500; }
+
+    /* ── 弹层 ── */
+    .overlay { position: fixed; inset: 0; background: rgba(4,6,12,.72); backdrop-filter: blur(3px); display: none; align-items: flex-end; justify-content: center; z-index: 50; }
+    .overlay.open { display: flex; }
+    .sheet { width: 100%; max-width: 560px; background: #161a26; border: 1px solid #2a2f42; border-bottom: none; border-radius: 18px 18px 0 0; padding: 26px 26px 30px; animation: up .22s ease; }
+    @keyframes up { from { transform: translateY(30px); opacity: 0; } to { transform: none; opacity: 1; } }
+    .sheet .l-tag { display: inline-block; font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 12px; margin-bottom: 12px; color: var(--sc2); background: color-mix(in srgb, var(--sc2) 14%, transparent); border: 1px solid color-mix(in srgb, var(--sc2) 35%, transparent); }
+    .sheet h3 { font-size: 19px; font-weight: 700; color: #fff; margin-bottom: 10px; }
+    .sheet p { font-size: 14px; color: var(--text-dim); line-height: 1.75; }
+    .sheet .close-hint { margin-top: 16px; font-size: 11px; color: var(--text-faint); text-align: center; }
+
+    @media (max-width: 680px) {
+      .layer { grid-template-columns: 1fr; }
+      .layer-label { border-right: none; border-bottom: 1px solid var(--border); padding: 12px 14px; flex-direction: row; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+      .layer-label .cnt { margin-top: 0; }
+      .header h1 { font-size: 24px; }
+    }
+  
+
+    /* ── 知识地图（业务地图式）── */
+    .lm-section { margin-top: 44px; }
+    .lm-head { display: flex; align-items: center; gap: 12px; padding-bottom: 10px; border-bottom: 2px solid var(--border); margin-bottom: 8px; }
+    .lm-no {
+      min-width: 40px; height: 30px; border-radius: 8px; color: #0b0d14; font-weight: 800;
+      display: inline-flex; align-items: center; justify-content: center; font-size: 14px; font-family: 'Inter';
+      padding: 0 8px; flex-shrink: 0;
+    }
+    .lm-title { font-size: 18px; font-weight: 800; color: #fff; letter-spacing: .02em; }
+    .lm-en { font-size: 11.5px; color: var(--text-faint); margin-top: 4px; }
+    .lm-desc { font-size: 12.5px; color: var(--text-dim); line-height: 1.8; margin: 12px 0 16px; max-width: 860px; }
+    .domain-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(430px, 1fr)); gap: 14px; }
+    .domain {
+      background: var(--bg-card); border-radius: 12px; border: 1.5px solid var(--border);
+      overflow: hidden; transition: box-shadow .15s, border-color .15s;
+    }
+    .domain:hover { border-color: color-mix(in srgb, var(--dc) 45%, var(--border)); box-shadow: 0 5px 18px rgba(0,0,0,.3); }
+    .domain-head { padding: 11px 16px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid var(--border); }
+    .domain-icon {
+      width: 30px; height: 30px; border-radius: 8px; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center; font-size: 15px;
+      background: color-mix(in srgb, var(--dc) 14%, transparent);
+      border: 1px solid color-mix(in srgb, var(--dc) 30%, transparent);
+    }
+    .domain-name { font-size: 14px; font-weight: 800; color: #f1f5f9; }
+    .domain-body { padding: 6px 16px 12px; }
+    .domain-note {
+      font-size: 11.5px; color: var(--text-faint); margin-top: 10px; padding-top: 8px;
+      border-top: 1px dashed var(--border); line-height: 1.7;
+    }
+    .item { padding: 9px 0; border-bottom: 1px dashed #232838; }
+    .item:last-child { border-bottom: none; }
+    .item-top { display: flex; align-items: baseline; gap: 8px; }
+    .item-name { font-weight: 700; color: #f1f5f9; font-size: 13px; }
+    .item-desc { color: var(--text-dim); font-size: 12.3px; line-height: 1.75; margin-top: 3px; }
+    .item-ex { font-size: 11px; color: var(--text-faint); margin-top: 3px; line-height: 1.7; }
+    .kb-badge {
+      display: inline-block; font-size: 9px; font-weight: 700; padding: 1px 7px; border-radius: 4px;
+      white-space: nowrap; flex-shrink: 0; letter-spacing: .05em;
+      background: color-mix(in srgb, var(--dc) 16%, transparent);
+      color: var(--dc); border: 1px solid color-mix(in srgb, var(--dc) 38%, transparent);
+    }
+
+    /* ── 基础概念辨析 ── */
+    .concept-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(400px, 1fr)); gap: 12px; }
+    .concept {
+      border: 1px solid var(--border); border-radius: 12px; background: var(--bg-card);
+      padding: 16px 18px 15px; position: relative; overflow: hidden;
+    }
+    .concept::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: var(--cc); }
+    .concept h4 { font-size: 14.5px; font-weight: 700; color: #fff; margin-bottom: 8px; }
+    .concept p { font-size: 12.8px; color: var(--text-dim); line-height: 1.85; }
+    .concept p b { color: var(--text); font-weight: 600; }
+
+    @media (max-width: 920px) {
+      .domain-grid { grid-template-columns: 1fr; }
+      .concept-grid { grid-template-columns: 1fr; }
+    }
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="top">
+      <a class="back" href="/ai-course/">← 返回课程讲义</a>
+      <span class="tag">学 AI · 第 1 课</span>
+    </div>
+    <div class="header">
+      <h1>AI 技术栈全景图</h1>
+      <p>从电网到应用共八层：电力支撑芯片，芯片训练出模型，模型经推理引擎变成服务，开发者用框架搭出应用。<br>
+      先看基础概念辨析，再按层展开知识地图，最后是每个重点层的深度解析（架构、算法迭代史、方案对比）。</p>
+    </div>
+    <div class="stat-line">
+      <span><b>8</b> 个层级</span><span><b>36</b> 个分类</span><span><b>136</b> 个知识条目</span><span><b>10</b> 组概念辨析</span><span><b>5</b> 个深度解析</span>
+    </div>
+  </div>
+
+  <div class="nav">
+    <div class="container">
+      <a href="#concepts" style="--nc:#f0abfc">基础概念辨析</a>
+      <a href="#map" style="--nc:#a78bfa">分层知识地图</a>
+      <a href="#models" style="--nc:#fbbf24">模型家族与架构</a>
+      <a href="#train" style="--nc:#34d399">训练微调对比</a>
+      <a href="#inference" style="--nc:#7dd3fc">推理引擎对比</a>
+      <a href="#compute" style="--nc:#94a3b8">算力路径与芯片</a>
+      <a href="#energy" style="--nc:#fb923c">电力与数据中心</a>
+    </div>
+  </div>
+
+  <div class="container">
+
+    <!-- ══════════ 基础概念辨析 ══════════ -->
+    <div id="concepts" class="section" style="margin-top:8px;--sc:#f0abfc;">
+      <div class="sec-head"><span class="no">入门</span><h2>基础概念 · 易混淆词辨析</h2></div>
+      <p class="sec-sub">这一节的词天天出现在 AI 讨论里，但经常被混用。先把这十组概念分清，后面看每一层都不会晕。</p>
+      <div class="concept-grid">
+<div class="concept" style="--cc:#f0abfc"><h4>API vs 工具（Function Calling）</h4><p>两个方向完全相反的调用。<b>API = 你调模型</b>：你的程序向模型服务接口发请求（比如 OpenAI 的 chat/completions），它返回一段文字，模型本身碰不到外部世界。<b>工具 = 模型调你</b>：模型判断需要帮助（查天气、读数据库、订机票）时，输出一条结构化的"调用申请"，你的程序去执行，再把结果喂回给模型。Function Calling 是这套机制的名字，MCP 是正在成为行业标准的接口规范。一句话记住：API 是"人用模型"，工具是"模型用外部能力"。</p></div><div class="concept" style="--cc:#34d399"><h4>训练 vs 推理</h4><p><b>训练是上学</b>：读海量数据、反复调整几十亿上千亿参数，产出是模型文件，烧算力、花数百万美元、只发生一次。<b>推理是上班</b>：加载训好的模型，为用户请求一个字一个字生成回答，7×24 持续进行、成本按 token 计。业界说"训练芯片/推理芯片""训练集群/推理服务"，分的就是这两件事。</p></div><div class="concept" style="--cc:#7dd3fc"><h4>模型权重 vs 推理引擎</h4><p>训练产出的模型只是一堆数字（权重文件，如 .gguf / .safetensors），自己不会跑。要它生成文字，需要<b>推理引擎</b>把权重加载进显存、管理 KV 缓存、调度计算——llama.cpp、vLLM、Ollama 都是引擎。关系类似游戏光盘和游戏机：同一个模型（光盘）可以装在不同引擎（主机）上，引擎决定跑多快、在哪跑。</p></div><div class="concept" style="--cc:#a78bfa"><h4>聊天机器人 vs 工作流 vs Agent</h4><p>三种 AI 应用的自主性阶梯。<b>聊天机器人</b>：你问一句它答一句。<b>工作流</b>：步骤预先画死（先检索→再总结→再排版），模型只在每个节点填空，稳定可控。<b>Agent</b>：只给目标，它自己拆任务、调工具、看结果、调整路线，循环直到完成。自主性递增、可控性递减，落地要按场景选档位。</p></div><div class="concept" style="--cc:#fbbf24"><h4>RAG vs 微调</h4><p>都是给模型补它没有的知识，但路线相反。<b>RAG 是开卷考试</b>：回答时先去知识库检索相关资料，知识随时可更新、可溯源、成本低，私有知识库几乎都走这条。<b>微调是背书</b>：把知识/风格写进模型权重，改一次要重新训练，适合学语气、格式、领域套路。实际工程常组合：RAG 管知识，微调管风格。</p></div><div class="concept" style="--cc:#fb923c"><h4>开源 vs 闭源</h4><p><b>开源</b>（Llama、Qwen、DeepSeek）公开模型权重：可自己部署、可微调、数据不出内网，能力上限略低。<b>闭源</b>（GPT、Claude）只给 API：能力天花板最高，但看不见内部、数据要进对方云。企业选型的权衡轴基本就是"数据隐私/可控性 vs 顶级能力/省事"。</p></div><div class="concept" style="--cc:#f472b6"><h4>Token 与上下文窗口</h4><p>模型不认字，文本要先切成 <b>token</b>（中文里 1 个字约等于 0.6～1 个 token）再计算，计费也按 token。<b>上下文窗口</b>是模型一次能"看见"的 token 总量上限：GPT-3 时代 4K，现在普遍 128K～1M。窗口越大能读越长的文档，但计算量和显存开销随之上涨——长文本是贵的。</p></div><div class="concept" style="--cc:#94a3b8"><h4>参数量 · 稠密与 MoE</h4><p>参数量 = 模型内部可调数字的个数，7B 即 70 亿个；一般参数越多越强，但也越慢越贵。<b>稠密模型</b>每次计算动用全部参数；<b>MoE（混合专家）</b>把模型拆成多个"专家"，每个请求只激活其中几个——总参数大（知识面广）、单次计算小（又快又省）。DeepSeek、Kimi、Qwen3 的大尺寸版本都是 MoE。</p></div><div class="concept" style="--cc:#4ade80"><h4>对齐：RLHF / DPO / GRPO</h4><p>预训练后的模型只会"续写文字"，可能胡说、不听指令。<b>对齐</b>就是教它像人一样回答：RLHF = 训奖励模型打分 + 强化学习优化（ChatGPT 同款，贵且难）；DPO = 拿"哪个回答更好"的偏好对直接优化（简单，开源主流）；GRPO = 组内相对优势强化学习（DeepSeek-R1 训推理能力用的）。</p></div><div class="concept" style="--cc:#64748b"><h4>量化：模型为什么能变小</h4><p>把权重从 16 位浮点数压成 8/4 位整数：70B 模型从约 140GB 显存降到 35GB 左右，一张消费级显卡就能跑，代价是轻微精度损失。常见格式：<b>GGUF</b>（llama.cpp 生态，CPU 友好）、<b>GPTQ/AWQ</b>（GPU 生态）、<b>FP8</b>（新一代显卡原生）。你下的每个"Q4""Q8"模型就是不同量化档位。</p></div>
+      </div>
+    </div>
+
+    <!-- ══════════ 分层知识地图 ══════════ -->
+    <div id="map" class="section" style="--sc:#a78bfa;">
+      <div class="sec-head"><span class="no">全景</span><h2>分层知识地图</h2></div>
+      <p class="sec-sub">八层从上到下：越往上越靠近用户，越往下越靠近物理世界。每一层内部按功能分区，每个条目都带大白话解释，标「核心」的是该分类里最该先认识的。</p>
+
+    <div class="lm-section" id="L8">
+      <div class="lm-head">
+        <span class="lm-no" style="background:#f472b6">L8</span>
+        <span class="lm-title">应用层</span>
+        <span class="lm-en">Applications</span>
+      </div>
+      <div class="lm-desc">普通人直接用的 AI 产品。每个产品背后都有一个基础模型——应用层拼的是产品、分发和场景理解，模型层拼的是能力。</div>
+      <div class="domain-grid"><div class="domain" style="--dc:#f472b6"><div class="domain-head"><div class="domain-icon">💬</div><div class="domain-name">聊天与助手</div></div><div class="domain-body"><div class="item"><div class="item-top"><span class="item-name">ChatGPT</span><span class="kb-badge">核心</span></div><div class="item-desc">OpenAI 对话助手，2022 年底上线，定义了"AI 聊天助手"这个产品形态</div><div class="item-ex">背后模型：GPT-5 系列</div></div><div class="item"><div class="item-top"><span class="item-name">Claude</span></div><div class="item-desc">Anthropic 出品，长文本、写作、编程见长</div><div class="item-ex">背后模型：Claude 4 系列（Opus/Sonnet）</div></div><div class="item"><div class="item-top"><span class="item-name">Gemini</span></div><div class="item-desc">Google 出品，深度整合搜索、Android、Workspace</div><div class="item-ex">背后模型：Gemini 系列</div></div><div class="item"><div class="item-top"><span class="item-name">DeepSeek</span><span class="kb-badge">核心</span></div><div class="item-desc">深度求索，国产开源代表，低成本高性能路线震动硅谷</div><div class="item-ex">背后模型：DeepSeek V3/R1</div></div><div class="item"><div class="item-top"><span class="item-name">豆包</span></div><div class="item-desc">字节跳动，日活居国内 AI 应用第一</div><div class="item-ex">背后模型：豆包大模型</div></div><div class="item"><div class="item-top"><span class="item-name">Kimi</span></div><div class="item-desc">月之暗面，以超长文本处理出名，后转向研究型 Agent</div><div class="item-ex">背后模型：Kimi K2</div></div><div class="item"><div class="item-top"><span class="item-name">通义</span></div><div class="item-desc">阿里 AI 助手，开源生态第一梯队</div><div class="item-ex">背后模型：通义千问 Qwen</div></div></div></div><div class="domain" style="--dc:#f472b6"><div class="domain-head"><div class="domain-icon">💻</div><div class="domain-name">编程与开发</div></div><div class="domain-body"><div class="item"><div class="item-top"><span class="item-name">Cursor</span><span class="kb-badge">核心</span></div><div class="item-desc">AI 原生 IDE，AI 编程工具标杆，"氛围编程"代表</div><div class="item-ex">竞品：Windsurf、Trae</div></div><div class="item"><div class="item-top"><span class="item-name">Claude Code</span><span class="kb-badge">核心</span></div><div class="item-desc">命令行编程 Agent，Agent 编程爆发的主推手</div></div><div class="item"><div class="item-top"><span class="item-name">GitHub Copilot</span></div><div class="item-desc">最早的 AI 编程大众产品，从补全转向 Agent</div></div><div class="item"><div class="item-top"><span class="item-name">Devin</span></div><div class="item-desc">自主软件工程 Agent：给需求，自己写码、调试、部署</div></div><div class="item"><div class="item-top"><span class="item-name">Manus</span></div><div class="item-desc">通用 Agent 产品代表：给一个目标，自主规划、操作电脑完成任务</div></div></div></div><div class="domain" style="--dc:#f472b6"><div class="domain-head"><div class="domain-icon">🔍</div><div class="domain-name">搜索与信息</div></div><div class="domain-body"><div class="item"><div class="item-top"><span class="item-name">Perplexity</span><span class="kb-badge">核心</span></div><div class="item-desc">AI 搜索代表：大模型实时总结网页来源并附引用，挑战谷歌</div></div><div class="item"><div class="item-top"><span class="item-name">秘塔 AI 搜索</span></div><div class="item-desc">国产 AI 搜索代表，结构化摘要 + 来源溯源</div></div></div></div><div class="domain" style="--dc:#f472b6"><div class="domain-head"><div class="domain-icon">🎨</div><div class="domain-name">图像 / 视频 / 音乐</div></div><div class="domain-body"><div class="item"><div class="item-top"><span class="item-name">Midjourney</span><span class="kb-badge">核心</span></div><div class="item-desc">图像生成审美天花板，设计师最爱</div><div class="item-ex">闭源，网页/Discord 使用</div></div><div class="item"><div class="item-top"><span class="item-name">即梦</span></div><div class="item-desc">字节的图像/视频生成平台</div><div class="item-ex">背后模型：Seedream（图）、Seedance（视频）</div></div><div class="item"><div class="item-top"><span class="item-name">可灵</span></div><div class="item-desc">快手视频生成 App，国产第一梯队</div></div><div class="item"><div class="item-top"><span class="item-name">Suno</span></div><div class="item-desc">AI 音乐生成：一句话或一段歌词出完整歌曲（带人声）</div></div></div></div></div>
+    </div>
+    <div class="lm-section" id="L7">
+      <div class="lm-head">
+        <span class="lm-no" style="background:#a78bfa">L7</span>
+        <span class="lm-title">开发编排层</span>
+        <span class="lm-en">Frameworks & Orchestration</span>
+      </div>
+      <div class="lm-desc">把模型和应用连起来的"胶水"：开发框架、低代码平台、连接协议、知识注入。大模型本身只会聊天，这一层让它能干活。</div>
+      <div class="domain-grid"><div class="domain" style="--dc:#a78bfa"><div class="domain-head"><div class="domain-icon">🧱</div><div class="domain-name">开发框架</div></div><div class="domain-body"><div class="item"><div class="item-top"><span class="item-name">LangChain</span><span class="kb-badge">核心</span></div><div class="item-desc">最知名的 LLM 应用开发框架：提示词、记忆、工具调用、RAG 组件库</div></div><div class="item"><div class="item-top"><span class="item-name">LangGraph</span></div><div class="item-desc">图编排框架：把 Agent 工作流写成状态机，支持循环、分支、人工介入</div></div><div class="item"><div class="item-top"><span class="item-name">LlamaIndex</span><span class="kb-badge">核心</span></div><div class="item-desc">以数据为中心的框架，RAG 主力：私有数据接入、索引、检索</div></div></div></div><div class="domain" style="--dc:#a78bfa"><div class="domain-head"><div class="domain-icon">🖱️</div><div class="domain-name">低代码平台</div></div><div class="domain-body"><div class="item"><div class="item-top"><span class="item-name">Dify</span><span class="kb-badge">核心</span></div><div class="item-desc">开源 LLMOps 平台，可视化编排 RAG 与工作流，国内企业用得多</div></div><div class="item"><div class="item-top"><span class="item-name">Coze 扣子</span></div><div class="item-desc">字节低代码 Bot 平台：拖拽搭聊天机器人，一键发布多渠道</div></div><div class="item"><div class="item-top"><span class="item-name">n8n</span></div><div class="item-desc">通用工作流自动化工具 + AI 节点，常用于把 AI 接进业务流程</div></div></div></div><div class="domain" style="--dc:#a78bfa"><div class="domain-head"><div class="domain-icon">🔌</div><div class="domain-name">连接协议</div></div><div class="domain-body"><div class="item"><div class="item-top"><span class="item-name">Function Calling</span><span class="kb-badge">核心</span></div><div class="item-desc">模型调用外部工具的机制：输出结构化指令，程序执行后回喂结果</div></div><div class="item"><div class="item-top"><span class="item-name">MCP 协议</span><span class="kb-badge">核心</span></div><div class="item-desc">Model Context Protocol，模型连工具/数据的"USB-C 接口"，行业事实标准</div><div class="item-ex">Anthropic 提出，OpenAI/Google 均已接入</div></div><div class="item"><div class="item-top"><span class="item-name">A2A 协议</span></div><div class="item-desc">Agent-to-Agent：让不同厂商的 Agent 互相发现与协作</div><div class="item-ex">Google 提出</div></div></div></div><div class="domain" style="--dc:#a78bfa"><div class="domain-head"><div class="domain-icon">📚</div><div class="domain-name">知识注入</div></div><div class="domain-body"><div class="item"><div class="item-top"><span class="item-name">RAG</span><span class="kb-badge">核心</span></div><div class="item-desc">检索增强生成：先查知识库再回答，注入私有知识、压幻觉的标配方案</div></div><div class="item"><div class="item-top"><span class="item-name">GraphRAG</span></div><div class="item-desc">知识图谱增强 RAG，擅长全文级总结和多跳问题</div><div class="item-ex">微软提出</div></div><div class="item"><div class="item-top"><span class="item-name">嵌入模型</span></div><div class="item-desc">把文本变成向量（BGE、text-embedding），一切检索的前提</div></div></div></div><div class="domain" style="--dc:#a78bfa"><div class="domain-head"><div class="domain-icon">🤝</div><div class="domain-name">多 Agent 与工程化</div></div><div class="domain-body"><div class="item"><div class="item-top"><span class="item-name">多 Agent 编排</span><span class="kb-badge">核心</span></div><div class="item-desc">多个 Agent 分工协作：AutoGen（微软）、CrewAI、OpenAI Agents SDK</div></div><div class="item"><div class="item-top"><span class="item-name">提示词工程</span></div><div class="item-desc">Prompt 方法论：few-shot 示例、CoT 思维链、角色设定</div></div><div class="item"><div class="item-top"><span class="item-name">结构化输出</span></div><div class="item-desc">让模型稳定输出 JSON（Schema 约束），程序调用大模型的基础</div></div><div class="item"><div class="item-top"><span class="item-name">可观测平台</span></div><div class="item-desc">给每次模型调用做链路追踪、质量评估、成本统计：LangSmith、Langfuse</div></div></div></div></div>
+    </div>
+    <div class="lm-section" id="L6">
+      <div class="lm-head">
+        <span class="lm-no" style="background:#7dd3fc">L6</span>
+        <span class="lm-title">推理部署层</span>
+        <span class="lm-en">Inference & Serving</span>
+      </div>
+      <div class="lm-desc">训练好的模型是"死"的权重文件，这一层把它变成又快又省的服务。核心矛盾：生成是一个字一个字往外蹦的，天然慢且吃显存。</div>
+      <div class="domain-grid"><div class="domain" style="--dc:#7dd3fc"><div class="domain-head"><div class="domain-icon">🚀</div><div class="domain-name">服务端推理引擎</div></div><div class="domain-body"><div class="item"><div class="item-top"><span class="item-name">vLLM</span><span class="kb-badge">核心</span></div><div class="item-desc">高吞吐推理事实标准；PagedAttention 像管虚拟内存一样管 KV 缓存</div></div><div class="item"><div class="item-top"><span class="item-name">SGLang</span><span class="kb-badge">核心</span></div><div class="item-desc">新一代高性能引擎；前缀缓存 + 结构化输出极快，Agent 场景流行</div></div><div class="item"><div class="item-top"><span class="item-name">TensorRT-LLM</span></div><div class="item-desc">NVIDIA 官方，深度编译优化，单卡性能天花板，配置繁琐</div></div><div class="item"><div class="item-top"><span class="item-name">TGI</span></div><div class="item-desc">Hugging Face 的 Text Generation Inference，成熟生产级方案</div></div><div class="item"><div class="item-top"><span class="item-name">LMDeploy</span></div><div class="item-desc">上海 AI Lab 出品，对国产芯片支持好</div></div></div></div><div class="domain" style="--dc:#7dd3fc"><div class="domain-head"><div class="domain-icon">🏠</div><div class="domain-name">本地与可移植</div></div><div class="domain-body"><div class="item"><div class="item-top"><span class="item-name">llama.cpp</span><span class="kb-badge">核心</span></div><div class="item-desc">万物可跑的 C++ 引擎：CPU、Mac、消费级显卡、手机；GGUF 格式推手</div></div><div class="item"><div class="item-top"><span class="item-name">Ollama</span><span class="kb-badge">核心</span></div><div class="item-desc">一条命令本地跑模型，个人 AI 的"Docker"，底层就是 llama.cpp</div></div><div class="item"><div class="item-top"><span class="item-name">MLC-LLM</span></div><div class="item-desc">编译技术把同一模型部署到手机、浏览器等异构设备</div></div><div class="item"><div class="item-top"><span class="item-name">OpenVINO</span></div><div class="item-desc">Intel 推理优化框架，在 CPU/核显上榨性能</div></div></div></div><div class="domain" style="--dc:#7dd3fc"><div class="domain-head"><div class="domain-icon">⚙️</div><div class="domain-name">核心优化技术</div></div><div class="domain-body"><div class="item"><div class="item-top"><span class="item-name">量化</span><span class="kb-badge">核心</span></div><div class="item-desc">权重压到 8/4 位换显存打折：GGUF、GPTQ/AWQ、FP8</div></div><div class="item"><div class="item-top"><span class="item-name">KV 缓存</span><span class="kb-badge">核心</span></div><div class="item-desc">生成要回看前文，缓存中间结果避免重算；推理显存的最大头</div></div><div class="item"><div class="item-top"><span class="item-name">投机解码</span></div><div class="item-desc">小模型打草稿猜 token、大模型并行验证，单请求提速 2～3 倍</div></div><div class="item"><div class="item-top"><span class="item-name">FlashAttention</span></div><div class="item-desc">IO 感知的注意力算子，大幅减少显存读写，训练推理双料标配</div></div><div class="item"><div class="item-top"><span class="item-name">PD 分离</span></div><div class="item-desc">预填充（算力密集）与解码（带宽密集）拆到不同机器池分别优化</div></div></div></div><div class="domain" style="--dc:#7dd3fc"><div class="domain-head"><div class="domain-icon">🌐</div><div class="domain-name">服务治理</div></div><div class="domain-body"><div class="item"><div class="item-top"><span class="item-name">API 网关/路由</span><span class="kb-badge">核心</span></div><div class="item-desc">一个 OpenAI 兼容接口接所有模型后端，管配额、计费、路由：LiteLLM、one-api</div></div><div class="item"><div class="item-top"><span class="item-name">OpenAI 兼容接口</span></div><div class="item-desc">业界事实标准 API 格式，几乎所有引擎/模型都提供兼容模式</div></div></div></div></div>
+    </div>
+    <div class="lm-section" id="L5">
+      <div class="lm-head">
+        <span class="lm-no" style="background:#fbbf24">L5</span>
+        <span class="lm-title">基础模型层</span>
+        <span class="lm-en">Foundation Models</span>
+      </div>
+      <div class="lm-desc">用海量数据训练出来的"大脑"，按处理的内容（模态）分五大家族。这是整个技术栈的中心资产。</div>
+      <div class="domain-grid"><div class="domain" style="--dc:#fbbf24"><div class="domain-head"><div class="domain-icon">💬</div><div class="domain-name">LLM 大语言模型</div></div><div class="domain-body"><div class="item"><div class="item-top"><span class="item-name">GPT-5</span><span class="kb-badge">核心</span></div><div class="item-desc">OpenAI 旗舰，快回答与慢思考合并为一个模型，路由自动切换</div></div><div class="item"><div class="item-top"><span class="item-name">Claude 4</span><span class="kb-badge">核心</span></div><div class="item-desc">Anthropic，Opus/Sonnet 双档位，编程与长任务第一梯队</div></div><div class="item"><div class="item-top"><span class="item-name">DeepSeek V3/R1</span><span class="kb-badge">核心</span></div><div class="item-desc">MoE 架构；V3 通用性价比之王，R1 用 GRPO 训推理并开源</div></div><div class="item"><div class="item-top"><span class="item-name">Qwen3</span></div><div class="item-desc">阿里开源，0.6B～235B 全尺寸覆盖，中文第一梯队</div></div><div class="item"><div class="item-top"><span class="item-name">Kimi K2</span></div><div class="item-desc">月之暗面万亿参数 MoE 开源模型，主打 Agent 能力</div></div><div class="item"><div class="item-top"><span class="item-name">Llama 4</span></div><div class="item-desc">Meta 开源系列，开源 LLM 生态点火者</div></div><div class="item"><div class="item-top"><span class="item-name">GLM-4.5</span></div><div class="item-desc">智谱 AI，国产开源第一梯队</div></div><div class="domain-note">只处理文本的"大脑"，其他模态的模型多以它为底座</div></div></div><div class="domain" style="--dc:#fbbf24"><div class="domain-head"><div class="domain-icon">🖼️</div><div class="domain-name">图像生成</div></div><div class="domain-body"><div class="item"><div class="item-top"><span class="item-name">FLUX</span><span class="kb-badge">核心</span></div><div class="item-desc">Black Forest Labs（SD 原班人马），开源生图之王</div></div><div class="item"><div class="item-top"><span class="item-name">Midjourney V7</span></div><div class="item-desc">闭源图像生成的审美标杆</div></div><div class="item"><div class="item-top"><span class="item-name">Nano Banana</span></div><div class="item-desc">Gemini 的图像生成/编辑模型，2025 年出圈，改图能力强</div></div><div class="item"><div class="item-top"><span class="item-name">Seedream</span></div><div class="item-desc">字节开源图像生成模型，即梦的底座</div></div><div class="domain-note">架构主线：GAN → 扩散模型 → DiT（见下方深度解析）</div></div></div><div class="domain" style="--dc:#fbbf24"><div class="domain-head"><div class="domain-icon">🎬</div><div class="domain-name">视频生成</div></div><div class="domain-body"><div class="item"><div class="item-top"><span class="item-name">Sora 2</span><span class="kb-badge">核心</span></div><div class="item-desc">OpenAI，原生音轨，物理一致性更强</div></div><div class="item"><div class="item-top"><span class="item-name">Veo 3</span><span class="kb-badge">核心</span></div><div class="item-desc">Google，第一个做出原生同步音效的视频模型</div></div><div class="item"><div class="item-top"><span class="item-name">可灵 2.x</span></div><div class="item-desc">快手，国产第一梯队，运动一致性好</div></div><div class="item"><div class="item-top"><span class="item-name">HunyuanVideo</span></div><div class="item-desc">腾讯开源视频生成模型</div></div><div class="item"><div class="item-top"><span class="item-name">Seedance</span></div><div class="item-desc">字节视频生成模型，即梦视频底座</div></div><div class="domain-note">架构主线：图像扩散扩时间维 → 时空 DiT（见下方深度解析）</div></div></div><div class="domain" style="--dc:#fbbf24"><div class="domain-head"><div class="domain-icon">🎙️</div><div class="domain-name">音频模型</div></div><div class="domain-body"><div class="item"><div class="item-top"><span class="item-name">Whisper</span><span class="kb-badge">核心</span></div><div class="item-desc">OpenAI 语音识别（ASR），多语言抗噪，事实标准</div></div><div class="item"><div class="item-top"><span class="item-name">CosyVoice / F5-TTS</span></div><div class="item-desc">新一代语音合成（TTS），3 秒参考音频克隆音色</div></div><div class="item"><div class="item-top"><span class="item-name">Suno / MusicGen</span></div><div class="item-desc">音乐生成：给风格描述或歌词出完整歌曲</div></div><div class="domain-note">思路：声波 → 音频 codec token → 当"外语"建模</div></div></div><div class="domain" style="--dc:#fbbf24"><div class="domain-head"><div class="domain-icon">🧩</div><div class="domain-name">多模态</div></div><div class="domain-body"><div class="item"><div class="item-top"><span class="item-name">GPT-4o</span><span class="kb-badge">核心</span></div><div class="item-desc">原生全模态（文/图/音端到端），语音交互真人级延迟</div></div><div class="item"><div class="item-top"><span class="item-name">Gemini</span></div><div class="item-desc">Google 原生多模态系列，长视频理解强</div></div><div class="item"><div class="item-top"><span class="item-name">Qwen-VL / InternVL</span></div><div class="item-desc">开源多模态代表，"编码器+投影+LLM"范式</div></div></div></div></div>
+    </div>
+    <div class="lm-section" id="L4">
+      <div class="lm-head">
+        <span class="lm-no" style="background:#34d399">L4</span>
+        <span class="lm-title">训练微调层</span>
+        <span class="lm-en">Training & Fine-tuning</span>
+      </div>
+      <div class="lm-desc">制造和改造模型的方法论：训练框架、学习范式流水线、参数高效微调、规模化工程。</div>
+      <div class="domain-grid"><div class="domain" style="--dc:#34d399"><div class="domain-head"><div class="domain-icon">🏗️</div><div class="domain-name">训练框架</div></div><div class="domain-body"><div class="item"><div class="item-top"><span class="item-name">PyTorch</span><span class="kb-badge">核心</span></div><div class="item-desc">深度学习绝对主流框架，学术界工业界通用</div></div><div class="item"><div class="item-top"><span class="item-name">JAX</span></div><div class="item-desc">Google 系框架，函数式 + XLA 编译，Gemini 就是它训的</div></div><div class="item"><div class="item-top"><span class="item-name">DeepSpeed</span><span class="kb-badge">核心</span></div><div class="item-desc">微软分布式训练库，ZeRO 显存优化，千卡训练标配</div></div><div class="item"><div class="item-top"><span class="item-name">Megatron-LM</span></div><div class="item-desc">NVIDIA 大模型并行训练框架，张量/流水线并行发源地</div></div></div></div><div class="domain" style="--dc:#34d399"><div class="domain-head"><div class="domain-icon">🛠️</div><div class="domain-name">微调工具箱</div></div><div class="domain-body"><div class="item"><div class="item-top"><span class="item-name">LLaMA-Factory</span><span class="kb-badge">核心</span></div><div class="item-desc">开箱即用微调框架：上百个模型 × 全部微调方法，带 Web 界面</div></div><div class="item"><div class="item-top"><span class="item-name">Unsloth</span></div><div class="item-desc">微调加速器：快 2 倍、省显存，消费级显卡友好</div></div></div></div><div class="domain" style="--dc:#34d399"><div class="domain-head"><div class="domain-icon">🎓</div><div class="domain-name">学习范式流水线</div></div><div class="domain-body"><div class="item"><div class="item-top"><span class="item-name">预训练</span><span class="kb-badge">核心</span></div><div class="item-desc">读万亿 token 学世界知识，数百万美元起，只有头部实验室做</div></div><div class="item"><div class="item-top"><span class="item-name">SFT 指令微调</span><span class="kb-badge">核心</span></div><div class="item-desc">用问答样本教模型按指令对话，从续写器变助手</div></div><div class="item"><div class="item-top"><span class="item-name">RLHF</span></div><div class="item-desc">人类反馈强化学习：奖励模型打分 + PPO 优化，ChatGPT 同款，贵</div></div><div class="item"><div class="item-top"><span class="item-name">DPO</span><span class="kb-badge">核心</span></div><div class="item-desc">直接偏好优化，绕开奖励模型，简单得像 SFT，开源对齐主流</div></div><div class="item"><div class="item-top"><span class="item-name">GRPO</span><span class="kb-badge">核心</span></div><div class="item-desc">组内相对优势强化学习，DeepSeek-R1 训推理能力的算法</div></div><div class="domain-note">顺序：预训练 → SFT → 对齐（RLHF/DPO/GRPO），见下方深度解析</div></div></div><div class="domain" style="--dc:#34d399"><div class="domain-head"><div class="domain-icon">🪶</div><div class="domain-name">参数高效微调</div></div><div class="domain-body"><div class="item"><div class="item-top"><span class="item-name">LoRA</span><span class="kb-badge">核心</span></div><div class="item-desc">冻结原模型，只训低秩适配矩阵（<1% 参数），消费级显卡可微调</div></div><div class="item"><div class="item-top"><span class="item-name">QLoRA</span></div><div class="item-desc">4bit 量化底座 + LoRA，24GB 显存微调 70B 模型</div></div><div class="item"><div class="item-top"><span class="item-name">全参数微调</span></div><div class="item-desc">所有权重都更新，效果上限最高，显存代价约模型 4 倍</div></div></div></div><div class="domain" style="--dc:#34d399"><div class="domain-head"><div class="domain-icon">📈</div><div class="domain-name">规模化工程</div></div><div class="domain-body"><div class="item"><div class="item-top"><span class="item-name">混合精度训练</span></div><div class="item-desc">BF16/FP8 低精度计算，提速省显存，精度几乎无损</div></div><div class="item"><div class="item-top"><span class="item-name">3D 并行</span></div><div class="item-desc">数据 + 张量 + 流水线并行，把一个大模型拆到千张卡上</div></div><div class="item"><div class="item-top"><span class="item-name">Scaling Law</span><span class="kb-badge">核心</span></div><div class="item-desc">算力/数据/参数堆得越多模型越强的规律，军备竞赛的理论依据</div></div></div></div></div>
+    </div>
+    <div class="lm-section" id="L3">
+      <div class="lm-head">
+        <span class="lm-no" style="background:#fb923c">L3</span>
+        <span class="lm-title">数据层</span>
+        <span class="lm-en">Data</span>
+      </div>
+      <div class="lm-desc">AI 的原材料，决定模型上限：语料库、数据生产、向量检索、评测基准。模型竞赛到后期拼的其实是数据。</div>
+      <div class="domain-grid"><div class="domain" style="--dc:#fb923c"><div class="domain-head"><div class="domain-icon">🌐</div><div class="domain-name">语料库</div></div><div class="domain-body"><div class="item"><div class="item-top"><span class="item-name">Common Crawl</span><span class="kb-badge">核心</span></div><div class="item-desc">全网月度爬取的原始语料，大多数预训练数据的起点</div></div><div class="item"><div class="item-top"><span class="item-name">FineWeb</span></div><div class="item-desc">Hugging Face 开放网页语料，清洗流程全透明</div><div class="item-ex">教育子集 FineWeb-Edu 出名</div></div><div class="item"><div class="item-top"><span class="item-name">The Stack</span></div><div class="item-desc">开放代码语料，编程模型的地基</div></div><div class="item"><div class="item-top"><span class="item-name">LAION-5B</span></div><div class="item-desc">50 亿图文对，开源图像生成模型的摇篮（SD 从这里起步）</div></div><div class="item"><div class="item-top"><span class="item-name">MNBVC</span></div><div class="item-desc">超大规模中文语料集，民间合力补中文语料短板</div></div></div></div><div class="domain" style="--dc:#fb923c"><div class="domain-head"><div class="domain-icon">🧪</div><div class="domain-name">数据生产</div></div><div class="domain-body"><div class="item"><div class="item-top"><span class="item-name">合成数据</span><span class="kb-badge">核心</span></div><div class="item-desc">用模型生成数据再训模型，应对"数据枯竭"的主要路线</div></div><div class="item"><div class="item-top"><span class="item-name">数据标注</span></div><div class="item-desc">RLHF 偏好数据靠人工对比打标，Scale AI 是行业巨头</div></div><div class="item"><div class="item-top"><span class="item-name">清洗流水线</span></div><div class="item-desc">去重、质量过滤、去毒的自动化管线：datatrove（HF）、Dolma（AI2）</div></div><div class="item"><div class="item-top"><span class="item-name">MinerU</span></div><div class="item-desc">上海 AI Lab 的 PDF/文档解析工具，把文献变成可训练语料</div></div></div></div><div class="domain" style="--dc:#fb923c"><div class="domain-head"><div class="domain-icon">🗄️</div><div class="domain-name">向量检索</div></div><div class="domain-body"><div class="item"><div class="item-top"><span class="item-name">Milvus</span><span class="kb-badge">核心</span></div><div class="item-desc">开源向量数据库代表，国产公司 Zilliz 出品</div></div><div class="item"><div class="item-top"><span class="item-name">FAISS</span></div><div class="item-desc">Meta 的向量相似度检索库，底层标配</div></div><div class="item"><div class="item-top"><span class="item-name">Chroma</span></div><div class="item-desc">轻量向量数据库，RAG 原型开发首选</div></div><div class="item"><div class="item-top"><span class="item-name">嵌入模型 BGE</span></div><div class="item-desc">把文本变成向量的模型，检索的前提</div></div></div></div><div class="domain" style="--dc:#fb923c"><div class="domain-head"><div class="domain-icon">📏</div><div class="domain-name">评测基准</div></div><div class="domain-body"><div class="item"><div class="item-top"><span class="item-name">MMLU</span></div><div class="item-desc">多学科知识考试，最常被引用的综合能力分</div></div><div class="item"><div class="item-top"><span class="item-name">LMArena</span><span class="kb-badge">核心</span></div><div class="item-desc">真人盲测对战投票，玩家票选出来的民间天梯</div></div><div class="item"><div class="item-top"><span class="item-name">SWE-bench</span></div><div class="item-desc">真实 GitHub issue 修复，编程能力标尺</div></div><div class="item"><div class="item-top"><span class="item-name">GPQA</span></div><div class="item-desc">研究生级科学问答，考前沿知识推理</div></div><div class="domain-note">模型界的"高考"——选模型先看榜单，再实测</div></div></div></div>
+    </div>
+    <div class="lm-section" id="L2">
+      <div class="lm-head">
+        <span class="lm-no" style="background:#94a3b8">L2</span>
+        <span class="lm-title">算力层</span>
+        <span class="lm-en">Compute & Chip Supply Chain</span>
+      </div>
+      <div class="lm-desc">芯片、互联与供应链：厂商路线、用途分类、集群互联、代工与封装、算力服务。</div>
+      <div class="domain-grid"><div class="domain" style="--dc:#94a3b8"><div class="domain-head"><div class="domain-icon">🏆</div><div class="domain-name">芯片厂商与路线</div></div><div class="domain-body"><div class="item"><div class="item-top"><span class="item-name">NVIDIA</span><span class="kb-badge">核心</span></div><div class="item-desc">霸主：H100/H200/B200/GB200 训练卡 + RTX 消费级，CUDA 生态护城河</div><div class="item-ex">AI 加速卡份额 90%+</div></div><div class="item"><div class="item-top"><span class="item-name">AMD</span></div><div class="item-desc">追赶者：MI300X/MI350，便宜大碗，ROCm 生态追赶中</div></div><div class="item"><div class="item-top"><span class="item-name">华为昇腾</span><span class="kb-badge">核心</span></div><div class="item-desc">国产主力：910B/910C（训练）、310（推理），CANN 软件栈</div></div><div class="item"><div class="item-top"><span class="item-name">国产第二梯队</span></div><div class="item-desc">寒武纪、摩尔线程、壁仞、燧原、海光——各有侧重，补生态课</div></div><div class="item"><div class="item-top"><span class="item-name">Google TPU</span></div><div class="item-desc">自用 ASIC，Gemini 的训练底座，不外卖硬件只能租云</div></div><div class="item"><div class="item-top"><span class="item-name">专用 ASIC 新势力</span></div><div class="item-desc">Groq LPU（推理延迟极低）、Cerebras（晶圆级芯片）</div></div><div class="domain-note">六条路线的详细对比见下方深度解析</div></div></div><div class="domain" style="--dc:#94a3b8"><div class="domain-head"><div class="domain-icon">🔢</div><div class="domain-name">芯片用途分类</div></div><div class="domain-body"><div class="item"><div class="item-top"><span class="item-name">训练芯片</span><span class="kb-badge">核心</span></div><div class="item-desc">大显存高带宽强互联，跑前向+反向+梯度同步，最贵最难</div><div class="item-ex">H100/B200、昇腾 910C</div></div><div class="item"><div class="item-top"><span class="item-name">推理芯片</span></div><div class="item-desc">只跑前向，低精度优先，拼性价比与能效</div><div class="item-ex">L4/L40S、昇腾 310、Groq</div></div><div class="item"><div class="item-top"><span class="item-name">渲染芯片</span></div><div class="item-desc">图形渲染：光栅化 + 光追 + 显示输出，也兼职跑 AI</div><div class="item-ex">RTX 4090/5090、摩尔线程</div></div><div class="item"><div class="item-top"><span class="item-name">边缘芯片</span></div><div class="item-desc">NPU 形态，几瓦功耗跑端侧小模型</div><div class="item-ex">苹果 Neural Engine、高通 Hexagon</div></div></div></div><div class="domain" style="--dc:#94a3b8"><div class="domain-head"><div class="domain-icon">🔗</div><div class="domain-name">互联与集群</div></div><div class="domain-body"><div class="item"><div class="item-top"><span class="item-name">NVLink</span><span class="kb-badge">核心</span></div><div class="item-desc">服务器内卡间高速总线（900GB/s 级），梯度同步的主动脉</div></div><div class="item"><div class="item-top"><span class="item-name">InfiniBand</span><span class="kb-badge">核心</span></div><div class="item-desc">服务器间高速网络，千卡训练的生命线</div></div></div></div><div class="domain" style="--dc:#94a3b8"><div class="domain-head"><div class="domain-icon">🏭</div><div class="domain-name">供应链</div></div><div class="domain-body"><div class="item"><div class="item-top"><span class="item-name">台积电</span><span class="kb-badge">核心</span></div><div class="item-desc">几乎所有先进 AI 芯片的唯一代工厂</div></div><div class="item"><div class="item-top"><span class="item-name">HBM 高带宽内存</span><span class="kb-badge">核心</span></div><div class="item-desc">SK 海力士/三星/美光供应，与算力并列的瓶颈</div></div><div class="item"><div class="item-top"><span class="item-name">CoWoS 先进封装</span></div><div class="item-desc">把 GPU 和 HBM 封装在一起的工艺，产能紧张多年</div></div></div></div><div class="domain" style="--dc:#94a3b8"><div class="domain-head"><div class="domain-icon">☁️</div><div class="domain-name">算力服务</div></div><div class="domain-body"><div class="item"><div class="item-top"><span class="item-name">GPU 云</span><span class="kb-badge">核心</span></div><div class="item-desc">按小时租 GPU：CoreWeave、火山引擎、阿里云——小团队入场券</div></div><div class="item"><div class="item-top"><span class="item-name">智算中心</span></div><div class="item-desc">国内以城市为单位的公共算力基建，配国产卡为主</div></div></div></div></div>
+    </div>
+    <div class="lm-section" id="L1">
+      <div class="lm-head">
+        <span class="lm-no" style="background:#64748b">L1</span>
+        <span class="lm-title">能源层</span>
+        <span class="lm-en">Power & Data Center</span>
+      </div>
+      <div class="lm-desc">AI 的物理底座：供电链路、散热、能耗指标、能源来源。电力正在取代芯片成为第一瓶颈。</div>
+      <div class="domain-grid"><div class="domain" style="--dc:#64748b"><div class="domain-head"><div class="domain-icon">⚡</div><div class="domain-name">供电链路</div></div><div class="domain-body"><div class="item"><div class="item-top"><span class="item-name">电网供电</span><span class="kb-badge">核心</span></div><div class="item-desc">数据中心主电源，选址第一看电力富余</div></div><div class="item"><div class="item-top"><span class="item-name">变电站 + UPS</span></div><div class="item-desc">降压配电 + 电池兜底，市电断开瞬间无缝接管</div></div><div class="item"><div class="item-top"><span class="item-name">柴油发电机</span></div><div class="item-desc">长时间断电的后备，每个数据中心标配</div></div><div class="item"><div class="item-top"><span class="item-name">HVDC 高压直流</span></div><div class="item-desc">减少转换损耗，新一代 AI 数据中心（GB200/GB300）的供电方向</div></div></div></div><div class="domain" style="--dc:#64748b"><div class="domain-head"><div class="domain-icon">❄️</div><div class="domain-name">散热</div></div><div class="domain-body"><div class="item"><div class="item-top"><span class="item-name">风冷</span></div><div class="item-desc">空调 + 风扇，10kW 以下机柜可用，风扇本身也耗电</div></div><div class="item"><div class="item-top"><span class="item-name">冷板液冷</span><span class="kb-badge">核心</span></div><div class="item-desc">冷却液直接接触芯片冷板，GB200 机柜（约 120kW）的强制选项</div></div><div class="item"><div class="item-top"><span class="item-name">浸没式液冷</span></div><div class="item-desc">整机泡进绝缘冷却液，换热效率最高，运维方式大变</div></div><div class="item"><div class="item-top"><span class="item-name">余热回收</span></div><div class="item-desc">服务器废热回收供暖，北欧已有实践</div></div></div></div><div class="domain" style="--dc:#64748b"><div class="domain-head"><div class="domain-icon">📊</div><div class="domain-name">指标与规划</div></div><div class="domain-body"><div class="item"><div class="item-top"><span class="item-name">PUE</span><span class="kb-badge">核心</span></div><div class="item-desc">总能耗/IT 能耗，越接近 1 越好，核心考核指标</div></div><div class="item"><div class="item-top"><span class="item-name">GW 级 AI 基地</span><span class="kb-badge">核心</span></div><div class="item-desc">Stargate 等项目：一个数据中心的用电 ≈ 一座中型城市</div></div><div class="item"><div class="item-top"><span class="item-name">东数西算</span></div><div class="item-desc">中国工程：算力枢纽放在电力便宜、气候凉爽的西部</div></div></div></div><div class="domain" style="--dc:#64748b"><div class="domain-head"><div class="domain-icon">🔋</div><div class="domain-name">能源来源</div></div><div class="domain-body"><div class="item"><div class="item-top"><span class="item-name">核电</span><span class="kb-badge">核心</span></div><div class="item-desc">微软三里岛 20 年购电协议；SMR 小型模块化反应堆是巨头押注方向</div></div><div class="item"><div class="item-top"><span class="item-name">风光绿电</span></div><div class="item-desc">亚马逊、谷歌签长期风电/光伏购电协议</div></div></div></div></div>
+    </div>
+      <div style="text-align:center;font-size:12px;color:var(--text-faint);margin-top:26px;line-height:1.8;">
+        ▲ 地图到此为止 · 下面是五个重点层的深度解析 ▼
+      </div>
+    </div>
+
+<!-- ══════════ L5 模型层深度 ══════════ -->
+    <div id="models" class="section" style="--sc:#fbbf24;">
+      <div class="sec-head"><span class="no">L5 深度</span><h2>基础模型层 · 五大家族</h2></div>
+      <p class="sec-sub">模型按处理的内容（模态）分成五个家族。每个家族都有自己的主流架构，且架构不是一步到位的——每一代算法都是在解决上一代的核心痛点。看懂这条迭代线，就看懂了 AI 技术演进的主干。</p>
+
+      <!-- 语言模型 -->
+      <div class="family" style="--fc:#fbbf24;">
+        <div class="family-head">
+          <div class="row"><span class="icon">💬</span><h3>语言模型（LLM）</h3><span class="arch-pill">架构：Transformer Decoder-only</span></div>
+          <div class="what">原理一句话：把文本切成 token，让模型反复做「预测下一个 token」，读完全网语料后涌现出理解与生成能力。2017 年至今主干架构没变过，迭代发生在规模、训练范式和效率工程上。</div>
+        </div>
+        <div class="family-body">
+          <div class="fb-title">算法迭代史</div>
+          <div class="timeline">
+            <div class="tl-item"><div class="tl-year">2017</div><div class="tl-name">Transformer 诞生（Google）</div><div class="tl-desc">《Attention Is All You Need》提出<b>自注意力机制</b>，抛弃 RNN 的循环结构——任意两个 token 直接互相看，训练可以完全并行。这是之后一切的地基。</div></div>
+            <div class="tl-item"><div class="tl-year">2018</div><div class="tl-name">GPT-1 vs BERT：两条路线分叉</div><div class="tl-desc">GPT 走 <b>decoder-only</b>（单向、自回归生成），BERT 走 encoder-only（双向、适合理解）。后来生成式需求压倒一切，GPT 路线胜出，BERT 系退居搜索/分类等场景。</div></div>
+            <div class="tl-item"><div class="tl-year">2019–2020</div><div class="tl-name">GPT-2 → GPT-3：规模定律（Scaling Law）</div><div class="tl-desc">GPT-3 堆到 1750 亿参数，验证了「模型越大、数据越多、效果越好」的规律，并出现 <b>few-shot 上下文学习</b>——给几个例子就能做新任务，不用重新训练。</div></div>
+            <div class="tl-item"><div class="tl-year">2022</div><div class="tl-name">ChatGPT：对齐革命（RLHF）</div><div class="tl-desc">同样的模型，用<b>人类反馈强化学习</b>教它「说人话、听指令、不胡说」，从续写机器变成助手。架构没变，训练范式变了——这一步引爆大众市场。</div></div>
+            <div class="tl-item"><div class="tl-year">2023</div><div class="tl-name">开源爆发 + MoE 普及</div><div class="tl-desc">Meta LLaMA 开源点燃生态；Mixtral 带火 <b>MoE 混合专家</b>：模型切成多个"专家"，每次只激活几个——总参数大、单次计算小，性价比大增（DeepSeek、Kimi 后来都走这条路）。</div></div>
+            <div class="tl-item"><div class="tl-year">2024</div><div class="tl-name">效率工程 + 推理模型元年</div><div class="tl-desc">DeepSeek-V2 提出 <b>MLA 多头潜在注意力</b>，大幅压缩推理时的显存开销；OpenAI o1 用<b>强化学习训练"慢思考"</b>——模型先打草稿推理再作答，数学/编程能力跃升。</div></div>
+            <div class="tl-item"><div class="tl-year">2025</div><div class="tl-name">推理模型开源 + 思考融合</div><div class="tl-desc">DeepSeek-R1 用 <b>GRPO 算法</b>低成本训出推理能力并开源，震动业界；GPT-5、Claude 4 一代把「快回答/慢思考」合并为一个模型自动切换。</div></div>
+          </div>
+          <div class="fb-title" style="margin-top:18px;">关键构件速览（现代 LLM 的零件表）</div>
+          <div class="note">
+            <b>自注意力</b>：每个 token 与全文其他 token 计算相关度，是"理解"的来源，但计算量随长度平方增长 ·
+            <b>RoPE</b>：旋转位置编码，让模型知道词序，且能外推到更长文本 ·
+            <b>GQA</b>：分组查询注意力，多个注意力头共享 KV，省显存 ·
+            <b>MoE</b>：混合专家，稀疏激活换性价比 ·
+            <b>上下文窗口</b>：从 GPT-3 的 4K token 到现在普遍 128K～1M
+          </div>
+        </div>
+      </div>
+
+      <!-- 图像生成 -->
+      <div class="family" style="--fc:#f472b6;">
+        <div class="family-head">
+          <div class="row"><span class="icon">🖼️</span><h3>图像生成</h3><span class="arch-pill">架构：扩散模型 → DiT</span></div>
+          <div class="what">原理一句话：扩散模型 = 训练时往图片上逐步加噪声直到全是噪点，再训练一个网络学会「去噪」；生成时从纯噪声出发，一步步去噪还原出图片。文本通过 CLIP 类编码器变成条件，引导去噪方向。</div>
+        </div>
+        <div class="family-body">
+          <div class="fb-title">算法迭代史</div>
+          <div class="timeline">
+            <div class="tl-item"><div class="tl-year">2014</div><div class="tl-name">GAN 生成对抗网络</div><div class="tl-desc">生成器造假图、判别器找茬，两者对抗进化。出图快但<b>训练极不稳定</b>、容易"模式崩溃"（只会画少数几种图），逐渐退出主流。</div></div>
+            <div class="tl-item"><div class="tl-year">2020</div><div class="tl-name">DDPM 扩散模型</div><div class="tl-desc">用「加噪-去噪」取代对抗训练，<b>稳定且质量高</b>，缺点是生成要迭代几十上百步，慢。</div></div>
+            <div class="tl-item"><div class="tl-year">2021</div><div class="tl-name">CLIP + DALL·E</div><div class="tl-desc">CLIP 用 4 亿图文对做<b>对比学习</b>，把图像和文本嵌入同一空间——从此可以用一句话精确控制生成内容，这是文生图的钥匙。</div></div>
+            <div class="tl-item"><div class="tl-year">2022</div><div class="tl-name">Stable Diffusion：潜空间扩散</div><div class="tl-desc">关键一步：不在原图上扩散，先把图<b>压缩进潜空间</b>（Latent Diffusion）再扩散，计算量降一个量级——消费级显卡也能跑，AI 绘画全民化。</div></div>
+            <div class="tl-item"><div class="tl-year">2023</div><div class="tl-name">ControlNet 精确控制</div><div class="tl-desc">给 SD 加"控制器"：用线稿、姿态、深度图约束构图，AI 绘画进入生产力场景。</div></div>
+            <div class="tl-item"><div class="tl-year">2024</div><div class="tl-name">DiT 换掉 UNet + Flow Matching</div><div class="tl-desc">骨干网络从 UNet 换成 <b>DiT（Diffusion Transformer）</b>——和 LLM 同款的 Transformer，吃下了 Scaling Law（越大越强）；采样目标从 DDPM 换成 <b>Flow Matching</b>（直接学从噪声到图像的"直线路径"，步数更少）。SD3、FLUX、Sora 全是 DiT。</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 视频生成 -->
+      <div class="family" style="--fc:#a78bfa;">
+        <div class="family-head">
+          <div class="row"><span class="icon">🎬</span><h3>视频生成</h3><span class="arch-pill">架构：时空潜空间扩散 + DiT</span></div>
+          <div class="what">原理一句话：在图像扩散基础上加"时间维"——视频先被时空 VAE 压缩成一串时空 token，DiT 在这些 token 上做注意力，同时保证空间构图合理、时间上前后连贯。算力需求比图像高 1～2 个量级。</div>
+        </div>
+        <div class="family-body">
+          <div class="fb-title">算法迭代史</div>
+          <div class="timeline">
+            <div class="tl-item"><div class="tl-year">2022</div><div class="tl-name">图像扩散硬扩时间维</div><div class="tl-desc">Make-A-Video、Imagen Video：在图像模型上插入<b>时间注意力层</b>，让相邻帧互相参照。能生成几秒短片，但糊、闪、不连贯。</div></div>
+            <div class="tl-item"><div class="tl-year">2023</div><div class="tl-name">视频扩散可用化</div><div class="tl-desc">Stable Video Diffusion、Runway Gen-2：专门用视频数据训练，质量上一个台阶，但时长和一致性仍受限。</div></div>
+            <div class="tl-item"><div class="tl-year">2024</div><div class="tl-name">Sora：时空 DiT + 世界模拟器</div><div class="tl-desc">OpenAI 把视频统一成<b>时空 patch token</b>喂给 DiT，提出"视频模型是世界模拟器"的叙事；一分钟 1080p 长视频震撼业界。同年国产跟进：可灵（快手）、HunyuanVideo（腾讯）、Vidu。</div></div>
+            <div class="tl-item"><div class="tl-year">2025</div><div class="tl-name">原生音效 + 物理一致性</div><div class="tl-desc">Veo 3、Sora 2、可灵 2.x：生成带<b>原生音轨</b>（对话、环境音同步）、更长时长、物理规律更准（碰撞、流体、光影）。竞争焦点从"能不能生成"转向"像不像真实世界"。</div></div>
+          </div>
+          <div class="note" style="margin-top:16px;">
+            <b>和图像生成的三个本质区别</b>：① 多一个时间维 → 需要时空 VAE 做更狠的压缩；② 注意力要同时管空间和时间（全 3D 注意力太贵，早期拆成"空间注意力+时间注意力"分开算）；③ 训练数据标注难——需要自动打标流水线给视频写描述。
+          </div>
+        </div>
+      </div>
+
+      <!-- 音频 -->
+      <div class="family" style="--fc:#34d399;">
+        <div class="family-head">
+          <div class="row"><span class="icon">🎙️</span><h3>音频模型（语音识别 / 语音合成 / 音乐）</h3><span class="arch-pill">架构：Transformer + 音频编解码器</span></div>
+          <div class="what">音频的共同思路：先用编码器把声波压成紧凑的 token 序列（如 EnCodec），之后就和语言模型一样用 Transformer 处理 token——"把声音当外语来建模"。</div>
+        </div>
+        <div class="family-body">
+          <div class="fb-title">三条子线的迭代</div>
+          <div class="timeline">
+            <div class="tl-item"><div class="tl-year">ASR 语音识别</div><div class="tl-name">HMM → DNN → Whisper</div><div class="tl-desc">早期靠隐马尔可夫模型+人工特征；2012 后深度学习接管；2022 年 OpenAI <b>Whisper</b> 用 68 万小时带噪数据弱监督训练 Transformer encoder-decoder，多语言、抗噪、免调优，成为事实标准。之后方向是流式实时（边说边出字）与多语种混合。</div></div>
+            <div class="tl-item"><div class="tl-year">TTS 语音合成</div><div class="tl-name">拼接 → WaveNet → VITS → 大模型 TTS</div><div class="tl-desc">最早从真人录音里<b>拼接</b>片段（机械感重）；2016 <b>WaveNet</b> 用神经网络逐采样点生成（逼真但极慢）；2021 <b>VITS</b> 端到端又快又好；2023 起 <b>VALL-E</b> 把 TTS 变成"语言建模"——给 3 秒参考音频就能克隆音色，CosyVoice、F5-TTS（Flow Matching）、GPT-SoVITS 都是这一代。</div></div>
+            <div class="tl-item"><div class="tl-year">音乐生成</div><div class="tl-name">MusicGen → Suno / Udio</div><div class="tl-desc">Meta <b>MusicGen</b>：Transformer 在音频 codec token 上自回归生成；商业产品 Suno/Udio 未公开细节（扩散与 Transformer 混合路线），已能按歌词+风格生成完整歌曲。</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 多模态 -->
+      <div class="family" style="--fc:#7dd3fc;">
+        <div class="family-head">
+          <div class="row"><span class="icon">🧩</span><h3>多模态模型</h3><span class="arch-pill">架构：视觉编码器 + LLM（或原生统一）</span></div>
+          <div class="what">原理一句话：让语言模型"长眼睛"——视觉编码器（CLIP ViT）把图像切成视觉 token，投影层对齐后塞进 LLM，图和文在同一个空间里被理解。</div>
+        </div>
+        <div class="family-body">
+          <div class="fb-title">算法迭代史</div>
+          <div class="timeline">
+            <div class="tl-item"><div class="tl-year">2021</div><div class="tl-name">CLIP 对齐图文空间</div><div class="tl-desc">对比学习让"一张狗的图"和"a photo of a dog"的向量靠在一起——多模态的地基。</div></div>
+            <div class="tl-item"><div class="tl-year">2023</div><div class="tl-name">LLaVA 范式：编码器 + 投影 + LLM</div><div class="tl-desc">结构极简、训练便宜，成为开源多模态的模板（Qwen-VL、InternVL 等一大票）。同年 GPT-4V 证明闭源路线的上限。</div></div>
+            <div class="tl-item"><div class="tl-year">2024–2025</div><div class="tl-name">原生全模态（Omni）</div><div class="tl-desc">GPT-4o、Gemini：文本/图像/音频在<b>同一个模型里端到端处理</b>，不再是拼装——语音对话做到真人级延迟，看图、听音、读视频一体。</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════ L4 训练微调深度 ══════════ -->
+    <div id="train" class="section" style="--sc:#34d399;">
+      <div class="sec-head"><span class="no">L4 深度</span><h2>训练微调层 · 这些方式到底差在哪</h2></div>
+      <p class="sec-sub">训练一个能用的模型要走流水线：<b>预训练</b>（学知识）→ <b>SFT 指令微调</b>（学对话格式）→ <b>对齐</b>（学人类偏好）。而 LoRA 那类是另一维度的选择——"改多少权重"。两个维度分开看就不乱了。</p>
+
+      <div class="fb-title" style="margin-bottom:12px;">维度一：学习流水线（每个阶段解决什么问题）</div>
+      <div class="tbl-wrap">
+        <table style="--sc:#34d399;">
+          <tr><th>阶段</th><th>干什么</th><th>数据</th><th>成本</th><th>谁做</th></tr>
+          <tr><td>预训练</td><td>读海量文本做"预测下一个词"，灌入世界知识与语言能力</td><td>万亿 token（全网语料清洗后）</td><td>数百万美元起，千卡集群跑数月</td><td>只有头部实验室做</td></tr>
+          <tr><td>SFT 指令微调</td><td>用"问-答"样本教模型按指令对话，从续写器变助手</td><td>几千～几十万条高质量对话</td><td>1～8 张卡，几小时～几天</td><td>企业/个人都能做</td></tr>
+          <tr><td>对齐（RLHF/DPO）</td><td>用人类偏好数据教模型"什么样的回答更好"，压幻觉、立规矩</td><td>人工标注的偏好对比对（A 比 B 好）</td><td>RLHF 很高（见下），DPO 中等</td><td>头部实验室为主</td></tr>
+          <tr><td>推理强化学习</td><td>用可验证奖励（数学题对错、代码能否跑通）训练"慢思考"</td><td>题目 + 自动判分，无需人工标注</td><td>中高</td><td>DeepSeek-R1、o1 的路线</td></tr>
+        </table>
+      </div>
+
+      <div class="fb-title" style="margin-bottom:12px;">对齐算法的三代迭代（这是最容易混淆的一组）</div>
+      <div class="vs-grid">
+        <div class="vs-card" style="--vc:#34d399;"><h4>RLHF + PPO</h4><div class="sub">2022 · ChatGPT 同款</div><p>先训一个<b>奖励模型</b>给回答打分，再用 PPO 强化学习优化。要同时维护 4 个模型（策略、参考、奖励、价值），工程复杂、训练不稳定、很贵。优点：上限高。</p></div>
+        <div class="vs-card" style="--vc:#34d399;"><h4>DPO</h4><div class="sub">2023 · 直接偏好优化</div><p>数学上绕开奖励模型，<b>直接用偏好对优化策略</b>——少训一个模型、少一套强化学习基建，像 SFT 一样简单。如今开源社区对齐的主流选择。</p></div>
+        <div class="vs-card" style="--vc:#34d399;"><h4>GRPO</h4><div class="sub">2024 · DeepSeek-R1 同款</div><p>组内相对优势：同一题采样一组回答，<b>用组内平均分当基准</b>算优劣，省掉价值模型。配合可验证奖励（数学/代码），是训练推理模型的当前最优解。</p></div>
+      </div>
+
+      <div class="fb-title" style="margin-bottom:12px;">维度二：改多少权重（微调手段对比）</div>
+      <div class="tbl-wrap">
+        <table style="--sc:#34d399;">
+          <tr><th>方式</th><th>原理</th><th>显存/成本</th><th>适用场景</th></tr>
+          <tr><td>全参数微调</td><td>所有权重都更新，效果上限最高</td><td>极高（需存梯度+优化器状态，约为模型本身 4 倍显存）</td><td>数据充足、要深度改造模型行为</td></tr>
+          <tr><td>LoRA</td><td><b>冻结原模型</b>，只训练旁路的低秩小矩阵（通常 &lt;1% 参数）</td><td>一张消费级显卡即可</td><td>最常用：教模型新领域知识/风格/格式</td></tr>
+          <tr><td>QLoRA</td><td>底座先量化到 4bit，再叠 LoRA</td><td>更低，24GB 卡可微调 70B 模型</td><td>显存紧张时的选择，精度略损</td></tr>
+        </table>
+      </div>
+      <div class="note" style="--fc:#34d399;">
+        一句话决策：有千万预算才谈预训练；想改造现有模型的行为 → <b>SFT + LoRA</b> 起步；要模型更"像人" → DPO；要模型会"推理" → GRPO + 可验证奖励。
+      </div>
+    </div>
+
+    <!-- ══════════ L6 推理部署深度 ══════════ -->
+    <div id="inference" class="section" style="--sc:#7dd3fc;">
+      <div class="sec-head"><span class="no">L6 深度</span><h2>推理部署层 · 引擎之争</h2></div>
+      <p class="sec-sub">训练好的模型是"死"的权重文件，要跑起来服务才产生价值。推理的核心矛盾：<b>生成是一个字一个字往外蹦的（自回归），天然慢且吃显存</b>——所有引擎都在用各种手段对抗这件事。</p>
+
+      <div class="fb-title" style="margin-bottom:12px;">五大引擎对比（这是"这几个有什么区别"的答案）</div>
+      <div class="tbl-wrap">
+        <table style="--sc:#7dd3fc;">
+          <tr><th>引擎</th><th>定位</th><th>硬件</th><th>绝活</th><th>适合谁</th></tr>
+          <tr><td>vLLM</td><td>服务端高吞吐推理的事实标准</td><td>NVIDIA GPU（也支持 AMD/昇腾）</td><td><b>PagedAttention</b>：像操作系统管理内存页一样管理 KV 缓存，显存浪费降到极低；连续批处理</td><td>生产环境 API 服务</td></tr>
+          <tr><td>SGLang</td><td>新一代高性能引擎</td><td>NVIDIA GPU</td><td><b>RadixAttention</b> 前缀缓存：相同上下文不重复计算；结构化输出（JSON）极快</td><td>Agent、复杂调用链、高并发</td></tr>
+          <tr><td>llama.cpp</td><td>极限可移植的 C++ 引擎</td><td>CPU / Mac / 消费级显卡 / 甚至手机</td><td>GGUF 量化格式，无 Python 依赖，任何设备都能跑</td><td>本地、边缘、没有数据中心 GPU 的场景</td></tr>
+          <tr><td>Ollama</td><td>本地跑模型的"一键方案"</td><td>同 llama.cpp（底层就是它）</td><td>一条命令拉模型、起服务，极简</td><td>个人开发者、快速试验</td></tr>
+          <tr><td>TensorRT-LLM</td><td>NVIDIA 官方极致性能</td><td>仅 NVIDIA</td><td>深度编译优化，单卡性能天花板，但配置繁琐</td><td>追求极限、愿意折腾的团队</td></tr>
+        </table>
+      </div>
+
+      <div class="fb-title" style="margin-bottom:12px;">引擎背后的关键技术（名词拆解）</div>
+      <div class="vs-grid">
+        <div class="vs-card" style="--vc:#7dd3fc;"><h4>量化</h4><div class="sub">省显存的第一手段</div><p>权重从 16 位浮点压到 8/4 位整数，显存直接砍半再砍半，代价是轻微精度损失。格式：<b>GGUF</b>（llama.cpp 系，CPU 友好）、<b>GPTQ/AWQ</b>（GPU 系）、<b>FP8</b>（新一代 GPU 原生）。</p></div>
+        <div class="vs-card" style="--vc:#7dd3fc;"><h4>KV 缓存</h4><div class="sub">自回归的代价</div><p>生成每个新 token 都要回看前文，把中间结果（KV）缓存起来才能不重算。它是推理显存的大头——vLLM 的 PagedAttention、DeepSeek 的 MLA 都是在治它。</p></div>
+        <div class="vs-card" style="--vc:#7dd3fc;"><h4>连续批处理</h4><div class="sub">吞吐的关键</div><p>不等一批请求全做完，谁生成完谁出列、新请求随时插队——GPU 利用率拉满。vLLM/SGLang/TGI 的标配。</p></div>
+        <div class="vs-card" style="--vc:#7dd3fc;"><h4>投机解码</h4><div class="sub">加速单请求</div><p>小模型先快速"猜"几个 token，大模型一次性并行验证——猜中就白赚。单用户延迟可降 2～3 倍。</p></div>
+        <div class="vs-card" style="--vc:#7dd3fc;"><h4>PD 分离</h4><div class="sub">2024 起的新架构</div><p>推理分两阶段：<b>预填充</b>（读输入，算力密集）和<b>解码</b>（逐字生成，显存带宽密集）。两阶段拆到不同机器池分别优化，是大规模服务的新趋势。</p></div>
+      </div>
+    </div>
+
+    <!-- ══════════ L2 算力深度 ══════════ -->
+    <div id="compute" class="section" style="--sc:#94a3b8;">
+      <div class="sec-head"><span class="no">L2 深度</span><h2>算力层 · 芯片分类与路线之争</h2></div>
+      <p class="sec-sub">芯片不是一种东西——按用途分成四类，差别比想象的大；而"谁能造出好用的 AI 芯片"目前有四条半路线，生态差距才是真正的护城河。</p>
+
+      <div class="fb-title" style="margin-bottom:12px;">芯片按用途分四类（"做渲染的、做训练的、做推理的"都在这）</div>
+      <div class="tbl-wrap">
+        <table style="--sc:#94a3b8;">
+          <tr><th>类型</th><th>设计目标</th><th>特征</th><th>代表</th></tr>
+          <tr><td>训练芯片</td><td>喂饱千卡集群的极限算力</td><td>高精度（BF16/FP8）、超大 HBM 显存与带宽、NVLink 高速互联、单卡上千瓦；要跑<b>前向+反向+梯度同步</b>，最贵最难</td><td>H100 / H200 / B200、昇腾 910B/910C、TPU v5p</td></tr>
+          <tr><td>推理芯片</td><td>单位成本出最多 token</td><td>只跑<b>前向</b>，可以用低精度（INT8/INT4），不追求极致互联，强调性价比与能效；很多是专用 ASIC</td><td>NVIDIA L4/L40S、昇腾 310、Groq LPU、各类国产推理卡</td></tr>
+          <tr><td>渲染芯片（显卡）</td><td>图形渲染：游戏、影视、3D</td><td>光栅化管线 + RT Core 光线追踪 + 显示输出；因带 CUDA 和张量核，也常被"兼职"跑中小 AI 模型</td><td>GeForce RTX 系列、AMD Radeon、摩尔线程（国产渲染卡）</td></tr>
+          <tr><td>边缘芯片</td><td>终端设备上的低功耗 AI</td><td>NPU 形态，几瓦功耗跑量化小模型：拍照优化、语音唤醒、端侧助手</td><td>苹果 Neural Engine、高通 Hexagon、NVIDIA Jetson</td></tr>
+        </table>
+      </div>
+      <div class="note" style="--fc:#94a3b8;margin-bottom:26px;">
+        训练卡 vs 渲染卡的一个直观区别：H100 这类计算卡<b>没有显示输出接口</b>——它不为画面而生，晶体管全花在张量计算和显存带宽上；而 RTX 显卡要分相当面积给光栅化、光追和显示管线。
+      </div>
+
+      <div class="fb-title" style="margin-bottom:12px;">算力路线对比（"这几条路径有什么区别，还有哪些路径"）</div>
+      <div class="tbl-wrap">
+        <table style="--sc:#94a3b8;">
+          <tr><th>路线</th><th>代表产品</th><th>软件生态</th><th>特点与差距</th></tr>
+          <tr><td>NVIDIA（霸主）</td><td>H100/H200/B200/GB200</td><td><b>CUDA</b>：18 年积累，所有主流框架原生最优支持</td><td>硬件+生态+网络（NVLink/InfiniBand）全栈垄断，贵但"买了就能跑"，占 AI 加速卡 90% 以上份额</td></tr>
+          <tr><td>AMD（追赶者）</td><td>MI300X / MI350</td><td>ROCm，PyTorch 已原生支持</td><td>硬件参数常反超 NVIDIA，便宜大碗；短板是软件生态成熟度——很多框架要自己踩坑调优</td></tr>
+          <tr><td>华为昇腾（国产主力）</td><td>910B / 910C（训练）、310（推理）</td><td>CANN + MindSpore，PyTorch 适配中</td><td>国产替代首选，国内大模型训练的重要备选；生态与 NVIDIA 有代差，靠政策和市场快速补课</td></tr>
+          <tr><td>Google TPU（自用系）</td><td>v5p / Trillium / Ironwood</td><td>JAX（Gemini 就是 TPU 训的）</td><td>专用 ASIC，能效高，但<b>不外卖硬件</b>，只能通过谷歌云租用，绑定 JAX 生态</td></tr>
+          <tr><td>专用 ASIC 新势力</td><td>Groq LPU、Cerebras 晶圆级芯片</td><td>各自专有工具链</td><td>剑走偏锋：Groq 用确定性架构把推理延迟打到极低；Cerebras 把整片晶圆做成一颗芯片。主打差异化场景</td></tr>
+          <tr><td>国产 GPU 梯队</td><td>寒武纪、摩尔线程、壁仞、燧原、海光</td><td>各自生态，兼容 CUDA 或自建</td><td>各有侧重（寒武纪偏推理/智能计算、摩尔线程走渲染+计算双线），整体在补生态课，是国产替代的第二梯队</td></tr>
+        </table>
+      </div>
+
+      <div class="fb-title" style="margin-bottom:12px;">集群怎么连（千卡万卡不是把卡堆一起就行）</div>
+      <div class="note" style="--fc:#94a3b8;">
+        <b>机内互联 NVLink</b>：一台服务器里 8 张卡之间的高速总线（900GB/s 级），梯度同步的主动脉 ·
+        <b>机间互联 InfiniBand / RoCE</b>：服务器之间的高速网络，千卡训练的生命线，网络抖动会直接拖慢整个集群 ·
+        训练大模型 = 几万张卡 + 几万个高速网口同时不掉链子，这是除了芯片之外的第二道门槛。
+      </div>
+    </div>
+
+    <!-- ══════════ L1 电力深度 ══════════ -->
+    <div id="energy" class="section" style="--sc:#fb923c;">
+      <div class="sec-head"><span class="no">L1 深度</span><h2>能源层 · AI 的物理底座</h2></div>
+      <p class="sec-sub">再往下一层就不是代码了：AI 数据中心首先是"电老虎"，其次才是机房。模型规模的每一次跃升，最终都折算成电表上的数字——电力正在取代芯片成为 AI 扩张的第一瓶颈。</p>
+
+      <div class="fb-title" style="margin-bottom:12px;">一度电怎么走到 GPU（供电链路）</div>
+      <div class="note" style="--fc:#fb923c;">
+        电网高压电 → <b>变电站降压</b> → 数据中心配电室 → <b>UPS 不间断电源</b>（电池兜底，断电瞬间接管）→ <b>柴油发电机</b>（长时间断电备份）→ PDU 配电柜 → 每个机柜 → 每张 GPU。任何一环断电，训练中断的代价以小时计。
+      </div>
+
+      <div class="fb-title" style="margin:20px 0 12px;">散热：从空调到液冷</div>
+      <div class="vs-grid">
+        <div class="vs-card" style="--vc:#fb923c;"><h4>风冷</h4><div class="sub">传统方式</div><p>空调冷风 + 风扇散热。单机柜功率 10kW 以内够用，<b>风扇本身也耗电</b>。老数据中心都是这个。</p></div>
+        <div class="vs-card" style="--vc:#fb923c;"><h4>冷板液冷</h4><div class="sub">GB200 时代的标配</div><p>冷却液直接接触芯片冷板带走热量。NVIDIA GB200 NVL72 单柜约 <b>120kW</b>（≈60 户家庭用电），风冷物理上已经吹不动，液冷成为强制选项。</p></div>
+        <div class="vs-card" style="--vc:#fb923c;"><h4>浸没式液冷</h4><div class="sub">更激进的方向</div><p>整台服务器泡进绝缘冷却液。换热效率最高，但运维方式完全改变，目前小规模商用。</p></div>
+      </div>
+
+      <div class="fb-title" style="margin-bottom:12px;">AI 到底多耗电（量级感）</div>
+      <div class="tbl-wrap">
+        <table style="--sc:#fb923c;">
+          <tr><th>对象</th><th>功率/能耗</th><th>直观对比</th></tr>
+          <tr><td>单张 H100</td><td>约 700W</td><td>一台大功率微波炉</td></tr>
+          <tr><td>单个 GB200 NVL72 机柜</td><td>约 120kW</td><td>≈ 60 户家庭的用电</td></tr>
+          <tr><td>GPT-4 级模型的一次训练</td><td>估算数十 GWh（未公开）</td><td>≈ 几千个美国家庭一年用电</td></tr>
+          <tr><td>新建 AI 数据中心</td><td>100MW～1GW 级规划</td><td>1GW ≈ 一座中型城市的负荷；Stargate 等项目按 GW 级建设</td></tr>
+        </table>
+      </div>
+
+      <div class="note" style="--fc:#fb923c;">
+        <b>为什么说电力是新瓶颈</b>：Sam Altman 等公开说过，芯片之后卡脖子的是电。数据中心选址开始跟着电站走，科技巨头直接下场买电——微软签了重启三里岛核电站的 20 年购电协议，亚马逊、谷歌收购核电初创（小型模块化反应堆 SMR）。<b>PUE</b>（总能耗/IT 设备能耗，越接近 1 越好）成为衡量数据中心水平的核心指标。
+      </div>
+    </div>
+
+    
+    <div style="text-align:center;font-size:12px;color:var(--text-faint);margin-top:70px;line-height:1.9;">
+      学 AI 路线建议：基础概念辨析 → 分层知识地图 → 挑一个最有感觉的深度解析往下钻<br>
+      想动手：从 Ollama 本地跑模型（L6）或 LoRA 微调（L4）开始，成本最低
+    </div>
+  </div>
+</body>
+</html>
