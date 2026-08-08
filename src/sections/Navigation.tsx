@@ -13,6 +13,7 @@ export default function Navigation() {
   }, []);
 
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    if (!href.startsWith('#')) return;
     e.preventDefault();
     const el = document.querySelector(href);
     if (el) {
