@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 教学 · 李冠南</title>
+<meta name="description" content="李冠南的 AI 课程与教学资源:公开课、一对一特训、技术栈全景图与开源资料包。">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #0a0a0a;
+    --panel: #111214;
+    --border: rgba(255,255,255,.08);
+    --fg: #e8e8e6;
+    --muted: #9b9b95;
+    --accent: #5ce1ff;
+    --warm: #f5a623;
+  }
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", -apple-system, sans-serif;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+  .wrap { max-width: 880px; margin: 0 auto; padding: 48px 24px 80px; }
+  .back {
+    display: inline-block;
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 14px;
+    letter-spacing: .5px;
+    margin-bottom: 40px;
+  }
+  .back:hover { color: var(--accent); }
+  .kicker {
+    font-family: "SFMono-Regular", Menlo, monospace;
+    font-size: 13px;
+    color: var(--accent);
+    letter-spacing: 3px;
+    margin-bottom: 12px;
+  }
+  h1 { font-size: 40px; font-weight: 700; letter-spacing: 1px; margin-bottom: 10px; }
+  .sub { color: var(--muted); font-size: 16px; margin-bottom: 48px; max-width: 560px; }
+  .section-label {
+    font-family: "SFMono-Regular", Menlo, monospace;
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 2px;
+    margin: 40px 0 16px;
+    text-transform: uppercase;
+  }
+  .card {
+    display: block;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px 26px;
+    margin-bottom: 14px;
+    text-decoration: none;
+    color: inherit;
+  }
+  a.card:hover { border-color: rgba(92,225,255,.45); }
+  .card-top { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; margin-bottom: 6px; }
+  .card h2 { font-size: 20px; font-weight: 600; }
+  .badge {
+    font-family: "SFMono-Regular", Menlo, monospace;
+    font-size: 11px;
+    letter-spacing: 1px;
+    color: var(--accent);
+    border: 1px solid rgba(92,225,255,.35);
+    border-radius: 4px;
+    padding: 1px 8px;
+    white-space: nowrap;
+  }
+  .badge.warm { color: var(--warm); border-color: rgba(245,166,35,.4); }
+  .badge.dim { color: var(--muted); border-color: var(--border); }
+  .card p { color: var(--muted); font-size: 14.5px; }
+  .card .who { margin-top: 8px; font-size: 13px; color: #6f6f6a; }
+  .footer {
+    margin-top: 64px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+    color: #6f6f6a;
+    font-size: 13px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .footer a { color: var(--muted); text-decoration: none; }
+  .footer a:hover { color: var(--accent); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="back" href="/">← 返回主页</a>
+  <div class="kicker">TEACHING · AI 教学</div>
+  <h1>从会问 AI,到能对结果负责</h1>
+  <p class="sub">课程与资料按「先用起来 → 再学透彻 → 最后看全景」排列。所有讲义在线可看,手机电脑通用,方向键或滑动翻页。</p>
+
+  <div class="section-label">课程 Courses</div>
+
+  <a class="card" href="/ai-course/">
+    <div class="card-top">
+      <h2>AI 协作公开课</h2>
+      <span class="badge">90 分钟 · 23 页</span>
+    </div>
+    <p>大模型 · Agent · MCP · Skills · 人机协作。核心主张:能生成不等于能交付,能交付就要对结果负责。附录含旅游管理专项自学清单与作业任务库。</p>
+    <div class="who">适合:第一次系统了解 AI 协作的同学</div>
+  </a>
+
+  <a class="card" href="/lesson-1/">
+    <div class="card-top">
+      <h2>特训第一课 · 从提示词到智能体</h2>
+      <span class="badge">4 小时 · 56 页</span>
+    </div>
+    <p>四个词讲透:Prompt(描述清楚)、Skills(沉淀复用)、MCP(接通现实)、Agent(给目标盯结果),以 WorkBuddy 实操落地,含旅游管理专业应用与职业路线图。</p>
+    <div class="who">适合:一对一特训学员复习 · 已上完公开课的同学进阶</div>
+  </a>
+
+  <div class="card">
+    <div class="card-top">
+      <h2>特训第二课 · 铸造你的第一个 Skill</h2>
+      <span class="badge dim">8 月 22 日后上线</span>
+    </div>
+    <p>把自己的方法写成 SKILL.md,建立个人 GitHub 技能库,并完成结课口试。</p>
+    <div class="who">适合:完成第一课的特训学员</div>
+  </div>
+
+  <div class="section-label">扩展阅读 Deep Dive</div>
+
+  <a class="card" href="/learn-ai/">
+    <div class="card-top">
+      <h2>学 AI · AI 技术栈全景图</h2>
+      <span class="badge warm">陆肯 制作</span>
+    </div>
+    <p>从电网到应用共八层:10 组概念辨析、8 层 136 个知识条目、5 个深度解析。课程讲「怎么用、怎么负责」,全景图讲「AI 由什么组成」,互为补充。</p>
+    <div class="who">适合:想知道「引擎盖下面是什么」的同学</div>
+  </a>
+
+  <div class="section-label">资料下载 Downloads</div>
+
+  <a class="card" href="/files/AI入门资料包_Prompt-Skills-MCP.zip" download>
+    <div class="card-top">
+      <h2>AI 入门资料包:Prompt · Skills · MCP</h2>
+      <span class="badge">ZIP · 约 200KB</span>
+    </div>
+    <p>国际优质开源材料精选:DAIR.AI 提示词工程指南中文版 22 篇、Anthropic 官方技能案例三个、MCP 官方文档四篇。附中文导读、三周阅读路线与 AI 社团活动方案,全部为可传播的开源许可并注明出处。</p>
+    <div class="who">适合:自学者 · 高校 AI 社团</div>
+  </a>
+
+  <div class="footer">
+    <span>李冠南 · AI 教学</span>
+    <span><a href="/">主页</a> · 联系与合作见主页页脚</span>
+  </div>
+</div>
+</body>
+</html>

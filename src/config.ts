@@ -31,7 +31,7 @@ export const navigationConfig: NavigationConfig = {
     { label: "能力 Expertise", href: "#curriculum" },
     { label: "理念 Vision", href: "#cinematic" },
     { label: "项目 Archive", href: "#alumni" },
-    { label: "AI 课 Teaching", href: "/ai-course/" },
+    { label: "AI 课 Teaching", href: "/teaching/" },
     { label: "联系 Contact", href: "#footer" },
   ],
   ctaText: "联系我 Contact",
@@ -255,7 +255,7 @@ export const footerConfig: FooterConfig = {
   copyright: "© 2026 李冠南 LI GUANNAN / π. 保留所有权利 All rights reserved.",
   bottomLinks: [
     { label: "聊聊影视数字化、AI 落地或产品", href: "#footer" },
-    { label: "AI 协作课讲义 AI Course", href: "/ai-course/" },
+    { label: "AI 教学中心 Teaching", href: "/teaching/" },
     { label: "返回顶部 Back to Top", href: "#hero" },
   ],
 };
