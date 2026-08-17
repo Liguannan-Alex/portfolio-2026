@@ -79,28 +79,28 @@ export const capabilitiesConfig: CapabilitiesConfig = {
       slug: "execution",
       description:
       "跨部门沟通、资源整合、供应商协同、项目跟进——在影院 / 文旅多部门协作的节奏里，把事从会议室推进到落地。Cross-team coordination, resource integration and on-the-ground delivery across 400+ cinemas.",
-      image: "images/cap-exec.png",
+      image: "/images/cap-exec.jpg",
     },
     {
       title: "产品 × 数字化 Product",
       slug: "product-digital",
       description:
         "需求拆解、流程梳理、字段设计、原型沟通、业务数据分析——把模糊的业务诉求翻译成清晰的产品方案。Translating fuzzy business needs into shipped products: requirements, prototypes, data and iteration.",
-      image: "images/cap-product.png",
+      image: "/images/cap-product.jpg",
     },
     {
       title: "AI 与工具应用 AI & Agents",
       slug: "ai-application",
       description:
         "生成式大模型落地、Prompt Engineering、Agent 自动化、知识库与文案数据辅助——让 AI 真正接入排片、营销、客服这些真实业务。Making LLMs actually work in real business: prompts, agents, knowledge bases and automation.",
-      image: "images/cap-ai.png",
+      image: "/images/cap-ai.jpg",
     },
     {
       title: "运营与增长 Growth",
       slug: "growth-content",
       description:
         "用户增长、直播运营、短视频资源对接、活动策划与复盘——单场直播 GMV 峰值 200 万元+的实战手感。Growth, livestream commerce and content: single-session GMV peak over ¥2M across 400+ cinema campaigns.",
-      image: "images/cap-growth.png",
+      image: "/images/cap-growth.jpg",
     },
   ],
 };
@@ -183,7 +183,7 @@ export interface ArchitectureConfig {
 
 export const architectureConfig: ArchitectureConfig = {
   sectionLabel: "工作理念 PHILOSOPHY",
-  videoPath: "videos/arch-loop.mp4",
+  videoPath: "/videos/arch-loop.mp4",
   title: "把影视业务、产品方法与 AI，拧成一股绳。",
   description:
     "我见过太多停在 PPT 里的好想法，也见过太多能跑却没人用的工具。所以我给自己定的标准是：既能拆需求、画原型，也能拉资源、推动上线；既研究大模型的能力边界，也关心一线同事明天上班好不好用。想法不值钱，落成「上架」才算数。Ideas are cheap — shipped is everything. Understand the model's limits, but care more about whether it works for the people using it tomorrow morning.",
@@ -208,14 +208,14 @@ export interface ResearchConfig {
 export const researchConfig: ResearchConfig = {
   sectionLabel: "代表项目 SELECTED WORKS",
   projects: [
-    { title: "《大圣归来》卡牌 IP 衍生", year: "2025", discipline: "IP 商业化 · 400+ 影城上架", image: "images/p-card.png" },
-    { title: "Openclaw AI 落地服务", year: "2026", discipline: "副业 · 30+ 客户", image: "images/p-openclaw.png" },
-    { title: "400+ 影院直播项目", year: "2022", discipline: "直播电商 · GMV 200万+", image: "images/p-live.png" },
-    { title: "横店文旅线上平台", year: "2022", discipline: "0–1 平台建设", image: "images/p-platform.png" },
-    { title: "数字化转型调研", year: "2023", discipline: "战略方案输出", image: "images/p-research.png" },
-    { title: "爆米花大作战", year: "2024", discipline: "C++ 体感游戏", image: "images/p-popcorn.png" },
-    { title: "重生之我在横店当群演", year: "2024", discipline: "TypeScript 叙事游戏", image: "images/p-hengdian.png" },
-    { title: "公众号「π·冠南」", year: "至今", discipline: "AI × 认知 × 影视写作", image: "images/p-pi.png" },
+    { title: "《大圣归来》卡牌 IP 衍生", year: "2025", discipline: "IP 商业化 · 400+ 影城上架", image: "/images/p-card.jpg" },
+    { title: "Openclaw AI 落地服务", year: "2026", discipline: "副业 · 30+ 客户", image: "/images/p-openclaw.jpg" },
+    { title: "400+ 影院直播项目", year: "2022", discipline: "直播电商 · GMV 200万+", image: "/images/p-live.jpg" },
+    { title: "横店文旅线上平台", year: "2022", discipline: "0–1 平台建设", image: "/images/p-platform.jpg" },
+    { title: "数字化转型调研", year: "2023", discipline: "战略方案输出", image: "/images/p-research.jpg" },
+    { title: "爆米花大作战", year: "2024", discipline: "C++ 体感游戏", image: "/images/p-popcorn.jpg" },
+    { title: "重生之我在横店当群演", year: "2024", discipline: "TypeScript 叙事游戏", image: "/images/p-hengdian.jpg" },
+    { title: "公众号「π·冠南」", year: "至今", discipline: "AI × 认知 × 影视写作", image: "/images/p-pi.jpg" },
   ],
 };
 
