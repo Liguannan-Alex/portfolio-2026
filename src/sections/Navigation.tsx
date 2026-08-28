@@ -50,7 +50,7 @@ export default function Navigation() {
         {siteConfig.brandName}
       </a>
 
-      <div className="hidden md:flex items-center" style={{ gap: 40 }}>
+      <div className="hidden md:flex items-center" style={{ gap: 'clamp(18px, 2.4vw, 40px)' }}>
         {navigationConfig.links.map((link) => (
           <a
             key={link.label}
@@ -65,9 +65,11 @@ export default function Navigation() {
 
       {navigationConfig.ctaText && (
         <a
-          href="#footer"
-          onClick={(e) => handleClick(e, '#footer')}
-          className="nav-link hidden md:inline-block"
+          href={navigationConfig.ctaHref}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="nav-cta-button"
+          aria-label="打开横店剧组招商线索雷达演示页（新窗口）"
         >
           {navigationConfig.ctaText}
         </a>

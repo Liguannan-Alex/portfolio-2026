@@ -133,4 +133,44 @@
   .nav-link:hover::after {
     transform: scaleX(1);
   }
+
+  .nav-cta-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    padding: 10px 14px;
+    border: 1px solid rgba(232, 198, 150, 0.7);
+    border-radius: 999px;
+    background: rgba(232, 198, 150, 0.92);
+    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.24);
+    color: #0a0a0a;
+    font-family: 'GeistMono', monospace;
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0.2px;
+    line-height: 1;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .nav-cta-button:hover {
+    background: #f2d5ad;
+    box-shadow: 0 10px 32px rgba(0, 0, 0, 0.3);
+    transform: translateY(-1px);
+  }
+
+  .nav-cta-button:focus-visible {
+    outline: 2px solid #ffffff;
+    outline-offset: 3px;
+  }
+
+  @media (max-width: 767px) {
+    .nav-cta-button {
+      padding: 9px 11px;
+      font-size: 11px;
+      letter-spacing: 0;
+    }
+  }
 }

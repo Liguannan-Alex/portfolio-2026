@@ -24,6 +24,7 @@ export interface NavLink {
 export interface NavigationConfig {
   links: NavLink[];
   ctaText: string;
+  ctaHref: string;
 }
 
 export const navigationConfig: NavigationConfig = {
@@ -34,7 +35,8 @@ export const navigationConfig: NavigationConfig = {
     { label: "AI 课 Teaching", href: "/teaching/" },
     { label: "联系 Contact", href: "#footer" },
   ],
-  ctaText: "联系我 Contact",
+  ctaText: "招商线索雷达 ↗",
+  ctaHref: "https://liguannan-alex.github.io/hengdian-lead-radar-demo/#catalog",
 };
 
 // ============================================================
