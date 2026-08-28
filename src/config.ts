@@ -38,7 +38,7 @@ export const navigationConfig: NavigationConfig = {
   ],
   ctaText: "联系我 Contact",
   radarCtaText: "招商线索雷达 ↗",
-  radarCtaHref: "https://liguannan-alex.github.io/hengdian-lead-radar-demo/#catalog",
+  radarCtaHref: "/radar/#catalog",
 };
 
 // ============================================================

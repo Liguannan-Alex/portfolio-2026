@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light">
+    <meta name="theme-color" content="#0c443f">
+    <meta name="description" content="横店剧组招商线索雷达领导演示版：项目盘面、公开证据、信源版图与业务待办一屏查看">
+    <link rel="canonical" href="https://piguannan.com/radar/">
+    <meta property="og:title" content="横店剧组招商线索雷达｜领导演示版">
+    <meta property="og:description" content="17 个项目线索、25 条公开证据、48 个固定信源与 27 家公司底库。">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://piguannan.com/radar/">
+    <meta property="og:image" content="https://piguannan.com/radar/assets/og.png">
+    <meta property="og:image:alt" content="横店剧组招商线索雷达领导演示版">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="横店剧组招商线索雷达｜领导演示版">
+    <meta name="twitter:description" content="从公开证据发现项目、交叉核验并形成招商跟进。">
+    <meta name="twitter:image" content="https://piguannan.com/radar/assets/og.png">
+    <title>横店剧组招商线索雷达｜领导演示版</title>
+    <link rel="stylesheet" href="./assets/styles.css">
+    <script defer src="./assets/demo-data.js"></script>
+    <script defer src="./assets/app.js"></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#project-results">跳到项目列表</a>
+    <header class="topbar">
+      <a class="brand" href="#top" aria-label="返回项目雷达顶部">
+        <span class="brand-mark" aria-hidden="true">横</span>
+        <span>
+          <strong>横店剧组招商线索雷达</strong>
+          <small>招商线索领导演示台</small>
+        </span>
+      </a>
+      <div class="topbar-actions">
+        <button class="quiet-button" id="open-library" type="button">底库说明</button>
+        <span class="readonly-badge">领导演示版</span>
+      </div>
+    </header>
+
+    <main id="top">
+      <section class="hero" aria-labelledby="page-title">
+        <div class="hero-copy">
+          <p class="eyebrow">领导视角 · 项目与招商线索盘面</p>
+          <h1 id="page-title">17 个项目，<br>先看哪几个？</h1>
+          <p class="hero-lead">把国家公开备案、横店片场动态和业务底库放到同一张雷达里：先发现项目，再看证据，再决定是否进入招商跟进。</p>
+        </div>
+        <div class="snapshot-card">
+          <span>公开证据截至</span>
+          <strong id="snapshot-date">—</strong>
+          <small>不代表项目今天仍处于同一状态</small>
+        </div>
+      </section>
+
+      <section class="boundary-note" aria-label="演示范围说明">
+        <strong>这是领导可查看的公开演示快照。</strong>
+        <span>项目名称、日期和依据来自公开证据；“同名备案”仍需核对主体与版本。登录、后台调度、人工复核和 AI API 不在公开站启用。</span>
+      </section>
+
+      <nav class="section-nav" aria-label="页面分区">
+        <a href="#overview">领导总览</a>
+        <a href="#catalog">底库版图</a>
+        <a href="#projects">项目雷达</a>
+        <a href="#workflow">工作闭环</a>
+      </nav>
+
+      <section class="metric-grid" id="overview" aria-label="雷达数据概览">
+        <article class="metric metric-primary">
+          <span>项目线索池</span>
+          <strong id="metric-projects">—</strong>
+          <small>均有横店片场公开动态留痕</small>
+        </article>
+        <article class="metric">
+          <span>双来源待核</span>
+          <strong id="metric-filings">—</strong>
+          <small>片场动态 + 同名备案候选</small>
+        </article>
+        <article class="metric">
+          <span>公开证据</span>
+          <strong id="metric-evidence">—</strong>
+          <small><b id="metric-official">—</b> 条备案记录 · <b id="metric-production">—</b> 条片场动态</small>
+        </article>
+        <article class="metric metric-library">
+          <span>业务底库</span>
+          <strong><b id="metric-sources">—</b> 信源 · <b id="metric-companies">—</b> 公司</strong>
+          <small>业务字段仍以“待业务确认”为准</small>
+        </article>
+      </section>
+
+      <section class="executive-grid" aria-label="领导决策概览">
+        <article class="overview-panel">
+          <div class="panel-heading">
+            <div>
+              <p class="eyebrow">同名备案候选覆盖</p>
+              <h2>哪些项目更值得先看？</h2>
+            </div>
+            <strong class="rate" id="cross-rate">—</strong>
+          </div>
+          <p class="panel-copy">同一个项目同时出现片场公开动态和国家同名备案时，优先进入主体、版本与招商价值复核。</p>
+          <div class="progress-rail" role="progressbar" aria-label="具有同名备案候选的项目占比" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+            <span id="verification-bar"></span>
+          </div>
+          <div class="overview-breakdown">
+            <div><strong id="dual-count">—</strong><span>双来源待核</span><small>优先核对主体与版本</small></div>
+            <div><strong id="single-count">—</strong><span>仅片场动态</span><small>继续查找备案与平台证据</small></div>
+            <div><strong id="review-evidence-count">—</strong><span>片场证据</span><small>需回原账号复核</small></div>
+          </div>
+        </article>
+
+        <article class="activity-panel">
+          <div class="panel-heading compact">
+            <div>
+              <p class="eyebrow">最近两次公开观察</p>
+              <h2>片场动态批次</h2>
+            </div>
+          </div>
+          <div class="date-signal-list">
+            <div><time datetime="2026-08-25">08.25</time><span>最新公开批次</span><strong><b id="recent-evidence-count">—</b> 条证据</strong></div>
+            <div><time datetime="2026-08-18">08.18</time><span>上一公开批次</span><strong><b id="earlier-evidence-count">—</b> 条证据</strong></div>
+          </div>
+          <p class="scope-note">日期表示证据出现时间，不代表项目今天仍在拍摄；17 个项目的当前生产阶段均待本周重新核验。</p>
+        </article>
+      </section>
+
+      <section class="catalog-grid" id="catalog" aria-label="业务底库版图">
+        <article class="catalog-panel source-panel">
+          <div class="panel-heading compact">
+            <div>
+              <p class="eyebrow">48 个固定信源 · 8 类</p>
+              <h2>信源覆盖版图</h2>
+            </div>
+            <button class="text-button" id="open-library-secondary" type="button">查看说明</button>
+          </div>
+          <div class="layer-chart" id="layer-chart" aria-label="各类信源数量"></div>
+        </article>
+
+        <article class="catalog-panel company-panel">
+          <div class="panel-heading compact">
+            <div>
+              <p class="eyebrow">27 家目标公司底库</p>
+              <h2>公司底库就绪度</h2>
+            </div>
+          </div>
+          <div class="company-status-grid">
+            <div><span>合作历史</span><strong>待逐项确认</strong></div>
+            <div><span>联系人掌握</span><strong>待逐项确认</strong></div>
+            <div><span>业务优先级</span><strong>待逐项确认</strong></div>
+          </div>
+          <p class="scope-note">现有白色内容仅作为系统建议，不替代业务部门正式结论。</p>
+        </article>
+
+        <article class="catalog-panel task-panel">
+          <div class="panel-heading compact">
+            <div>
+              <p class="eyebrow">下一步处理</p>
+              <h2>当前三类业务任务</h2>
+            </div>
+          </div>
+          <div class="task-list">
+            <div><strong id="task-identity">—</strong><span>核对同名备案主体与版本</span></div>
+            <div><strong id="task-filing">—</strong><span>继续寻找备案或平台依据</span></div>
+            <div><strong id="task-source-review">—</strong><span>回到片场原账号复核</span></div>
+          </div>
+          <p class="scope-note">任务存在交叉，不能简单相加为项目总数。</p>
+        </article>
+      </section>
+
+      <section class="workspace" id="projects" aria-labelledby="results-heading">
+        <div class="workspace-heading">
+          <div>
+            <p class="eyebrow">17 个项目候选</p>
+            <h2 id="results-heading">项目雷达</h2>
+          </div>
+          <p class="result-summary" id="result-summary" aria-live="polite">正在整理项目…</p>
+        </div>
+
+        <form class="filters" id="filters" role="search">
+          <label class="search-field">
+            <span>搜索项目</span>
+            <input id="search" type="search" placeholder="输入项目名或备案申报机构" autocomplete="off">
+          </label>
+          <label>
+            <span>交叉核验状态</span>
+            <select id="evidence-filter">
+              <option value="all">全部项目</option>
+              <option value="cross">双来源待核</option>
+              <option value="single">仅片场动态</option>
+            </select>
+          </label>
+          <label>
+            <span>片场证据</span>
+            <select id="production-filter">
+              <option value="all">全部项目</option>
+              <option value="recent">8 月 25 日动态</option>
+              <option value="earlier">8 月 18 日动态</option>
+            </select>
+          </label>
+          <label>
+            <span>排序</span>
+            <select id="sort">
+              <option value="latest">优先核验在前</option>
+              <option value="evidence">证据数量优先</option>
+              <option value="name">项目名称</option>
+            </select>
+          </label>
+          <div class="view-toggle" role="group" aria-label="切换项目显示方式">
+            <button class="active" type="button" data-view="cards" aria-pressed="true">卡片</button>
+            <button type="button" data-view="list" aria-pressed="false">列表</button>
+          </div>
+        </form>
+
+        <div id="project-results" class="project-results cards" tabindex="-1"></div>
+        <div id="empty-state" class="empty-state" hidden>
+          <strong>没有符合当前条件的项目</strong>
+          <span>可以清空搜索词或调整筛选条件。</span>
+          <button type="button" id="reset-filters">查看全部项目</button>
+        </div>
+      </section>
+
+      <section class="explanation" id="workflow" aria-labelledby="how-to-read">
+        <div>
+          <p class="eyebrow">业务工作闭环</p>
+          <h2 id="how-to-read">从发现项目到招商跟进</h2>
+        </div>
+        <ol>
+          <li><b>发现</b><span>按 48 个固定信源组织公开信息更新与人工复核。</span></li>
+          <li><b>归集</b><span>把同一项目的公开证据集中到一张卡片。</span></li>
+          <li><b>核验</b><span>同名备案只作为候选，继续核对主体与版本。</span></li>
+          <li><b>跟进</b><span>由业务人员确认优先级、负责人和下一步。</span></li>
+        </ol>
+      </section>
+    </main>
+
+    <footer>
+      <p>横店剧组招商线索雷达 · 领导公开演示版</p>
+      <p>数据来自可追溯公开证据；不包含联系人、私域内容、账号凭据或 API 密钥。</p>
+    </footer>
+
+    <div class="drawer-backdrop" id="drawer-backdrop" hidden></div>
+    <aside class="drawer" id="evidence-drawer" role="dialog" aria-modal="true" aria-labelledby="drawer-title" aria-describedby="drawer-boundary" hidden>
+      <div class="drawer-header">
+        <div>
+          <p class="eyebrow">查看依据</p>
+          <h2 id="drawer-title">项目证据</h2>
+        </div>
+        <button class="icon-button" id="close-drawer" type="button" aria-label="关闭证据详情">关闭</button>
+      </div>
+      <div class="drawer-content" id="drawer-content"></div>
+      <p class="drawer-boundary" id="drawer-boundary">证据只支持其标明的事实范围，不自动证明当前状态、主体或版本一致。</p>
+    </aside>
+
+    <aside class="drawer" id="library-drawer" role="dialog" aria-modal="true" aria-labelledby="library-title" hidden>
+      <div class="drawer-header">
+        <div>
+          <p class="eyebrow">正式业务底库</p>
+          <h2 id="library-title">信源与公司说明</h2>
+        </div>
+        <button class="icon-button" id="close-library" type="button" aria-label="关闭底库说明">关闭</button>
+      </div>
+      <div class="drawer-content" id="library-content"></div>
+    </aside>
+
+    <noscript>此演示需要启用 JavaScript 才能筛选项目和查看证据。</noscript>
+  </body>
+</html>
