@@ -10,9 +10,10 @@ test('主页提供独立且安全的招商线索雷达入口', async () => {
     readFile(new URL('../src/sections/Navigation.tsx', import.meta.url), 'utf8'),
   ]);
 
-  assert.match(configSource, /ctaText:\s*"招商线索雷达 ↗"/);
-  assert.ok(configSource.includes(`ctaHref: "${radarUrl}"`));
-  assert.match(navigationSource, /href=\{navigationConfig\.ctaHref\}/);
+  assert.match(configSource, /ctaText:\s*"联系我 Contact"/);
+  assert.match(configSource, /radarCtaText:\s*"招商线索雷达 ↗"/);
+  assert.ok(configSource.includes(`radarCtaHref: "${radarUrl}"`));
+  assert.match(navigationSource, /href=\{navigationConfig\.radarCtaHref\}/);
   assert.match(navigationSource, /target="_blank"/);
   assert.match(navigationSource, /rel="noopener noreferrer"/);
   assert.match(navigationSource, /className="nav-cta-button"/);

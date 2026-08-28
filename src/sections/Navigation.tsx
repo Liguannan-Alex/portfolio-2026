@@ -63,17 +63,29 @@ export default function Navigation() {
         ))}
       </div>
 
-      {navigationConfig.ctaText && (
-        <a
-          href={navigationConfig.ctaHref}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="nav-cta-button"
-          aria-label="打开横店剧组招商线索雷达演示页（新窗口）"
-        >
-          {navigationConfig.ctaText}
-        </a>
-      )}
+      <div className="flex items-center" style={{ gap: 16 }}>
+        {navigationConfig.ctaText && (
+          <a
+            href="#footer"
+            onClick={(e) => handleClick(e, '#footer')}
+            className="nav-link hidden xl:inline-block"
+          >
+            {navigationConfig.ctaText}
+          </a>
+        )}
+
+        {navigationConfig.radarCtaText && (
+          <a
+            href={navigationConfig.radarCtaHref}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="nav-cta-button"
+            aria-label="打开横店剧组招商线索雷达演示页（新窗口）"
+          >
+            {navigationConfig.radarCtaText}
+          </a>
+        )}
+      </div>
     </nav>
   );
 }
