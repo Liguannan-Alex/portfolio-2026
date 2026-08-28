@@ -26,9 +26,11 @@ test('雷达快照可从 PiGuannan 的 /radar/ 独立分享', async () => {
   assert.match(indexSource, /<link rel="canonical" href="https:\/\/piguannan\.com\/radar\/">/);
   assert.match(indexSource, /<meta property="og:url" content="https:\/\/piguannan\.com\/radar\/">/);
   assert.match(indexSource, /<meta property="og:image" content="https:\/\/piguannan\.com\/radar\/assets\/og\.png">/);
-  assert.match(indexSource, /<a href="#catalog">底库版图<\/a>/);
+  assert.match(indexSource, /<a href="#catalog">核验网络<\/a>/);
+  assert.match(indexSource, /48 个信源核验网络/);
+  assert.match(indexSource, /id="open-company-library"/);
 
-  for (const asset of ['assets/styles.css', 'assets/demo-data.js', 'assets/app.js', 'assets/og.png']) {
+  for (const asset of ['assets/styles.css', 'assets/demo-data.js', 'assets/catalog-data.js', 'assets/app.js', 'assets/og.png']) {
     const assetStat = await stat(new URL(asset, radarRoot));
     assert.ok(assetStat.size > 0, `${asset} 不应为空`);
   }

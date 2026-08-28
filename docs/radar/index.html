@@ -5,11 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="color-scheme" content="light">
     <meta name="theme-color" content="#0c443f">
-    <meta name="description" content="横店剧组招商线索雷达领导演示版：项目盘面、公开证据、信源版图与业务待办一屏查看">
-    <link rel="canonical" href="https://piguannan.com/radar/">
+    <meta name="description" content="横店剧组招商线索雷达领导演示版：17 个项目候选、可追溯依据与 48 个信源核验入口一屏查看">
     <meta property="og:title" content="横店剧组招商线索雷达｜领导演示版">
-    <meta property="og:description" content="17 个项目线索、25 条公开证据、48 个固定信源与 27 家公司底库。">
+    <meta property="og:description" content="17 个项目候选、25 条项目依据关联、48 个信源核验入口与 27 家公司底库。">
     <meta property="og:type" content="website">
+    <link rel="canonical" href="https://piguannan.com/radar/">
     <meta property="og:url" content="https://piguannan.com/radar/">
     <meta property="og:image" content="https://piguannan.com/radar/assets/og.png">
     <meta property="og:image:alt" content="横店剧组招商线索雷达领导演示版">
@@ -20,6 +20,7 @@
     <title>横店剧组招商线索雷达｜领导演示版</title>
     <link rel="stylesheet" href="./assets/styles.css">
     <script defer src="./assets/demo-data.js"></script>
+    <script defer src="./assets/catalog-data.js"></script>
     <script defer src="./assets/app.js"></script>
   </head>
   <body>
@@ -33,7 +34,7 @@
         </span>
       </a>
       <div class="topbar-actions">
-        <button class="quiet-button" id="open-library" type="button">底库说明</button>
+        <button class="quiet-button" id="open-library" type="button">全量依据库</button>
         <span class="readonly-badge">领导演示版</span>
       </div>
     </header>
@@ -43,7 +44,7 @@
         <div class="hero-copy">
           <p class="eyebrow">领导视角 · 项目与招商线索盘面</p>
           <h1 id="page-title">17 个项目，<br>先看哪几个？</h1>
-          <p class="hero-lead">把国家公开备案、横店片场动态和业务底库放到同一张雷达里：先发现项目，再看证据，再决定是否进入招商跟进。</p>
+          <p class="hero-lead">把国家公开备案、横店片场动态、四大平台与 48 个固定信源放进同一张雷达：先看已经取得的依据，再一键去各平台交叉核验。</p>
         </div>
         <div class="snapshot-card">
           <span>公开证据截至</span>
@@ -54,12 +55,12 @@
 
       <section class="boundary-note" aria-label="演示范围说明">
         <strong>这是领导可查看的公开演示快照。</strong>
-        <span>项目名称、日期和依据来自公开证据；“同名备案”仍需核对主体与版本。登录、后台调度、人工复核和 AI API 不在公开站启用。</span>
+        <span>项目名称、日期和“已取得依据”来自公开原文；48 个平台入口属于核验网络，不自动计入项目依据。“同名备案”仍需核对主体与版本。</span>
       </section>
 
       <nav class="section-nav" aria-label="页面分区">
         <a href="#overview">领导总览</a>
-        <a href="#catalog">底库版图</a>
+        <a href="#catalog">核验网络</a>
         <a href="#projects">项目雷达</a>
         <a href="#workflow">工作闭环</a>
       </nav>
@@ -76,14 +77,14 @@
           <small>片场动态 + 同名备案候选</small>
         </article>
         <article class="metric">
-          <span>公开证据</span>
+          <span>项目—依据关联</span>
           <strong id="metric-evidence">—</strong>
-          <small><b id="metric-official">—</b> 条备案记录 · <b id="metric-production">—</b> 条片场动态</small>
+          <small><b id="metric-originals">—</b> 份独立原始材料 · <b id="metric-official">—</b> 条备案关联 · <b id="metric-production">—</b> 条片场关联</small>
         </article>
         <article class="metric metric-library">
           <span>业务底库</span>
           <strong><b id="metric-sources">—</b> 信源 · <b id="metric-companies">—</b> 公司</strong>
-          <small>业务字段仍以“待业务确认”为准</small>
+          <small>公开平台可跳转，受限来源转人工核验</small>
         </article>
       </section>
 
@@ -126,10 +127,10 @@
         <article class="catalog-panel source-panel">
           <div class="panel-heading compact">
             <div>
-              <p class="eyebrow">48 个固定信源 · 8 类</p>
-              <h2>信源覆盖版图</h2>
+              <p class="eyebrow">48 个固定信源 · 8 类 · 全部可操作</p>
+              <h2>48 个信源核验网络</h2>
             </div>
-            <button class="text-button" id="open-library-secondary" type="button">查看说明</button>
+            <button class="text-button" id="open-library-secondary" type="button">查看全部核验入口</button>
           </div>
           <div class="layer-chart" id="layer-chart" aria-label="各类信源数量"></div>
         </article>
@@ -140,13 +141,14 @@
               <p class="eyebrow">27 家目标公司底库</p>
               <h2>公司底库就绪度</h2>
             </div>
+            <button class="text-button" id="open-company-library" type="button">查看公司库</button>
           </div>
           <div class="company-status-grid">
             <div><span>合作历史</span><strong>待逐项确认</strong></div>
             <div><span>联系人掌握</span><strong>待逐项确认</strong></div>
             <div><span>业务优先级</span><strong>待逐项确认</strong></div>
           </div>
-          <p class="scope-note">现有白色内容仅作为系统建议，不替代业务部门正式结论。</p>
+          <p class="scope-note">公开版仅展示中性系统观察；合作史、联系人和内部优先级待登录后由业务确认。</p>
         </article>
 
         <article class="catalog-panel task-panel">
@@ -223,9 +225,9 @@
           <h2 id="how-to-read">从发现项目到招商跟进</h2>
         </div>
         <ol>
-          <li><b>发现</b><span>按 48 个固定信源组织公开信息更新与人工复核。</span></li>
-          <li><b>归集</b><span>把同一项目的公开证据集中到一张卡片。</span></li>
-          <li><b>核验</b><span>同名备案只作为候选，继续核对主体与版本。</span></li>
+          <li><b>发现</b><span>按 48 个固定信源持续发现项目线索。</span></li>
+          <li><b>归集</b><span>把具体原文与项目关系集中到一张证据卡。</span></li>
+          <li><b>核验</b><span>一键跳转官方、平台、媒体与社交入口交叉核对。</span></li>
           <li><b>跟进</b><span>由业务人员确认优先级、负责人和下一步。</span></li>
         </ol>
       </section>
@@ -233,7 +235,7 @@
 
     <footer>
       <p>横店剧组招商线索雷达 · 领导公开演示版</p>
-      <p>数据来自可追溯公开证据；不包含联系人、私域内容、账号凭据或 API 密钥。</p>
+      <p>已取得依据与可核验入口分开计数；不公开联系人、私域内容、账号凭据或 API 密钥。</p>
     </footer>
 
     <div class="drawer-backdrop" id="drawer-backdrop" hidden></div>
@@ -246,16 +248,16 @@
         <button class="icon-button" id="close-drawer" type="button" aria-label="关闭证据详情">关闭</button>
       </div>
       <div class="drawer-content" id="drawer-content"></div>
-      <p class="drawer-boundary" id="drawer-boundary">证据只支持其标明的事实范围，不自动证明当前状态、主体或版本一致。</p>
+      <p class="drawer-boundary" id="drawer-boundary">已取得依据只支持其标明的事实范围；平台入口仅供继续核验，不自动证明当前状态、主体或版本一致。</p>
     </aside>
 
     <aside class="drawer" id="library-drawer" role="dialog" aria-modal="true" aria-labelledby="library-title" hidden>
       <div class="drawer-header">
         <div>
-          <p class="eyebrow">正式业务底库</p>
-          <h2 id="library-title">信源与公司说明</h2>
+          <p class="eyebrow">全量核验网络</p>
+          <h2 id="library-title">信源核验库</h2>
         </div>
-        <button class="icon-button" id="close-library" type="button" aria-label="关闭底库说明">关闭</button>
+        <button class="icon-button" id="close-library" type="button" aria-label="关闭信源核验库">关闭</button>
       </div>
       <div class="drawer-content" id="library-content"></div>
     </aside>
