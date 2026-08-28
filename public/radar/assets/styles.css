@@ -499,6 +499,8 @@ footer {
 .evidence-meta { display: flex; flex-wrap: wrap; gap: 7px; align-items: center; margin-bottom: 11px; }
 .evidence-kind { padding: 6px 8px; color: var(--teal-700); background: var(--teal-100); }
 .evidence-kind.official { color: #76501f; background: var(--sand); }
+.evidence-kind.pending { color: #77501d; background: var(--amber-soft); }
+.lead-record-item { border-style: dashed; background: #fffdf8; }
 .evidence-date { color: var(--muted); font-size: 11px; }
 .evidence-item h4 { margin: 0 0 9px; font-size: 14px; }
 .evidence-item p { margin: 0 0 11px; color: #49615d; font-size: 12px; line-height: 1.7; }
@@ -749,7 +751,8 @@ body.drawer-open { overflow: hidden; }
   .source-business-fields, .company-fields { grid-template-columns: 1fr; }
   .source-card > summary { grid-template-columns: 32px minmax(0, 1fr); }
   .source-mode { grid-column: 2; justify-self: start; }
-  .source-actions .source-link { min-height: 44px; }
+  .source-actions .source-link,
+  .company-card > .source-link { min-height: 44px; }
   .drawer-boundary { margin-inline: 18px; }
 }
 

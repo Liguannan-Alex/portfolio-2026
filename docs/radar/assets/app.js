@@ -89,21 +89,21 @@
     return safeExternalUrl(candidate);
   }
 
-  function businessValueOrPending(value, internalOnly = false) {
-    if (internalOnly) return value ? "已确认（登录后可见）" : "待业务确认";
-    return value === null || value === undefined || String(value).trim() === "" ? "待业务确认" : String(value);
+  function publicBusinessValue() {
+    return "待业务确认";
   }
 
   function evidenceCounts(project) {
     return project.evidence.reduce((counts, item) => {
       counts[item.category] = (counts[item.category] || 0) + 1;
       return counts;
-    }, { official: 0, production: 0 });
+    }, { official: 0, social: 0 });
   }
 
   function projectNextStep(project) {
     if (project.filing) return "核对同名备案的主体、版本与招商价值";
-    return "更新片场状态，并继续查找备案或平台证据";
+    if ((project.leadRecords || []).length > 0) return "定位对应原帖，并继续查找备案或平台依据";
+    return "交叉核验第三方线索，并继续查找备案或平台依据";
   }
 
   function projectCard(project, index) {
@@ -111,14 +111,17 @@
     const filingApplicant = filing?.filingApplicant || "待业务确认";
     const filingLabel = filing ? "找到同名备案，待核对主体" : "当前资料中暂未找到备案";
     const counts = evidenceCounts(project);
-    const evidenceLabel = filing
-      ? `已取得 ${project.evidence.length} 条依据 · 备案 ${counts.official} · 片场 ${counts.production}`
-      : `已取得 ${project.evidence.length} 条依据 · 备案待补`;
+    const leadCount = (project.leadRecords || []).length;
+    const evidenceLabel = project.evidence.length > 0
+      ? `已取得 ${project.evidence.length} 条依据 · 备案 ${counts.official} · 第三方线索 ${counts.social}`
+      : `尚未取得可追溯原文 · ${leadCount} 条待定位线索`;
+    const statusLabel = filing ? "备案候选待核" : project.evidence.length > 0 ? "第三方线索待核" : "原帖待定位";
+    const cardEvidenceSummary = `${project.evidence.length} 条依据${leadCount ? ` · ${leadCount} 条待定位线索` : ""}`;
     return `
       <article class="project-card ${filing ? "cross-project" : "single-project"}">
         <div class="card-top">
           <span class="project-index">${String(index + 1).padStart(2, "0")}</span>
-          <span class="status-badge ${filing ? "filing" : "tracking"}">${filing ? "双来源待核" : "片场线索待补备案"}</span>
+          <span class="status-badge ${filing ? "filing" : "tracking"}">${statusLabel}</span>
         </div>
         <h3>${escapeHtml(project.name)}</h3>
         <p class="card-stage">${escapeHtml(project.stage)}</p>
@@ -131,7 +134,7 @@
           <div><dt>下一步</dt><dd>${escapeHtml(projectNextStep(project))}</dd></div>
         </dl>
         <div class="card-footer">
-          <span>${project.evidence.length} 条依据 · 最新 ${displayDate(project.latestEvidenceAt)}</span>
+          <span>${cardEvidenceSummary}${project.latestEvidenceAt ? ` · 最新 ${displayDate(project.latestEvidenceAt)}` : ""}</span>
           <button class="evidence-button" type="button" data-project-id="${escapeHtml(project.id)}">查看完整证据链</button>
         </div>
       </article>`;
@@ -145,9 +148,10 @@
       if (query && !searchable.includes(query)) return false;
       if (state.verification === "cross" && !project.filing) return false;
       if (state.verification === "single" && project.filing) return false;
-      const productionDates = project.evidence.filter((item) => item.category === "production").map((item) => item.publishedAt);
-      if (state.production === "recent" && !productionDates.some((date) => date === "2026-08-25")) return false;
-      if (state.production === "earlier" && !productionDates.some((date) => date === "2026-08-18")) return false;
+      const signalDates = project.evidence.filter((item) => item.category === "social").map((item) => item.publishedAt)
+        .concat((project.leadRecords || []).map((item) => item.observedAt));
+      if (state.production === "recent" && !signalDates.some((date) => date === "2026-08-25")) return false;
+      if (state.production === "earlier" && !signalDates.some((date) => date === "2026-08-21")) return false;
       return true;
     });
 
@@ -173,35 +177,37 @@
 
   function renderLeadershipOverview() {
     const allEvidence = data.projects.flatMap((project) => project.evidence);
+    const allLeadRecords = data.projects.flatMap((project) => project.leadRecords || []);
     const originalMaterialCount = data.originalMaterialCount
       || new Set(allEvidence.map((item) => safeExternalUrl(item.url)).filter(Boolean)).size;
     const officialCount = allEvidence.filter((item) => item.category === "official").length;
-    const productionEvidence = allEvidence.filter((item) => item.category === "production");
-    const productionCount = productionEvidence.length;
+    const socialEvidence = allEvidence.filter((item) => item.category === "social");
+    const socialCount = socialEvidence.length;
     const dualCount = data.projects.filter((project) => Boolean(project.filing)).length;
     const singleCount = data.projects.length - dualCount;
-    const recentCount = productionEvidence.filter((item) => item.publishedAt === "2026-08-25").length;
-    const earlierCount = productionEvidence.filter((item) => item.publishedAt === "2026-08-18").length;
+    const recentCount = allLeadRecords.filter((item) => item.observedAt === "2026-08-25").length;
+    const earlierCount = socialEvidence.filter((item) => item.publishedAt === "2026-08-21").length;
+    const reviewCount = socialCount + allLeadRecords.length;
     const crossPercent = Math.round((dualCount / data.projects.length) * 100);
 
-    setText("#snapshot-date", displayDate(data.evidenceThrough));
+    setText("#snapshot-date", displayDate(data.snapshotThrough || data.evidenceThrough));
     setText("#metric-projects", data.projects.length);
     setText("#metric-filings", dualCount);
     setText("#metric-evidence", allEvidence.length);
     setText("#metric-originals", originalMaterialCount);
     setText("#metric-official", officialCount);
-    setText("#metric-production", productionCount);
+    setText("#metric-production", socialCount);
     setText("#metric-sources", sources.length || catalog.sourceCount || data.catalog.sourceCount);
     setText("#metric-companies", companies.length || catalog.companyCount || data.catalog.companyCount);
     setText("#cross-rate", `${dualCount} / ${data.projects.length} · ${crossPercent}%`);
     setText("#dual-count", dualCount);
     setText("#single-count", singleCount);
-    setText("#review-evidence-count", productionCount);
+    setText("#review-evidence-count", reviewCount);
     setText("#recent-evidence-count", recentCount);
     setText("#earlier-evidence-count", earlierCount);
     setText("#task-identity", `${dualCount} 个`);
     setText("#task-filing", `${singleCount} 个`);
-    setText("#task-source-review", `${productionCount} 条`);
+    setText("#task-source-review", `${reviewCount} 条`);
 
     const progressBar = document.querySelector("#verification-bar");
     if (progressBar) progressBar.style.width = `${crossPercent}%`;
@@ -242,6 +248,21 @@
       </article>`;
   }
 
+  function leadRecordItem(item) {
+    const sourceUrl = safeExternalUrl(item.url);
+    return `
+      <article class="evidence-item lead-record-item">
+        <div class="evidence-meta">
+          <span class="evidence-kind pending">待定位原帖</span>
+          <span class="evidence-date">记录日 ${displayDate(item.observedAt)}</span>
+        </div>
+        <h4>${escapeHtml(item.title || "账号线索待复核")}</h4>
+        <p><b>来源账号：</b>${escapeHtml(item.sourceName)}</p>
+        <p class="evidence-scope"><b>边界：</b>${escapeHtml(item.scope)}</p>
+        ${sourceUrl ? `<a class="source-link" href="${escapeHtml(sourceUrl)}" target="_blank" rel="noopener noreferrer">打开来源账号（非原帖）↗</a>` : '<span class="source-link unavailable">来源账号入口待补</span>'}
+      </article>`;
+  }
+
   function sourceLinks(source, projectName) {
     const entry = source.entry || {};
     const endpointList = Array.isArray(entry.endpoints) && entry.endpoints.length > 0 ? entry.endpoints : [entry];
@@ -261,20 +282,10 @@
 
   function renderSourceCard(source, projectName = "") {
     const suggestion = source.systemSuggestion || {};
-    const business = source.businessConfirmation || {};
     const entry = source.entry || {};
     const mode = sourceModeMeta[entry.mode] || { label: "入口待确认", className: "manual" };
     const queryName = projectName || source.name;
-    const businessFields = [
-      ["在用状态", business.usageStatus],
-      ["实际提前量", business.actualLeadTime],
-      ["可靠度", business.reliability],
-      ["覆盖剧组类型", business.crewTypes],
-      ["获取方式", business.accessMethod],
-      ["主要用途", business.primaryUse],
-      ["负责人（内部字段）", business.owner, true],
-      ["使用心得与坑", business.notes],
-    ];
+    const businessFields = ["在用状态", "实际提前量", "可靠度", "覆盖剧组类型", "获取方式", "主要用途", "负责人（内部字段）", "使用心得与坑"];
     return `
       <details class="source-card" data-source-id="${escapeHtml(source.id)}">
         <summary>
@@ -289,8 +300,8 @@
             <p><b>预判提前量：</b>${escapeHtml(suggestion.expectedLeadTime || "待补充")}</p>
           </div>
           <dl class="source-business-fields">
-            ${businessFields.map(([label, value, internalOnly]) => `
-              <div><dt>${escapeHtml(label)}</dt><dd class="${value ? "" : "pending"}">${escapeHtml(businessValueOrPending(value, internalOnly))}</dd></div>`).join("")}
+            ${businessFields.map((label) => `
+              <div><dt>${escapeHtml(label)}</dt><dd class="pending">${escapeHtml(publicBusinessValue())}</dd></div>`).join("")}
           </dl>
           <div class="source-entry-guidance">
             <b>核验方式：</b>${escapeHtml(entry.guidance || "入口与核验方式待补充。")}
@@ -355,14 +366,15 @@
     activeEvidenceProject = project;
     projectSourceState.query = "";
     projectSourceState.layer = "all";
-    document.querySelector("#drawer-title").textContent = `${project.name} · 证据依据`;
+    document.querySelector("#drawer-title").textContent = `${project.name} · 证据与核验任务`;
     const filingText = project.filing
       ? `${project.filing.conclusion}；候选编号：${project.filing.reference}`
       : "当前资料中暂未找到备案证据；这不等于项目未备案。";
     const counts = evidenceCounts(project);
+    const leadRecords = project.leadRecords || [];
     drawerContent.innerHTML = `
       <section class="drawer-summary">
-        <div class="drawer-status-row"><span class="status-badge ${project.filing ? "filing" : "tracking"}">${project.filing ? "双来源待核" : "片场线索待补备案"}</span><span>备案 ${counts.official} · 片场 ${counts.production}</span></div>
+        <div class="drawer-status-row"><span class="status-badge ${project.filing ? "filing" : "tracking"}">${project.filing ? "备案候选待核" : "公开线索待核"}</span><span>备案 ${counts.official} · 第三方线索 ${counts.social} · 待定位 ${leadRecords.length}</span></div>
         <h3>${escapeHtml(project.name)}</h3>
         <p>${escapeHtml(filingText)}</p>
       </section>
@@ -372,9 +384,15 @@
     ? project.evidence.map(evidenceItem).join("")
     : '<div class="source-empty"><strong>尚未取得可追溯原文</strong><span>此状态不代表项目不存在。</span></div>'}
       </section>
+      ${leadRecords.length > 0 ? `
+      <section class="lead-record-section" aria-labelledby="lead-record-title">
+        <div class="drawer-section-heading"><div><p class="eyebrow">不计入项目依据</p><h3 id="lead-record-title">待定位原帖</h3></div><strong>${leadRecords.length} 条</strong></div>
+        <p class="verification-boundary"><b>这里只记录来源账号入口。</b> 对应项目原帖尚未定位，因此不能作为“已取得依据”。</p>
+        ${leadRecords.map(leadRecordItem).join("")}
+      </section>` : ""}
       <section class="verification-section" aria-labelledby="verification-network-title">
         <div class="drawer-section-heading"><div><p class="eyebrow">48 个固定信源核验网络</p><h3 id="verification-network-title">继续交叉核验</h3></div><strong>${sources.length} 个入口</strong></div>
-        <p class="verification-boundary"><b>可核验入口，不计入项目依据。</b> 点击平台入口时已自动带入“${escapeHtml(project.name)}”；需登录、人工或人脉核验的渠道按其权限边界处理。</p>
+        <p class="verification-boundary"><b>可核验入口，不计入项目依据。</b> 支持站内搜索的入口会自动带入“${escapeHtml(project.name)}”；其他入口打开官网或转为登录、人工、人脉核验任务。</p>
         <div class="source-directory-controls">
           <label><span>搜索信源</span><input id="project-source-search" type="search" value="" placeholder="平台、公众号、备案或片场"></label>
           <label><span>信源层级</span><select id="project-source-layer">${layerOptions("all")}</select></label>
@@ -390,15 +408,12 @@
     const aliases = Array.isArray(company.aliases) && company.aliases.length > 0
       ? company.aliases.join("、")
       : "暂无公开别名";
-    const confirmations = company.businessConfirmation || {};
-    const confirmationState = Object.values(confirmations).some((value) => value !== null && value !== undefined && String(value).trim() !== "")
-      ? "已有内部确认（登录后可见）"
-      : "待业务确认";
+    const confirmationState = "待业务确认";
     return `
       <article class="company-card">
         <div class="company-card-heading"><span class="source-order">${String(company.order).padStart(2, "0")}</span><h4>${escapeHtml(company.name)}</h4></div>
         <p><b>公开别名：</b>${escapeHtml(aliases)}</p>
-        <p><b>公开观察：</b>${escapeHtml(company.publicObservation || "待补充")}</p>
+        <p><b>系统预填观察（待核验）：</b>${escapeHtml(company.publicObservation || "待补充")}</p>
         <div class="source-suggestion"><span class="field-origin">系统建议</span><p>${escapeHtml(company.systemSuggestion || "待补充")}</p></div>
         <div class="company-confirmation-state"><span>业务字段</span><strong>${escapeHtml(confirmationState)}</strong></div>
         <p class="public-boundary">公开版不展示联系人、合作史和内部优先级。</p>
@@ -437,7 +452,7 @@
   function renderLibrary() {
     const sourceTab = libraryState.tab === "sources";
     libraryContent.innerHTML = `
-      <p class="library-intro">48 个信源和 27 家公司来自业务提供的底库。白色预填内容标为“系统建议”；尚未确认的业务字段继续显示“待业务确认”。核验入口不等于已取得项目依据。</p>
+      <p class="library-intro">48 个信源名称、层级与预填建议，以及 27 家公司名称来自业务提供的底库。公开版对公司建议作中性化呈现；所有业务确认字段统一隐藏为“待业务确认”。核验入口不等于已取得项目依据。</p>
       <div class="library-stats">
         <div class="library-stat"><strong>${sources.length}</strong><span>固定信源</span></div>
         <div class="library-stat"><strong>${sourceLayers.length}</strong><span>信源分类</span></div>
@@ -481,7 +496,7 @@
     if (event.key !== "Tab" || backdrop.hidden) return;
     const drawer = evidenceDrawer.hidden ? libraryDrawer : evidenceDrawer;
     const focusable = Array.from(drawer.querySelectorAll('a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), summary, [tabindex]:not([tabindex="-1"])'))
-      .filter((element) => !element.hidden && element.getAttribute("aria-hidden") !== "true");
+      .filter((element) => !element.hidden && element.getAttribute("aria-hidden") !== "true" && element.getClientRects().length > 0);
     if (focusable.length === 0) return;
     const first = focusable[0];
     const last = focusable[focusable.length - 1];

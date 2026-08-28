@@ -1,82 +1,85 @@
 window.__HENGDIAN_PAGES_DEMO__ = {
-  "evidenceThrough": "2026-08-25",
-  "evidenceCount": 25,
+  "snapshotThrough": "2026-08-25",
+  "evidenceThrough": "2026-08-21",
+  "evidenceCount": 19,
   "filingCount": 5,
   "projects": [
     {
       "id": "project-curated-三少爷的剑",
       "name": "三少爷的剑",
-      "stage": "片场动态快照",
-      "hengdianStatus": "截至公开观察日有片场动态",
+      "stage": "第三方在拍线索",
+      "hengdianStatus": "第三方文章提及在横店拍摄，待官方交叉核验",
       "needsReview": true,
       "lastVerifiedAt": null,
-      "latestEvidenceAt": "2026-08-18",
+      "latestEvidenceAt": "2026-08-21",
       "filing": null,
       "evidence": [
         {
-          "category": "production",
-          "reviewStatus": "待原账号复核",
-          "sourceName": "横店影视城片场·周动态证据",
-          "title": "三少爷的剑",
+          "category": "social",
+          "reviewStatus": "第三方公开线索，待官方交叉核验",
+          "sourceName": "凌舟逢晚茉（微博认证电视剧博主）",
+          "title": "横店影视城在拍长剧仅16部",
           "url": "https://www.sina.cn/news/detail/5334389597669897.html",
-          "publishedAt": "2026-08-18",
-          "scope": "仅证明报道日的片场动态，不代表今天仍在拍",
-          "sourceId": "source-037"
+          "publishedAt": "2026-08-21",
+          "scope": "仅证明该第三方文章在发布日将项目列入横店在拍长剧，待官方交叉核验；不代表官方确认或当前仍在拍",
+          "sourceId": "source-029"
         }
       ]
     },
     {
       "id": "project-curated-临安若梦之凤起云帆",
       "name": "临安若梦之凤起云帆",
-      "stage": "片场动态快照",
-      "hengdianStatus": "截至公开观察日有片场动态",
+      "stage": "第三方在拍线索",
+      "hengdianStatus": "第三方文章提及在横店拍摄，待官方交叉核验",
       "needsReview": true,
       "lastVerifiedAt": null,
-      "latestEvidenceAt": "2026-08-18",
+      "latestEvidenceAt": "2026-08-21",
       "filing": null,
       "evidence": [
         {
-          "category": "production",
-          "reviewStatus": "待原账号复核",
-          "sourceName": "横店影视城片场·周动态证据",
-          "title": "临安若梦之凤起云帆",
+          "category": "social",
+          "reviewStatus": "第三方公开线索，待官方交叉核验",
+          "sourceName": "凌舟逢晚茉（微博认证电视剧博主）",
+          "title": "横店影视城在拍长剧仅16部",
           "url": "https://www.sina.cn/news/detail/5334389597669897.html",
-          "publishedAt": "2026-08-18",
-          "scope": "仅证明报道日的片场动态，不代表今天仍在拍",
-          "sourceId": "source-037"
+          "publishedAt": "2026-08-21",
+          "scope": "仅证明该第三方文章在发布日将项目列入横店在拍长剧，待官方交叉核验；不代表官方确认或当前仍在拍",
+          "sourceId": "source-029"
         }
       ]
     },
     {
       "id": "project-curated-云京令",
       "name": "云京令",
-      "stage": "片场动态快照",
-      "hengdianStatus": "截至公开观察日有片场动态",
+      "stage": "片场线索待定位",
+      "hengdianStatus": "已定位片场账号入口，对应原帖待定位，暂不能确认横店关联",
       "needsReview": true,
       "lastVerifiedAt": null,
-      "latestEvidenceAt": "2026-08-25",
+      "latestEvidenceAt": null,
       "filing": null,
-      "evidence": [
+      "evidence": [],
+      "leadRecords": [
         {
-          "category": "production",
-          "reviewStatus": "待原账号复核",
-          "sourceName": "横店影视城片场·周动态证据",
-          "title": "云京令",
+          "category": "production_account",
+          "status": "账号入口已定位，对应原帖待定位",
+          "sourceName": "横店影视城片场（新浪账号入口）",
+          "title": "云京令：对应原帖待定位",
           "url": "https://www.sina.cn/media/7927216783",
-          "publishedAt": "2026-08-25",
-          "scope": "仅证明报道日的片场动态，不代表今天仍在拍",
-          "sourceId": "source-037"
+          "observedAt": "2026-08-25",
+          "scope": "仅证明账号入口已定位，不证明该项目在横店拍摄或当前仍在拍，不计入依据",
+          "sourceId": "source-037",
+          "countsAsEvidence": false
         }
       ]
     },
     {
       "id": "project-curated-公主",
       "name": "公·主",
-      "stage": "片场动态快照",
-      "hengdianStatus": "截至公开观察日有片场动态",
+      "stage": "第三方在拍线索",
+      "hengdianStatus": "第三方文章提及在横店拍摄，待官方交叉核验",
       "needsReview": true,
       "lastVerifiedAt": null,
-      "latestEvidenceAt": "2026-08-18",
+      "latestEvidenceAt": "2026-08-21",
       "filing": {
         "status": "title_match",
         "conclusion": "找到同名备案，待核对主体",
@@ -85,14 +88,14 @@ window.__HENGDIAN_PAGES_DEMO__ = {
       },
       "evidence": [
         {
-          "category": "production",
-          "reviewStatus": "待原账号复核",
-          "sourceName": "横店影视城片场·周动态证据",
-          "title": "公·主",
+          "category": "social",
+          "reviewStatus": "第三方公开线索，待官方交叉核验",
+          "sourceName": "凌舟逢晚茉（微博认证电视剧博主）",
+          "title": "横店影视城在拍长剧仅16部",
           "url": "https://www.sina.cn/news/detail/5334389597669897.html",
-          "publishedAt": "2026-08-18",
-          "scope": "仅证明报道日的片场动态，不代表今天仍在拍",
-          "sourceId": "source-037"
+          "publishedAt": "2026-08-21",
+          "scope": "仅证明该第三方文章在发布日将项目列入横店在拍长剧，待官方交叉核验；不代表官方确认或当前仍在拍",
+          "sourceId": "source-029"
         },
         {
           "category": "official",
@@ -109,11 +112,11 @@ window.__HENGDIAN_PAGES_DEMO__ = {
     {
       "id": "project-curated-千夜奇谭",
       "name": "千夜奇谭",
-      "stage": "片场动态快照",
-      "hengdianStatus": "截至公开观察日有片场动态",
+      "stage": "同名备案待核对",
+      "hengdianStatus": "已定位片场账号入口，对应原帖待定位，暂不能确认横店关联",
       "needsReview": true,
       "lastVerifiedAt": null,
-      "latestEvidenceAt": "2026-08-25",
+      "latestEvidenceAt": "2025-12-31",
       "filing": {
         "status": "title_match",
         "conclusion": "找到同名备案，待核对主体",
@@ -122,16 +125,6 @@ window.__HENGDIAN_PAGES_DEMO__ = {
       },
       "evidence": [
         {
-          "category": "production",
-          "reviewStatus": "待原账号复核",
-          "sourceName": "横店影视城片场·周动态证据",
-          "title": "千夜奇谭",
-          "url": "https://www.sina.cn/media/7927216783",
-          "publishedAt": "2026-08-25",
-          "scope": "仅证明报道日的片场动态，不代表今天仍在拍",
-          "sourceId": "source-037"
-        },
-        {
           "category": "official",
           "reviewStatus": "国家公开页同名记录",
           "sourceName": "国家公开公示同步·人工核录",
@@ -141,38 +134,51 @@ window.__HENGDIAN_PAGES_DEMO__ = {
           "scope": "仅证明公开备案记录存在，不自动确认主体、版本或当前拍摄状态",
           "sourceId": "source-001"
         }
+      ],
+      "leadRecords": [
+        {
+          "category": "production_account",
+          "status": "账号入口已定位，对应原帖待定位",
+          "sourceName": "横店影视城片场（新浪账号入口）",
+          "title": "千夜奇谭：对应原帖待定位",
+          "url": "https://www.sina.cn/media/7927216783",
+          "observedAt": "2026-08-25",
+          "scope": "仅证明账号入口已定位，不证明该项目在横店拍摄或当前仍在拍，不计入依据",
+          "sourceId": "source-037",
+          "countsAsEvidence": false
+        }
       ]
     },
     {
       "id": "project-curated-团圆之后",
       "name": "团圆之后",
-      "stage": "片场动态快照",
-      "hengdianStatus": "截至公开观察日有片场动态",
+      "stage": "第三方在拍线索",
+      "hengdianStatus": "第三方文章提及在横店拍摄，待官方交叉核验",
       "needsReview": true,
       "lastVerifiedAt": null,
-      "latestEvidenceAt": "2026-08-18",
+      "latestEvidenceAt": "2026-08-21",
       "filing": null,
       "evidence": [
         {
-          "category": "production",
-          "reviewStatus": "待原账号复核",
-          "sourceName": "横店影视城片场·周动态证据",
-          "title": "团圆之后",
+          "category": "social",
+          "reviewStatus": "第三方公开线索，待官方交叉核验",
+          "sourceName": "凌舟逢晚茉（微博认证电视剧博主）",
+          "title": "横店影视城在拍长剧仅16部",
           "url": "https://www.sina.cn/news/detail/5334389597669897.html",
-          "publishedAt": "2026-08-18",
-          "scope": "仅证明报道日的片场动态，不代表今天仍在拍",
-          "sourceId": "source-037"
+          "publishedAt": "2026-08-21",
+          "scope": "仅证明该第三方文章在发布日将项目列入横店在拍长剧，待官方交叉核验；不代表官方确认或当前仍在拍",
+          "sourceId": "source-029"
         }
       ]
     },
     {
       "id": "project-curated-恰逢春",
       "name": "恰逢春",
-      "stage": "片场动态快照",
-      "hengdianStatus": "截至公开观察日有片场动态",
+      "stage": "第三方在拍线索",
+      "hengdianStatus": "第三方文章提及在横店拍摄，待官方交叉核验",
       "needsReview": true,
       "lastVerifiedAt": null,
-      "latestEvidenceAt": "2026-08-25",
+      "latestEvidenceAt": "2026-08-21",
       "filing": {
         "status": "title_match",
         "conclusion": "找到同名备案，待核对主体",
@@ -181,24 +187,14 @@ window.__HENGDIAN_PAGES_DEMO__ = {
       },
       "evidence": [
         {
-          "category": "production",
-          "reviewStatus": "待原账号复核",
-          "sourceName": "横店影视城片场·周动态证据",
-          "title": "恰逢春",
-          "url": "https://www.sina.cn/media/7927216783",
-          "publishedAt": "2026-08-25",
-          "scope": "仅证明报道日的片场动态，不代表今天仍在拍",
-          "sourceId": "source-037"
-        },
-        {
-          "category": "production",
-          "reviewStatus": "待原账号复核",
-          "sourceName": "横店影视城片场·周动态证据",
-          "title": "恰逢春",
+          "category": "social",
+          "reviewStatus": "第三方公开线索，待官方交叉核验",
+          "sourceName": "凌舟逢晚茉（微博认证电视剧博主）",
+          "title": "横店影视城在拍长剧仅16部",
           "url": "https://www.sina.cn/news/detail/5334389597669897.html",
-          "publishedAt": "2026-08-18",
-          "scope": "仅证明报道日的片场动态，不代表今天仍在拍",
-          "sourceId": "source-037"
+          "publishedAt": "2026-08-21",
+          "scope": "仅证明该第三方文章在发布日将项目列入横店在拍长剧，待官方交叉核验；不代表官方确认或当前仍在拍",
+          "sourceId": "source-029"
         },
         {
           "category": "official",
@@ -210,60 +206,73 @@ window.__HENGDIAN_PAGES_DEMO__ = {
           "scope": "仅证明公开备案记录存在，不自动确认主体、版本或当前拍摄状态",
           "sourceId": "source-001"
         }
+      ],
+      "leadRecords": [
+        {
+          "category": "production_account",
+          "status": "账号入口已定位，对应原帖待定位",
+          "sourceName": "横店影视城片场（新浪账号入口）",
+          "title": "恰逢春：对应原帖待定位",
+          "url": "https://www.sina.cn/media/7927216783",
+          "observedAt": "2026-08-25",
+          "scope": "仅证明账号入口已定位，不证明该项目在横店拍摄或当前仍在拍，不计入依据",
+          "sourceId": "source-037",
+          "countsAsEvidence": false
+        }
       ]
     },
     {
       "id": "project-curated-我的仵作前辈",
       "name": "我的仵作前辈",
-      "stage": "片场动态快照",
-      "hengdianStatus": "截至公开观察日有片场动态",
+      "stage": "第三方在拍线索",
+      "hengdianStatus": "第三方文章提及在横店拍摄，待官方交叉核验",
       "needsReview": true,
       "lastVerifiedAt": null,
-      "latestEvidenceAt": "2026-08-18",
+      "latestEvidenceAt": "2026-08-21",
       "filing": null,
       "evidence": [
         {
-          "category": "production",
-          "reviewStatus": "待原账号复核",
-          "sourceName": "横店影视城片场·周动态证据",
-          "title": "我的仵作前辈",
+          "category": "social",
+          "reviewStatus": "第三方公开线索，待官方交叉核验",
+          "sourceName": "凌舟逢晚茉（微博认证电视剧博主）",
+          "title": "横店影视城在拍长剧仅16部",
           "url": "https://www.sina.cn/news/detail/5334389597669897.html",
-          "publishedAt": "2026-08-18",
-          "scope": "仅证明报道日的片场动态，不代表今天仍在拍",
-          "sourceId": "source-037"
+          "publishedAt": "2026-08-21",
+          "scope": "仅证明该第三方文章在发布日将项目列入横店在拍长剧，待官方交叉核验；不代表官方确认或当前仍在拍",
+          "sourceId": "source-029"
         }
       ]
     },
     {
       "id": "project-curated-江湖有个云岫阁",
       "name": "江湖有个云岫阁",
-      "stage": "片场动态快照",
-      "hengdianStatus": "截至公开观察日有片场动态",
+      "stage": "第三方在拍线索",
+      "hengdianStatus": "第三方文章提及在横店拍摄，待官方交叉核验",
       "needsReview": true,
       "lastVerifiedAt": null,
-      "latestEvidenceAt": "2026-08-18",
+      "latestEvidenceAt": "2026-08-21",
       "filing": null,
       "evidence": [
         {
-          "category": "production",
-          "reviewStatus": "待原账号复核",
-          "sourceName": "横店影视城片场·周动态证据",
-          "title": "江湖有个云岫阁",
+          "category": "social",
+          "reviewStatus": "第三方公开线索，待官方交叉核验",
+          "sourceName": "凌舟逢晚茉（微博认证电视剧博主）",
+          "title": "横店影视城在拍长剧仅16部",
           "url": "https://www.sina.cn/news/detail/5334389597669897.html",
-          "publishedAt": "2026-08-18",
-          "scope": "仅证明报道日的片场动态，不代表今天仍在拍",
-          "sourceId": "source-037"
+          "publishedAt": "2026-08-21",
+          "scope": "仅证明该第三方文章在发布日将项目列入横店在拍长剧，待官方交叉核验；不代表官方确认或当前仍在拍",
+          "sourceId": "source-029"
         }
       ]
     },
     {
       "id": "project-curated-珠雀",
       "name": "珠雀",
-      "stage": "片场动态快照",
-      "hengdianStatus": "截至公开观察日有片场动态",
+      "stage": "同名备案待核对",
+      "hengdianStatus": "已定位片场账号入口，对应原帖待定位，暂不能确认横店关联",
       "needsReview": true,
       "lastVerifiedAt": null,
-      "latestEvidenceAt": "2026-08-25",
+      "latestEvidenceAt": "2025-11-03",
       "filing": {
         "status": "title_match",
         "conclusion": "找到同名备案，待核对主体",
@@ -271,16 +280,6 @@ window.__HENGDIAN_PAGES_DEMO__ = {
         "filingApplicant": "青岛春风画面文化传媒有限公司"
       },
       "evidence": [
-        {
-          "category": "production",
-          "reviewStatus": "待原账号复核",
-          "sourceName": "横店影视城片场·周动态证据",
-          "title": "珠雀",
-          "url": "https://www.sina.cn/media/7927216783",
-          "publishedAt": "2026-08-25",
-          "scope": "仅证明报道日的片场动态，不代表今天仍在拍",
-          "sourceId": "source-037"
-        },
         {
           "category": "official",
           "reviewStatus": "国家公开页同名记录",
@@ -291,136 +290,152 @@ window.__HENGDIAN_PAGES_DEMO__ = {
           "scope": "仅证明公开备案记录存在，不自动确认主体、版本或当前拍摄状态",
           "sourceId": "source-001"
         }
+      ],
+      "leadRecords": [
+        {
+          "category": "production_account",
+          "status": "账号入口已定位，对应原帖待定位",
+          "sourceName": "横店影视城片场（新浪账号入口）",
+          "title": "珠雀：对应原帖待定位",
+          "url": "https://www.sina.cn/media/7927216783",
+          "observedAt": "2026-08-25",
+          "scope": "仅证明账号入口已定位，不证明该项目在横店拍摄或当前仍在拍，不计入依据",
+          "sourceId": "source-037",
+          "countsAsEvidence": false
+        }
       ]
     },
     {
       "id": "project-curated-神医凤轻尘",
       "name": "神医凤轻尘",
-      "stage": "片场动态快照",
-      "hengdianStatus": "截至公开观察日有片场动态",
+      "stage": "第三方在拍线索",
+      "hengdianStatus": "第三方文章提及在横店拍摄，待官方交叉核验",
       "needsReview": true,
       "lastVerifiedAt": null,
-      "latestEvidenceAt": "2026-08-18",
+      "latestEvidenceAt": "2026-08-21",
       "filing": null,
       "evidence": [
         {
-          "category": "production",
-          "reviewStatus": "待原账号复核",
-          "sourceName": "横店影视城片场·周动态证据",
-          "title": "神医凤轻尘",
+          "category": "social",
+          "reviewStatus": "第三方公开线索，待官方交叉核验",
+          "sourceName": "凌舟逢晚茉（微博认证电视剧博主）",
+          "title": "横店影视城在拍长剧仅16部",
           "url": "https://www.sina.cn/news/detail/5334389597669897.html",
-          "publishedAt": "2026-08-18",
-          "scope": "仅证明报道日的片场动态，不代表今天仍在拍",
-          "sourceId": "source-037"
+          "publishedAt": "2026-08-21",
+          "scope": "仅证明该第三方文章在发布日将项目列入横店在拍长剧，待官方交叉核验；不代表官方确认或当前仍在拍",
+          "sourceId": "source-029"
         }
       ]
     },
     {
       "id": "project-curated-神都怪谈录",
       "name": "神都怪谈录",
-      "stage": "片场动态快照",
-      "hengdianStatus": "截至公开观察日有片场动态",
+      "stage": "第三方在拍线索",
+      "hengdianStatus": "第三方文章提及在横店拍摄，待官方交叉核验",
       "needsReview": true,
       "lastVerifiedAt": null,
-      "latestEvidenceAt": "2026-08-18",
+      "latestEvidenceAt": "2026-08-21",
       "filing": null,
       "evidence": [
         {
-          "category": "production",
-          "reviewStatus": "待原账号复核",
-          "sourceName": "横店影视城片场·周动态证据",
-          "title": "神都怪谈录",
+          "category": "social",
+          "reviewStatus": "第三方公开线索，待官方交叉核验",
+          "sourceName": "凌舟逢晚茉（微博认证电视剧博主）",
+          "title": "横店影视城在拍长剧仅16部",
           "url": "https://www.sina.cn/news/detail/5334389597669897.html",
-          "publishedAt": "2026-08-18",
-          "scope": "仅证明报道日的片场动态，不代表今天仍在拍",
-          "sourceId": "source-037"
+          "publishedAt": "2026-08-21",
+          "scope": "仅证明该第三方文章在发布日将项目列入横店在拍长剧，待官方交叉核验；不代表官方确认或当前仍在拍",
+          "sourceId": "source-029"
         }
       ]
     },
     {
       "id": "project-curated-笑探太平镇",
       "name": "笑探太平镇",
-      "stage": "片场动态快照",
-      "hengdianStatus": "截至公开观察日有片场动态",
+      "stage": "第三方在拍线索",
+      "hengdianStatus": "第三方文章提及在横店拍摄，待官方交叉核验",
       "needsReview": true,
       "lastVerifiedAt": null,
-      "latestEvidenceAt": "2026-08-18",
+      "latestEvidenceAt": "2026-08-21",
       "filing": null,
       "evidence": [
         {
-          "category": "production",
-          "reviewStatus": "待原账号复核",
-          "sourceName": "横店影视城片场·周动态证据",
-          "title": "笑探太平镇",
+          "category": "social",
+          "reviewStatus": "第三方公开线索，待官方交叉核验",
+          "sourceName": "凌舟逢晚茉（微博认证电视剧博主）",
+          "title": "横店影视城在拍长剧仅16部",
           "url": "https://www.sina.cn/news/detail/5334389597669897.html",
-          "publishedAt": "2026-08-18",
-          "scope": "仅证明报道日的片场动态，不代表今天仍在拍",
-          "sourceId": "source-037"
+          "publishedAt": "2026-08-21",
+          "scope": "仅证明该第三方文章在发布日将项目列入横店在拍长剧，待官方交叉核验；不代表官方确认或当前仍在拍",
+          "sourceId": "source-029"
         }
       ]
     },
     {
       "id": "project-curated-被剧透的世界",
       "name": "被剧透的世界",
-      "stage": "片场动态快照",
-      "hengdianStatus": "截至公开观察日有片场动态",
+      "stage": "第三方在拍线索",
+      "hengdianStatus": "第三方文章提及在横店拍摄，待官方交叉核验",
       "needsReview": true,
       "lastVerifiedAt": null,
-      "latestEvidenceAt": "2026-08-25",
+      "latestEvidenceAt": "2026-08-21",
       "filing": null,
       "evidence": [
         {
-          "category": "production",
-          "reviewStatus": "待原账号复核",
-          "sourceName": "横店影视城片场·周动态证据",
-          "title": "被剧透的世界",
-          "url": "https://www.sina.cn/media/7927216783",
-          "publishedAt": "2026-08-25",
-          "scope": "仅证明报道日的片场动态，不代表今天仍在拍",
-          "sourceId": "source-037"
-        },
-        {
-          "category": "production",
-          "reviewStatus": "待原账号复核",
-          "sourceName": "横店影视城片场·周动态证据",
-          "title": "被剧透的世界",
+          "category": "social",
+          "reviewStatus": "第三方公开线索，待官方交叉核验",
+          "sourceName": "凌舟逢晚茉（微博认证电视剧博主）",
+          "title": "横店影视城在拍长剧仅16部",
           "url": "https://www.sina.cn/news/detail/5334389597669897.html",
-          "publishedAt": "2026-08-18",
-          "scope": "仅证明报道日的片场动态，不代表今天仍在拍",
-          "sourceId": "source-037"
+          "publishedAt": "2026-08-21",
+          "scope": "仅证明该第三方文章在发布日将项目列入横店在拍长剧，待官方交叉核验；不代表官方确认或当前仍在拍",
+          "sourceId": "source-029"
+        }
+      ],
+      "leadRecords": [
+        {
+          "category": "production_account",
+          "status": "账号入口已定位，对应原帖待定位",
+          "sourceName": "横店影视城片场（新浪账号入口）",
+          "title": "被剧透的世界：对应原帖待定位",
+          "url": "https://www.sina.cn/media/7927216783",
+          "observedAt": "2026-08-25",
+          "scope": "仅证明账号入口已定位，不证明该项目在横店拍摄或当前仍在拍，不计入依据",
+          "sourceId": "source-037",
+          "countsAsEvidence": false
         }
       ]
     },
     {
       "id": "project-curated-越狱",
       "name": "越狱",
-      "stage": "片场动态快照",
-      "hengdianStatus": "截至公开观察日有片场动态",
+      "stage": "第三方在拍线索",
+      "hengdianStatus": "第三方文章提及在横店拍摄，待官方交叉核验",
       "needsReview": true,
       "lastVerifiedAt": null,
-      "latestEvidenceAt": "2026-08-18",
+      "latestEvidenceAt": "2026-08-21",
       "filing": null,
       "evidence": [
         {
-          "category": "production",
-          "reviewStatus": "待原账号复核",
-          "sourceName": "横店影视城片场·周动态证据",
-          "title": "越狱",
+          "category": "social",
+          "reviewStatus": "第三方公开线索，待官方交叉核验",
+          "sourceName": "凌舟逢晚茉（微博认证电视剧博主）",
+          "title": "横店影视城在拍长剧仅16部",
           "url": "https://www.sina.cn/news/detail/5334389597669897.html",
-          "publishedAt": "2026-08-18",
-          "scope": "仅证明报道日的片场动态，不代表今天仍在拍",
-          "sourceId": "source-037"
+          "publishedAt": "2026-08-21",
+          "scope": "仅证明该第三方文章在发布日将项目列入横店在拍长剧，待官方交叉核验；不代表官方确认或当前仍在拍",
+          "sourceId": "source-029"
         }
       ]
     },
     {
       "id": "project-curated-错世录",
       "name": "错世录",
-      "stage": "片场动态快照",
-      "hengdianStatus": "截至公开观察日有片场动态",
+      "stage": "第三方在拍线索",
+      "hengdianStatus": "第三方文章提及在横店拍摄，待官方交叉核验",
       "needsReview": true,
       "lastVerifiedAt": null,
-      "latestEvidenceAt": "2026-08-25",
+      "latestEvidenceAt": "2026-08-21",
       "filing": {
         "status": "title_match",
         "conclusion": "找到同名备案，待核对主体",
@@ -429,24 +444,14 @@ window.__HENGDIAN_PAGES_DEMO__ = {
       },
       "evidence": [
         {
-          "category": "production",
-          "reviewStatus": "待原账号复核",
-          "sourceName": "横店影视城片场·周动态证据",
-          "title": "错世录",
-          "url": "https://www.sina.cn/media/7927216783",
-          "publishedAt": "2026-08-25",
-          "scope": "仅证明报道日的片场动态，不代表今天仍在拍",
-          "sourceId": "source-037"
-        },
-        {
-          "category": "production",
-          "reviewStatus": "待原账号复核",
-          "sourceName": "横店影视城片场·周动态证据",
-          "title": "错世录",
+          "category": "social",
+          "reviewStatus": "第三方公开线索，待官方交叉核验",
+          "sourceName": "凌舟逢晚茉（微博认证电视剧博主）",
+          "title": "横店影视城在拍长剧仅16部",
           "url": "https://www.sina.cn/news/detail/5334389597669897.html",
-          "publishedAt": "2026-08-18",
-          "scope": "仅证明报道日的片场动态，不代表今天仍在拍",
-          "sourceId": "source-037"
+          "publishedAt": "2026-08-21",
+          "scope": "仅证明该第三方文章在发布日将项目列入横店在拍长剧，待官方交叉核验；不代表官方确认或当前仍在拍",
+          "sourceId": "source-029"
         },
         {
           "category": "official",
@@ -458,27 +463,40 @@ window.__HENGDIAN_PAGES_DEMO__ = {
           "scope": "仅证明公开备案记录存在，不自动确认主体、版本或当前拍摄状态",
           "sourceId": "source-001"
         }
+      ],
+      "leadRecords": [
+        {
+          "category": "production_account",
+          "status": "账号入口已定位，对应原帖待定位",
+          "sourceName": "横店影视城片场（新浪账号入口）",
+          "title": "错世录：对应原帖待定位",
+          "url": "https://www.sina.cn/media/7927216783",
+          "observedAt": "2026-08-25",
+          "scope": "仅证明账号入口已定位，不证明该项目在横店拍摄或当前仍在拍，不计入依据",
+          "sourceId": "source-037",
+          "countsAsEvidence": false
+        }
       ]
     },
     {
       "id": "project-curated-镇河先生",
       "name": "镇河先生",
-      "stage": "片场动态快照",
-      "hengdianStatus": "截至公开观察日有片场动态",
+      "stage": "第三方在拍线索",
+      "hengdianStatus": "第三方文章提及在横店拍摄，待官方交叉核验",
       "needsReview": true,
       "lastVerifiedAt": null,
-      "latestEvidenceAt": "2026-08-18",
+      "latestEvidenceAt": "2026-08-21",
       "filing": null,
       "evidence": [
         {
-          "category": "production",
-          "reviewStatus": "待原账号复核",
-          "sourceName": "横店影视城片场·周动态证据",
-          "title": "镇河先生",
+          "category": "social",
+          "reviewStatus": "第三方公开线索，待官方交叉核验",
+          "sourceName": "凌舟逢晚茉（微博认证电视剧博主）",
+          "title": "横店影视城在拍长剧仅16部",
           "url": "https://www.sina.cn/news/detail/5334389597669897.html",
-          "publishedAt": "2026-08-18",
-          "scope": "仅证明报道日的片场动态，不代表今天仍在拍",
-          "sourceId": "source-037"
+          "publishedAt": "2026-08-21",
+          "scope": "仅证明该第三方文章在发布日将项目列入横店在拍长剧，待官方交叉核验；不代表官方确认或当前仍在拍",
+          "sourceId": "source-029"
         }
       ]
     }
@@ -487,5 +505,7 @@ window.__HENGDIAN_PAGES_DEMO__ = {
     "sourceCount": 48,
     "companyCount": 27
   },
-  "originalMaterialCount": 6
+  "originalMaterialCount": 5,
+  "leadRecordCount": 6,
+  "leadObservedThrough": "2026-08-25"
 };

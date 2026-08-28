@@ -7,7 +7,7 @@
     <meta name="theme-color" content="#0c443f">
     <meta name="description" content="横店剧组招商线索雷达领导演示版：17 个项目候选、可追溯依据与 48 个信源核验入口一屏查看">
     <meta property="og:title" content="横店剧组招商线索雷达｜领导演示版">
-    <meta property="og:description" content="17 个项目候选、25 条项目依据关联、48 个信源核验入口与 27 家公司底库。">
+    <meta property="og:description" content="17 个项目候选、19 条可追溯依据关联、48 个信源核验网络与 27 家公司底库。">
     <meta property="og:type" content="website">
     <link rel="canonical" href="https://piguannan.com/radar/">
     <meta property="og:url" content="https://piguannan.com/radar/">
@@ -34,7 +34,7 @@
         </span>
       </a>
       <div class="topbar-actions">
-        <button class="quiet-button" id="open-library" type="button">全量依据库</button>
+        <button class="quiet-button" id="open-library" type="button">全量核验库</button>
         <span class="readonly-badge">领导演示版</span>
       </div>
     </header>
@@ -44,10 +44,10 @@
         <div class="hero-copy">
           <p class="eyebrow">领导视角 · 项目与招商线索盘面</p>
           <h1 id="page-title">17 个项目，<br>先看哪几个？</h1>
-          <p class="hero-lead">把国家公开备案、横店片场动态、四大平台与 48 个固定信源放进同一张雷达：先看已经取得的依据，再一键去各平台交叉核验。</p>
+          <p class="hero-lead">把国家公开备案、第三方在拍线索、片场账号核验任务和 48 个固定信源放进同一张雷达：先看可追溯原文，再去各平台交叉核验。</p>
         </div>
         <div class="snapshot-card">
-          <span>公开证据截至</span>
+          <span>公开线索快照截至</span>
           <strong id="snapshot-date">—</strong>
           <small>不代表项目今天仍处于同一状态</small>
         </div>
@@ -55,7 +55,7 @@
 
       <section class="boundary-note" aria-label="演示范围说明">
         <strong>这是领导可查看的公开演示快照。</strong>
-        <span>项目名称、日期和“已取得依据”来自公开原文；48 个平台入口属于核验网络，不自动计入项目依据。“同名备案”仍需核对主体与版本。</span>
+        <span>“已取得依据”均可回到具体公开原文；账号主页或待定位原帖单列为线索任务。48 个固定信源属于核验网络，不自动计入项目依据。</span>
       </section>
 
       <nav class="section-nav" aria-label="页面分区">
@@ -69,22 +69,22 @@
         <article class="metric metric-primary">
           <span>项目线索池</span>
           <strong id="metric-projects">—</strong>
-          <small>均有横店片场公开动态留痕</small>
+          <small>16 项已有可追溯原文 · 1 项待定位原帖</small>
         </article>
         <article class="metric">
-          <span>双来源待核</span>
+          <span>同名备案候选</span>
           <strong id="metric-filings">—</strong>
-          <small>片场动态 + 同名备案候选</small>
+          <small>仍需核对主体、版本与当前状态</small>
         </article>
         <article class="metric">
           <span>项目—依据关联</span>
           <strong id="metric-evidence">—</strong>
-          <small><b id="metric-originals">—</b> 份独立原始材料 · <b id="metric-official">—</b> 条备案关联 · <b id="metric-production">—</b> 条片场关联</small>
+          <small><b id="metric-originals">—</b> 份独立原始材料 · <b id="metric-official">—</b> 条备案关联 · <b id="metric-production">—</b> 条第三方线索关联</small>
         </article>
         <article class="metric metric-library">
           <span>业务底库</span>
           <strong><b id="metric-sources">—</b> 信源 · <b id="metric-companies">—</b> 公司</strong>
-          <small>公开平台可跳转，受限来源转人工核验</small>
+          <small>36 个档案有公开跳转 · 12 个转人工核验</small>
         </article>
       </section>
 
@@ -97,14 +97,14 @@
             </div>
             <strong class="rate" id="cross-rate">—</strong>
           </div>
-          <p class="panel-copy">同一个项目同时出现片场公开动态和国家同名备案时，优先进入主体、版本与招商价值复核。</p>
+          <p class="panel-copy">出现国家同名备案候选的项目优先核对主体和版本；第三方在拍线索仍需回到官方、平台或制作公司交叉验证。</p>
           <div class="progress-rail" role="progressbar" aria-label="具有同名备案候选的项目占比" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
             <span id="verification-bar"></span>
           </div>
           <div class="overview-breakdown">
-            <div><strong id="dual-count">—</strong><span>双来源待核</span><small>优先核对主体与版本</small></div>
-            <div><strong id="single-count">—</strong><span>仅片场动态</span><small>继续查找备案与平台证据</small></div>
-            <div><strong id="review-evidence-count">—</strong><span>片场证据</span><small>需回原账号复核</small></div>
+            <div><strong id="dual-count">—</strong><span>同名备案候选</span><small>优先核对主体与版本</small></div>
+            <div><strong id="single-count">—</strong><span>暂无备案关联</span><small>继续查找备案与平台依据</small></div>
+            <div><strong id="review-evidence-count">—</strong><span>公开线索待复核</span><small>第三方线索与待定位原帖</small></div>
           </div>
         </article>
 
@@ -112,14 +112,14 @@
           <div class="panel-heading compact">
             <div>
               <p class="eyebrow">最近两次公开观察</p>
-              <h2>片场动态批次</h2>
+              <h2>线索核验批次</h2>
             </div>
           </div>
           <div class="date-signal-list">
-            <div><time datetime="2026-08-25">08.25</time><span>最新公开批次</span><strong><b id="recent-evidence-count">—</b> 条证据</strong></div>
-            <div><time datetime="2026-08-18">08.18</time><span>上一公开批次</span><strong><b id="earlier-evidence-count">—</b> 条证据</strong></div>
+            <div><time datetime="2026-08-25">08.25</time><span>账号原帖待定位</span><strong><b id="recent-evidence-count">—</b> 条任务</strong></div>
+            <div><time datetime="2026-08-21">08.21</time><span>第三方公开文章</span><strong><b id="earlier-evidence-count">—</b> 个项目关联</strong></div>
           </div>
-          <p class="scope-note">日期表示证据出现时间，不代表项目今天仍在拍摄；17 个项目的当前生产阶段均待本周重新核验。</p>
+          <p class="scope-note">08.21 为第三方文章发布日期；08.25 仅为账号线索记录日。两者都不代表项目今天仍在拍摄。</p>
         </article>
       </section>
 
@@ -127,7 +127,7 @@
         <article class="catalog-panel source-panel">
           <div class="panel-heading compact">
             <div>
-              <p class="eyebrow">48 个固定信源 · 8 类 · 全部可操作</p>
+              <p class="eyebrow">48 个固定信源 · 8 类 · 36 项可跳转 · 12 项人工核验</p>
               <h2>48 个信源核验网络</h2>
             </div>
             <button class="text-button" id="open-library-secondary" type="button">查看全部核验入口</button>
@@ -148,7 +148,7 @@
             <div><span>联系人掌握</span><strong>待逐项确认</strong></div>
             <div><span>业务优先级</span><strong>待逐项确认</strong></div>
           </div>
-          <p class="scope-note">公开版仅展示中性系统观察；合作史、联系人和内部优先级待登录后由业务确认。</p>
+          <p class="scope-note">公开版仅展示系统预填观察（待核验）；合作史、联系人和内部优先级不在公开版呈现。</p>
         </article>
 
         <article class="catalog-panel task-panel">
@@ -161,7 +161,7 @@
           <div class="task-list">
             <div><strong id="task-identity">—</strong><span>核对同名备案主体与版本</span></div>
             <div><strong id="task-filing">—</strong><span>继续寻找备案或平台依据</span></div>
-            <div><strong id="task-source-review">—</strong><span>回到片场原账号复核</span></div>
+            <div><strong id="task-source-review">—</strong><span>定位片场原帖并核验第三方线索</span></div>
           </div>
           <p class="scope-note">任务存在交叉，不能简单相加为项目总数。</p>
         </article>
@@ -185,16 +185,16 @@
             <span>交叉核验状态</span>
             <select id="evidence-filter">
               <option value="all">全部项目</option>
-              <option value="cross">双来源待核</option>
-              <option value="single">仅片场动态</option>
+              <option value="cross">有同名备案候选</option>
+              <option value="single">暂无备案关联</option>
             </select>
           </label>
           <label>
-            <span>片场证据</span>
+            <span>线索批次</span>
             <select id="production-filter">
               <option value="all">全部项目</option>
-              <option value="recent">8 月 25 日动态</option>
-              <option value="earlier">8 月 18 日动态</option>
+              <option value="recent">8 月 25 日账号任务</option>
+              <option value="earlier">8 月 21 日第三方文章</option>
             </select>
           </label>
           <label>
