@@ -1,31 +1,28 @@
-# 李冠南 · 个人主页 2026
+# π·冠南的片场
 
-暗金影视风格个人主页 — 产品经理 × 生成式 AI × 影视数字化。
+个人 3D 作品集：https://piguannan.com/
 
-**线上地址**：https://piguannan.com
-**上一版主页**（保留）：https://liguannan-alex.github.io
-
-## 技术栈
-
-React 19 + TypeScript + Vite 7 + Tailwind + shadcn/ui，HashRouter 路由（适配 GitHub Pages 子目录部署）。
+## 源码与发布
+- 当前首页源码：`studio/`；Three.js + Rapier + React。
+- GitHub Pages 沿用 `main` 分支的 `/docs` 发布源，域名配置不变。
+- `studio` 使用 Vinext 原生静态导出；产物没有服务端运行要求或 ChatGPT 登录要求。
+- 旧主页保留在 https://piguannan.com/classic/ ，旧源码在 `src/`；旧说明见 README-classic.md。
+- `teaching/`、`ai-course/`、`lesson-1/`、`bluebook/`、`learn-ai/`、`radar/` 与 `files/` 保持原地址。
 
 ## 本地开发
-
-```bash
-npm ci
-npm run dev      # 开发
-npm run build    # 构建到 dist/
+```sh
+npm run setup:studio
+npm run dev
 ```
 
-## 部署
-
-GitHub Pages 从 `main` 分支的 `/docs` 目录发布。更新流程：
-
-```bash
-npm run build && rm -rf docs && cp -R dist docs && touch docs/.nojekyll
-git add -A && git commit -m "更新主页" && git push
+## 构建与发布
+```sh
+npm run build
+git add studio docs scripts package.json README.md
+git commit -m "Update studio"
+git push origin main
 ```
+`stage-studio.mjs` 合并新静态资源，不清空原有子页面。提交前检查 Git diff。
 
-## 内容维护
-
-所有文案集中在 `src/config.ts`，改文字不用碰组件。图片在 `public/images/`，均为 AI 生成配图（角标含「AI生成」标识）。
+## 开源资源
+车辆模型、树叶纹理基于 Bruno Simon folio-2025 的 MIT 开源资源，许可保留在 `studio/public/world/BRUNO-MIT-LICENSE.txt` 及线上 `/world/BRUNO-MIT-LICENSE.txt`。场所与内容按李冠南的公开履历及项目组织。

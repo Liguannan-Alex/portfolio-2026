@@ -4,11 +4,15 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc -b && vite build",
+    "dev": "npm --prefix studio run dev",
+    "build": "npm run build:studio",
     "lint": "eslint .",
     "test:radar-link": "node --test tests/radar-link.test.mjs",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "build:classic": "tsc -b && vite build",
+    "dev:classic": "vite",
+    "build:studio": "npm --prefix studio run build && node scripts/stage-studio.mjs",
+    "setup:studio": "npm ci --prefix studio"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
