@@ -57,3 +57,7 @@ html,body{height:100%;overflow:hidden;background:#eedac0}body{font-family:'PingF
 .teaching-shelf{margin-top:22px;font-size:12px;color:#bfd1c7}.teaching-shelf a{display:block;border-top:1px solid #77958944;padding:12px 0}.teaching-shelf strong{font-size:12px;color:#e3dcc5}.teaching-shelf small{display:block;font-size:10px;line-height:1.7;margin-top:6px;color:#8aaba3}.skill-details{clear:both;font-size:13px;color:#687e71;margin:20px 0}.skill-details>div{padding:13px 0;border-bottom:1px solid #ded6c5}.skill-details strong{font-size:13px}.skill-details p{font-size:12px;line-height:1.9;margin:7px 0}
 
 .studio-world:not(.is-intro):not(.is-night) .drive-brand{color:#294e5a;text-shadow:0 1px 3px #f5efdacc}
+
+/* Keep the quality choice available on phones; screen width is not GPU quality. */
+@media(max-width:760px){.studio-world .drive-toolbar>button:nth-last-child(2){display:flex}}
+@media(max-width:380px){.studio-world .drive-brand>div{display:none}}
