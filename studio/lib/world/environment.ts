@@ -3,6 +3,8 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.js';
 import { locations,worldObstacles,type Obstacle } from './driving';
 import { content } from './content';
+import { makeCareerExhibit } from './career-exhibit';
+import { isCareerGround } from './career';
 
 export async function makeEnvironment(scene:THREE.Scene,anisotropy=1){
  const assets:THREE.Texture[]=[];const geometries:THREE.BufferGeometry[]=[];const materials:THREE.Material[]=[];
@@ -65,10 +67,8 @@ export async function makeEnvironment(scene:THREE.Scene,anisotropy=1){
   screenGroups.set(id,{group,screen,title,focus:new THREE.Vector3(x,3.6,z-4),camera:new THREE.Vector3(x+1,6.2,z+15.5)});
  }
  await Promise.all([stage('works',-17,-10,'作品放映场','/previews/portal.png'),stage('learn',-12,25,'从会问 AI，到能对结果负责','/previews/ai-course.png')]);
- // Career: actual dates form a physical sequence rather than repeated buildings.
- const years=['2013','2018','2019','2020','2022','2025'];
- years.forEach((year,i)=>{const x=7+i*4.1,z=-19+Math.sin(i*.8)*1.8;box(x,.5,z,2.8,1,1.5,i%2?teal:wood);const p=sign(year,x,1.4,z+.8,2.5,.8,dark);p.rotation.x=-.12;});
- sign('走过的路，都在这里。',17,4,-23,10,1.25,wood);for(const x of [11,23])box(x,2,-23,.2,4,.3,wood);
+ // Every career record has its own physical archive and readable approach.
+ const career=makeCareerExhibit(scene,anisotropy);
  // GitHub arcade: cabinets and a popcorn cart tell the game-work story.
  const arcadeImages=['/previews/hengdian-game.png','/previews/portal.png'];
  for(let i=0;i<2;i++){const x=-28+i*3.2,z=1;box(x,1.6,z,2.6,3.2,2.4,i?teal:dark,scene,true);box(x,3.6,z,2.8,.7,2.2,i?wood:'#b87961');const tx=await loader.loadAsync(arcadeImages[i]);tx.colorSpace=THREE.SRGBColorSpace;assets.push(tx);const ma=new THREE.MeshBasicMaterial({map:tx});materials.push(ma);const sc=mesh(new THREE.PlaneGeometry(2.1,1.7),ma);sc.position.set(x,2.4,z+1.23);box(x,1.2,z+1.4,2.5,.18,.9,wood);cyl(x-.5,1.4,z+1.5,.1,.3,dark);cyl(x+.5,1.33,z+1.5,.1,.05,'#efb576');}
@@ -93,7 +93,7 @@ export async function makeEnvironment(scene:THREE.Scene,anisotropy=1){
  const grassMat=new THREE.MeshLambertMaterial({color:'#ffffff',side:THREE.DoubleSide});materials.push(grassMat);
  grassMat.onBeforeCompile=shader=>{shader.uniforms.uTime=grassUniforms.time;shader.uniforms.uCar=grassUniforms.car;shader.vertexShader='uniform float uTime;uniform vec3 uCar;\n'+shader.vertexShader;shader.vertexShader=shader.vertexShader.replace('#include <begin_vertex>','#include <begin_vertex>\n float wind=sin(uTime*1.2+instanceMatrix[3].x*.8+instanceMatrix[3].z*.6); transformed.x+=wind*position.y*.22; float cd=distance(instanceMatrix[3].xz,uCar.xz); transformed.y*=mix(.25,1.,smoothstep(.5,1.8,cd));');};
  const grass=new THREE.InstancedMesh(grassGeo,grassMat,48000);grass.receiveShadow=true;let count=0;
- while(count<48000){const x=(random()-.5)*65,z=(random()-.5)*64;if(onPath(x,z)||locations.some(p=>Math.hypot(p.x-x,p.z-z)<4.1)||worldObstacles.some(p=>Math.abs(p.x-x)<p.w/2+1.5&&Math.abs(p.z-z)<p.d/2+1.5))continue;dummy.position.set(x,.03,z);dummy.rotation.set(0,random()*Math.PI*2,0);dummy.scale.set(.7+random(),.35+random()*.7,.7);dummy.updateMatrix();grass.setMatrixAt(count,dummy.matrix);grass.setColorAt(count,new THREE.Color().setHSL(.20+random()*.06,.27,.43+random()*.20));count++;}scene.add(grass);
+ while(count<48000){const x=(random()-.5)*65,z=(random()-.5)*64;if(isCareerGround(x,z)||onPath(x,z)||locations.some(p=>Math.hypot(p.x-x,p.z-z)<4.1)||worldObstacles.some(p=>Math.abs(p.x-x)<p.w/2+1.5&&Math.abs(p.z-z)<p.d/2+1.5))continue;dummy.position.set(x,.03,z);dummy.rotation.set(0,random()*Math.PI*2,0);dummy.scale.set(.7+random(),.35+random()*.7,.7);dummy.updateMatrix();grass.setMatrixAt(count,dummy.matrix);grass.setColorAt(count,new THREE.Color().setHSL(.20+random()*.06,.27,.43+random()*.20));count++;}scene.add(grass);
  // Detailed MIT-licensed vehicle, recoloured for the blue-scarf personal identity.
  const bodyVisual=gltf.scene.children.find(o=>/^chassis/i.test(o.name))!;const wheelTemplate=gltf.scene.children.find(o=>/^wheelContainer/i.test(o.name))!;
  bodyVisual.removeFromParent();bodyVisual.position.set(0,0,0);bodyVisual.rotation.y=Math.PI/2;
@@ -103,9 +103,9 @@ export async function makeEnvironment(scene:THREE.Scene,anisotropy=1){
  const plate=sign('π',0,.34,-1.35,.48,.3,'#254c59','#fff0d2',car);plate.rotation.x=-.05;
  assets.forEach(configureTexture);
  const trackGeo=new THREE.PlaneGeometry(.19,.5);geometries.push(trackGeo);const trackMat=new THREE.MeshBasicMaterial({color:'#665948',transparent:true,opacity:.22,depthWrite:false});materials.push(trackMat);const tracks=new THREE.InstancedMesh(trackGeo,trackMat,900);tracks.frustumCulled=false;let trackIndex=0;dummy.scale.set(0,0,0);dummy.updateMatrix();for(let i=0;i<900;i++)tracks.setMatrixAt(i,dummy.matrix);scene.add(tracks);let trackDistance=0;
- return{car,wheels,groundPhysics,obstacles:[...worldObstacles,...colliderTrees],screenGroups,
+ return{car,wheels,groundPhysics,obstacles:[...worldObstacles,...colliderTrees,...career.obstacles],screenGroups,career,
   update:(t:number,position:THREE.Vector3,speed:number,night:boolean)=>{waterUniforms.time.value=t;grassUniforms.time.value=t;grassUniforms.car.value.copy(position);dish.rotation.y=t*.12;lamps.forEach(l=>{(l.material as THREE.MeshStandardMaterial).emissiveIntensity=night?2:.6;});trackDistance+=Math.abs(speed)/60;if(trackDistance>.5&&Math.abs(speed)>1){trackDistance=0;for(const wheel of wheels){const p=wheel.pivot.getWorldPosition(new THREE.Vector3());dummy.position.set(p.x,.058,p.z);dummy.rotation.set(-Math.PI/2,0,car.rotation.y);dummy.scale.set(1,1,1);dummy.updateMatrix();tracks.setMatrixAt(trackIndex%900,dummy.matrix);trackIndex++;}tracks.instanceMatrix.needsUpdate=true;}},
   setPreview:async(id:string,projectId:string)=>{const target=screenGroups.get(id);const item=content.projects.find(p=>p.id===projectId);if(!target||!item)return;target.screen.userData.project=projectId;let texture:THREE.Texture|undefined;const key=item.image||item.id;texture=loadedImages.get(key);if(!texture){const card=document.createElement('canvas');card.width=1280;card.height=800;const c=card.getContext('2d')!;c.fillStyle='#192e38';c.fillRect(0,0,1280,800);if(item.image){const original=await loader.loadAsync(item.image);assets.push(original);const im=original.image;const scale=Math.min(1280/im.width,800/im.height);c.drawImage(im,(1280-im.width*scale)/2,(800-im.height*scale)/2,im.width*scale,im.height*scale);}else{c.fillStyle='#ecd6b2';c.font='700 57px Arial, "PingFang SC",sans-serif';let line='',y=240;for(const char of item.title){if(c.measureText(line+char).width>1080){c.fillText(line,90,y);line=char;y+=85;}else line+=char;}c.fillText(line,90,y);c.fillStyle='#96bcb9';c.font='30px Arial, "PingFang SC",sans-serif';c.fillText(item.status,90,y+95);c.fillStyle='#d4dac7';c.font='30px Arial, "PingFang SC",sans-serif';line='';y+=175;for(const char of item.description){if(c.measureText(line+char).width>1080){c.fillText(line,90,y);line=char;y+=52;}else line+=char;}c.fillText(line,90,y);c.fillStyle='#769998';c.font='24px monospace';c.fillText('PROJECT NOTES / PI GUANNAN',90,720);}texture=new THREE.CanvasTexture(card);texture.colorSpace=THREE.SRGBColorSpace;assets.push(texture);loadedImages.set(key,texture);}if(target.screen.userData.project!==projectId)return;configureTexture(texture);(target.screen.material as THREE.MeshBasicMaterial).map=texture;(target.screen.material as THREE.MeshBasicMaterial).needsUpdate=true;},
-  dispose:()=>{geometries.forEach(g=>g.dispose());materials.forEach(m=>m.dispose());assets.forEach(t=>t.dispose());gltf.scene.traverse(o=>{if(o instanceof THREE.Mesh)o.geometry.dispose();});}
+  dispose:()=>{career.dispose();geometries.forEach(g=>g.dispose());materials.forEach(m=>m.dispose());assets.forEach(t=>t.dispose());gltf.scene.traverse(o=>{if(o instanceof THREE.Mesh)o.geometry.dispose();});}
  };
 }

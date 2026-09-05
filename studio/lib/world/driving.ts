@@ -12,7 +12,7 @@ export const locations = [
  {id:'radar',name:'影视雷达台',label:'FILM RADAR',x:28,z:4,color:'#789d96'},
 ] as const;
 export const worldObstacles:Obstacle[]=[
- {x:-17,z:-16,w:11,d:3},{x:17,z:-21,w:8,d:3},
+ {x:-17,z:-16,w:11,d:3},
  {x:-28,z:0,w:4,d:7},{x:-12,z:18,w:11,d:3},
  {x:14,z:19,w:8,d:4},{x:29,z:-2,w:6,d:4},
  {x:-8,z:2,w:1.1,d:1.1},{x:7,z:7,w:1.1,d:1.1},
