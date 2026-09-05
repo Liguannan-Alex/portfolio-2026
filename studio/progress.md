@@ -6,3 +6,5 @@ Original prompt: 就是像素的清晰度还是不如 bruno 那个
 - Validation passed: desktop DPR 2 and mobile DPR 3 both render at DPR 2 with 4 MSAA samples; quality toggles and showcase resize keep compositor/canvas buffers matched; no browser errors. All 17 tests pass; static and Sites builds pass.
 - Mobile now defaults to high quality; the existing quality toggle is visible on phones.
 - Before/after screenshots and verification results are stored locally under piguannan-pixel-design/clarity/.
+
+- Final visual check found coplanar terrain caps: extrusion top y=-0.000000024 versus ground y=0. Lowered decorative island extrusion 3 cm to remove visible depth-fighting stripes; ground collider and drive surface stay at y=0.

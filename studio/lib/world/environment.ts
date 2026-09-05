@@ -25,7 +25,7 @@ export async function makeEnvironment(scene:THREE.Scene,anisotropy=1){
  const outline=[[-36,-31],[-20,-38],[0,-36],[21,-37],[35,-23],[37,-1],[34,22],[20,36],[-3,37],[-28,32],[-37,13],[-39,-10]];
  const shape=new THREE.Shape();outline.forEach(([x,z],i)=>{if(i===0)shape.moveTo(x,-z);else shape.lineTo(x,-z);});shape.closePath();
  const topGeometry=new THREE.ShapeGeometry(shape);topGeometry.rotateX(-Math.PI/2);const ground=mesh(topGeometry,mat('#7f966d'));ground.castShadow=false;
- const edgeGeometry=new THREE.ExtrudeGeometry(shape,{depth:1.5,bevelEnabled:true,bevelSegments:1,steps:1,bevelSize:.35,bevelThickness:.15});edgeGeometry.rotateX(-Math.PI/2);edgeGeometry.translate(0,-1.65,0);mesh(edgeGeometry,mat('#9d947b'));
+ const edgeGeometry=new THREE.ExtrudeGeometry(shape,{depth:1.5,bevelEnabled:true,bevelSegments:1,steps:1,bevelSize:.35,bevelThickness:.15});edgeGeometry.rotateX(-Math.PI/2);edgeGeometry.translate(0,-1.68,0);mesh(edgeGeometry,mat('#9d947b'));
  const indices=topGeometry.index?new Uint32Array(topGeometry.index.array):new Uint32Array(Array.from({length:topGeometry.getAttribute('position').count},(_,i)=>i));
  const groundPhysics={positions:new Float32Array(topGeometry.getAttribute('position').array),indices};
  const bridge=box(5,.15,16,3.5,.20,5.5,'#bfa17c');bridge.rotation.x=.085;bridge.rotation.y=-.55;bridge.updateMatrixWorld(true);const ramp=bridge.geometry.clone().applyMatrix4(bridge.matrixWorld);const rp=new Float32Array(ramp.getAttribute('position').array),ri=new Uint32Array(ramp.index!.array);const baseCount=groundPhysics.positions.length/3;groundPhysics.positions=new Float32Array([...groundPhysics.positions,...rp]);groundPhysics.indices=new Uint32Array([...groundPhysics.indices,...Array.from(ri,v=>v+baseCount)]);ramp.dispose();
